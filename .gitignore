@@ -1,0 +1,5 @@
+node_modules/
+bundle
+build
+.idea/
+viewar-modules/viewar-scripts/

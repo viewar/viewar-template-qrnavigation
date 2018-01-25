@@ -1,0 +1,13 @@
+.dreieck {
+  border-right: 50px solid transparent;
+  border-top: 100px solid rgba(77, 184, 67, 0.85);
+  float: left;
+}
+
+.viereck {
+  font-size: 20px;
+  color: white;
+  padding: 38px 60px;
+  background-color: rgba(77, 184, 67, 0.85);
+  float: left;
+}
