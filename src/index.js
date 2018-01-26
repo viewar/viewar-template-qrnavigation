@@ -30,21 +30,14 @@ injectTapEventPlugin();
 
   // initialize the ViewAR API
   const api = await viewarApi.init({appId, version, logToScreen: true});
-  const viewarThunkMiddleware = getThunkMiddleware(api);
+  window.api = api;
 
   // apply viewar thunk middleware
-  const middlewares = [viewarThunkMiddleware]; // ADD YOUR MIDDLEWARES HERE
-  const enhancers = [applyMiddleware(...middlewares)];
-
-
-  api.sceneManager.clearScene();
-
-  const annotationService = new AnnotationService();
-  annotationService.init({ viewarApi: api });
+  const enhancers = [];
 
 
   const socketConnection = SocketConnection();
-  Object.assign(api, { annotationService, socketConnection });
+  Object.assign(api, { socketConnection });
 
   // create store with the viewar thunk middleware
   const store = createStore(viewarReducers(), composeWithDevTools(...enhancers));

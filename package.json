@@ -24,7 +24,7 @@
   "author": "Matthias Klan for ViewAR GmbH",
   "license": "ISC",
   "dependencies": {
-    "viewar-api": "^0.10.17",
+    "viewar-api": "../../",
     "viewar-core": "^5.4.1",
     "viewar-room-planner": "^0.1.0",
     "async-reactor": "^1.2.1",

@@ -35,9 +35,8 @@ const List = styled.div`
   -webkit-overflow-scrolling: touch;
 `;
 
-const RoutesView = ({ routes, handleRouteSelect, activeRoute, deleteRoutes, history }) =>
+const RoutesView = ({ routes, handleRouteSelect, activeRoute, deleteRoutes }) =>
   <Container>
-    <Button onClick={history.goBack}>Back</Button>
     <Button onClick={deleteRoutes}>Delete All</Button>
     <List>
       { Object.entries(routes).filter(([label, { canceled }]) => !canceled).map(([label, route]) => <ListItem key={label + Date.now()} active={activeRoute === label} onClick={() => handleRouteSelect(label)}>{label} {route.live && '[live]'}</ListItem>) }
