@@ -57,14 +57,14 @@ const getUniqueTargetsByPosition = (targets) => {
 
 ///////////////
 
-const HomeView = ({ handleNewClick, toggleShowRoutes, isTracking, showQRMessage, initialized, showRoutes, showCreateNewRoute, setShowCreateNewRoute }) =>
+const HomeView = ({ handleNewClick, handleShowClick, isTracking, setShowRoutes, showQRMessage, initialized, showRoutes, showCreateNewRoute, setShowCreateNewRoute }) =>
   <Container>
     { !isTracking && <Overlay> Please do a few sidesteps </Overlay> }
     { showQRMessage && <Overlay> Please film the QR-Code </Overlay> }
     { initialized && <div>
-      { !showCreateNewRoute && <Button onClick={handleNewClick}>Create new route</Button> }
-      { !showCreateNewRoute && <Button onClick={toggleShowRoutes}>{showRoutes ? 'Hide routes' : 'Show routes'}</Button> }
-      { showRoutes && !showCreateNewRoute && <Routes /> }
+      { !showRoutes && !showCreateNewRoute && <Button onClick={handleNewClick}>Create new route</Button> }
+      { !showRoutes && !showCreateNewRoute && <Button onClick={handleShowClick}>Show routes</Button> }
+      { showRoutes && !showCreateNewRoute && <Routes onBack={() => setShowRoutes(false)} /> }
       { showCreateNewRoute && <CreateNewRoute onBack={() => setShowCreateNewRoute(false)} /> }
     </div>
     }
@@ -80,6 +80,9 @@ export default compose(
   withState('showRoutes', 'setShowRoutes', false),
   withState('showCreateNewRoute', 'setShowCreateNewRoute', false),
   withProps(({ viewar }) => ({
+
+
+
     tracker: Object.values(viewar.trackers)[0],
     mySessionId: Math.random().toString(36).substring(7),
     ballModel: viewar.modelManager.findModelByForeignKey('ball'),
@@ -88,18 +91,21 @@ export default compose(
   })),
   withHandlers({
     handleNewClick: ({ setShowCreateNewRoute }) => () => setShowCreateNewRoute(true),
-    toggleShowRoutes: ({ setShowRoutes, showRoutes }) => () => setShowRoutes(!showRoutes),
-    handleTracking: ({ viewar, tracker, targetModel, setIsTracking, setShowQRMessage, setInitialized }) => async ({ tracking, targetName }) => {
+    handleShowClick: ({ setShowRoutes }) => () => setShowRoutes(true),
+    handleTracking: ({ viewar, tracker, targetModel, setIsTracking, setShowQRMessage, setInitialized, initialized }) => async ({ tracking, targetName }) => {
       if (targetName.includes('planeTarget')) {
         setIsTracking(tracking);
         setInitialized(false);
         if (tracking) setShowQRMessage(true);
       }
-      if (tracking && !targetName.includes('planeTarget')) {
+      if (tracking && !initialized && !targetName.includes('planeTarget')) {
         setShowQRMessage(false);
         setInitialized(true);
 
         const targets = getUniqueTargetsByPosition(viewar.appConfig.trackerList[0].targets);
+
+        console.log(targets, targetName)
+
         return Promise.all(targets.map(({ pose }) => viewar.sceneManager.insertModel(targetModel, { pose }) ));
       }
     },

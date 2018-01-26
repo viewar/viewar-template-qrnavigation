@@ -27,6 +27,13 @@ let getSceneState$;
 let interval;
 let lastPosition;
 
+export const removeInstancesByForeignKey = ({ viewar }) => (foreignKey) => {
+  return Promise.all(viewar.sceneManager.scene.children
+    .filter(child => child.model.foreignKey === foreignKey)
+    .map(viewar.sceneManager.removeNode)
+  );
+};
+
 const NewView = ({ handleBack, isTracking, showQRMessage, startHandler, stopHandler, isRecording, cancelHandler }) =>
   <Container>
     { !isRecording && <Button onClick={handleBack}>Back</Button> }
@@ -45,12 +52,7 @@ export default compose(
     activeCamera: viewar.cameras.perspectiveCamera.active ? viewar.cameras.perspectiveCamera : viewar.cameras.augmentedRealityCamera,
   })),
   withHandlers({
-    removeInstancesByForeignKey: ({ viewar }) => (foreignKey) => {
-      return Promise.all(viewar.sceneManager.scene.children
-        .filter(child => child.model.foreignKey === foreignKey)
-        .map(viewar.sceneManager.removeNode)
-      );
-    },
+    removeInstancesByForeignKey,
     addPoint: ({ viewar, activeCamera, ballModel, label }) => async () => {
       const pose = await activeCamera.updatePose();
       viewar.socketConnection.send({ messageType: 'newLiveRoute', data: { route: label, sender: viewar.socketConnection.socket.id } }); //signal for clients which entered show routes after starting
@@ -93,10 +95,15 @@ export default compose(
       clearInterval(interval);
       setIsRecording(false);
 
+
       const sceneState = await viewar.sceneManager.getSceneStateSafe();
+
+      console.log(sceneState);
 
       const routes = await viewar.storage.cloud.read('/public/routes/index.json') || {};
       routes[label] = sceneState;
+
+      console.log(routes);
 
       await viewar.storage.cloud.write('/public/routes/index.json', JSON.stringify(routes));
 

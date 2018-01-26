@@ -13,6 +13,8 @@ import scan from '../../../assets/button_scan.svg';
 import add from '../../../assets/button_annotation.svg';
 import support from '../../../assets/button_support.svg';
 
+import { removeInstancesByForeignKey } from "../new/new.view";
+
 
 import { viewarConnect } from '../../lib/viewar-react';
 
@@ -35,8 +37,9 @@ const List = styled.div`
   -webkit-overflow-scrolling: touch;
 `;
 
-const RoutesView = ({ routes, handleRouteSelect, activeRoute, deleteRoutes }) =>
+const RoutesView = ({ routes, handleRouteSelect, activeRoute, deleteRoutes, handleBack }) =>
   <Container>
+    <Button onClick={handleBack}>Back</Button>
     <Button onClick={deleteRoutes}>Delete All</Button>
     <List>
       { Object.entries(routes).filter(([label, { canceled }]) => !canceled).map(([label, route]) => <ListItem key={label + Date.now()} active={activeRoute === label} onClick={() => handleRouteSelect(label)}>{label} {route.live && '[live]'}</ListItem>) }
@@ -52,7 +55,32 @@ export default compose(
     ballModel: viewar.modelManager.findModelByForeignKey('ball'),
   })),
   withHandlers({
-    handleRouteSelect: ({ routes, viewar, setActiveRoute }) => async (label) => {
+    removeInstancesByForeignKey,
+  }),
+  withHandlers({
+    handleRouteDeselect: ({ routes, removeInstancesByForeignKey, setActiveRoute }) => async () => {
+
+      setActiveRoute(null);
+      return removeInstancesByForeignKey('ball');
+    },
+    deleteRoutes: ({ viewar, setRoutes, setActiveRoute }) => () => {
+      if(confirm('are you sure?')) {
+        setRoutes({});
+        setActiveRoute(null);
+        return viewar.storage.cloud.write('/public/routes/index.json', JSON.stringify({}));
+      }
+    },
+  }),
+  withHandlers({
+    handleBack: ({ handleRouteDeselect, onBack}) => async () => {
+      await handleRouteDeselect();
+      onBack();
+    },
+    handleRouteSelect: ({ routes, viewar, setActiveRoute, handleRouteDeselect, activeRoute }) => async (label) => {
+
+      if(label === activeRoute) {
+        return handleRouteDeselect();
+      }
 
       setActiveRoute(label);
 
@@ -62,19 +90,22 @@ export default compose(
       }
 
       const sceneState = routes[label];
-      return viewar.sceneManager.setSceneState(sceneState);
+      const result = await viewar.sceneManager.setSceneState(sceneState);
+      console.log(result);
     },
     deleteRoutes: ({ viewar, setRoutes, setActiveRoute }) => () => {
-       setRoutes({});
-       setActiveRoute(null);
-       return viewar.storage.cloud.write('/public/routes/index.json', JSON.stringify({}));
+      if(confirm('are you sure?')) {
+        setRoutes({});
+        setActiveRoute(null);
+        return viewar.storage.cloud.write('/public/routes/index.json', JSON.stringify({}));
+      }
     },
   }),
   lifecycle({
     async componentDidMount() {
       const { viewar, setRoutes, ballModel, setActiveRoute } = this.props;
 
-      const routes = await viewar.storage.cloud.read('/public/routes/index.json');
+      const routes = await viewar.storage.cloud.read('/public/routes/index.json')  || {};
       setRoutes(routes);
 
       newLiveRoute$ = viewar.socketConnection.getData('newLiveRoute').subscribe(( { route, sender } ) => {
@@ -90,7 +121,7 @@ export default compose(
       });
 
       saveLiveRoute$ = viewar.socketConnection.getData('saveLiveRoute').subscribe(async ({ route }) => {
-        const routes = await viewar.storage.cloud.read('/public/routes/index.json');
+        const routes = await viewar.storage.cloud.read('/public/routes/index.json') || {};
         setRoutes(routes);
       });
 
@@ -106,8 +137,8 @@ export default compose(
 
     },
     async componentWillUnmount() {
-      const { viewar, setRoutes, ballModel, activeRoute } = this.props;
-      await viewar.sceneManager.clearScene();
+      const { removeInstancesByForeignKey } = this.props;
+      await removeInstancesByForeignKey();
 
       newLiveRoute$ && newLiveRoute$.unsubscribe();
       cancelLiveRoute$ && cancelLiveRoute$.unsubscribe();

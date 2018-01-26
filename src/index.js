@@ -8,7 +8,9 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 
-import viewarApi from 'viewar-api'
+import viewarApi from 'viewar-api';
+
+
 import { ViewarProvider, viewarReducers, getThunkMiddleware } from './lib/viewar-react';
 
 import Main from './containers/main/main';
@@ -31,6 +33,10 @@ injectTapEventPlugin();
   // initialize the ViewAR API
   const api = await viewarApi.init({appId, version, logToScreen: true});
   window.api = api;
+
+  api.storage.cloud.storageKey = appId;
+
+  await api.sceneManager.clearScene();
 
   // apply viewar thunk middleware
   const enhancers = [];
