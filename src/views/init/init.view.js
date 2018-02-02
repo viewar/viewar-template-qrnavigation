@@ -38,6 +38,11 @@ export default compose(
 
       });
 
+      await setTimeout(async () => {
+        const model = modelManager.findModelByForeignKey('ball');
+        await sceneManager.insertModel(model, { pose: { position: { x: 0, y: 0, z: 0 }} } );
+      }, 0);
+
       socketConnection.socket.on('connect_error', () => {
         alert('Socket Connection Error!');
       });
