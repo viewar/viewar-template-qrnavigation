@@ -1,56 +1,49 @@
 import React from 'react';
+
+import classNames from 'classnames';
 import { compose, withProps, withState, withHandlers, pure, lifecycle } from 'recompose';
-import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import styled, { css } from 'styled-components';
-
 import Button from '../../components/Button';
-import { Row, Absolute } from '../../components/Helpers';
-
-import { applyQuaternion, addVectors, multiplyScalar } from '../../utils/math';
-
-import scan from '../../../assets/button_scan.svg';
-import add from '../../../assets/button_annotation.svg';
-import support from '../../../assets/button_support.svg';
 
 import { removeInstancesByForeignKey } from "../new/new.view";
 
-
 import { viewarConnect } from '../../lib/viewar-react';
+
+import styles from './styles.css';
 
 let newLiveRoute$, cancelLiveRoute$, saveLiveRoute$, newLiveRoutePoint$, newSceneState$;
 
-const Container = styled.div`
-  width: 100%;
-  height: 100%;
-`;
 
-const ListItem = styled.div`
-  margin: 15px;
-  font-size: 22px;
-  color: ${props => props.active ? 'red' : 'green' }
-`;
+const ListItem = ({ children, active, onClick }) => <div onClick={onClick} className={classNames(styles.listItem, active && styles.active)}>{children}</div>;
+const List = ({ children }) => <div className={styles.list}>{children}</div>;
+const ButtonBar = ({ children }) => <div className={styles.buttonBar}>{children}</div>;
+const Label = ({ children, onClick }) => <div onClick={onClick} className={styles.label}>{children}</div>;
 
-const List = styled.div`
-  height: calc(100vh - 100px);
-  overflow: scroll;
-  -webkit-overflow-scrolling: touch;
-`;
-
-const RoutesView = ({ routes, handleRouteSelect, activeRoute, deleteRoutes, handleBack }) =>
-  <Container>
-    <Button onClick={handleBack}>Back</Button>
-    <Button onClick={deleteRoutes}>Delete All</Button>
+const Routes = ({ routes, handleRouteSelect, activeRoute, isAdmin, deleteRoute, editRouteName, showEditOptions }) =>
     <List>
-      { Object.entries(routes).filter(([label, { canceled }]) => !canceled).map(([label, route]) => <ListItem key={label + Date.now()} active={activeRoute === label} onClick={() => handleRouteSelect(label)}>{label} {route.live && '[live]'}</ListItem>) }
-    </List>
-  </Container>
+      { Object.entries(routes)
+        .filter(([label, { canceled }]) => !canceled)
+        .sort((a, b) => {
+          if(a[0] < b[0]) return -1;
+          if(a[0] > b[0]) return 1;
+          return 0;
+        })
+        .map(([label, route]) =>
+          <ListItem key={label + Date.now()} active={activeRoute === label}>
+            <Label onClick={() => handleRouteSelect(label)} >{label} {route.live && '[live]'}</Label>
+            {showEditOptions && <ButtonBar>
+              <Button onClick={() => editRouteName(label)} small>Edit</Button>
+              <Button onClick={() => deleteRoute(label)} small>Remove</Button>
+            </ButtonBar> }
+          </ListItem>
+        )
+      }
+    </List>;
 
 export default compose(
   viewarConnect(),
   withRouter,
   withState('routes', 'setRoutes', {}),
-  withState('activeRoute', 'setActiveRoute', null),
   withProps(({ viewar }) => ({
     ballModel: viewar.modelManager.findModelByForeignKey('ball'),
   })),
@@ -58,31 +51,20 @@ export default compose(
     removeInstancesByForeignKey,
   }),
   withHandlers({
-    handleRouteDeselect: ({ routes, removeInstancesByForeignKey, setActiveRoute }) => async () => {
+    handleRouteDeselect: ({ routes, removeInstancesByForeignKey, activeRouteChanged }) => async () => {
 
-      setActiveRoute(null);
+      activeRouteChanged(null);
       return removeInstancesByForeignKey('ball');
-    },
-    deleteRoutes: ({ viewar, setRoutes, setActiveRoute }) => () => {
-      if(confirm('are you sure?')) {
-        setRoutes({});
-        setActiveRoute(null);
-        return viewar.storage.cloud.write('/public/routes/index.json', JSON.stringify({}));
-      }
     },
   }),
   withHandlers({
-    handleBack: ({ handleRouteDeselect, onBack}) => async () => {
-      await handleRouteDeselect();
-      onBack();
-    },
-    handleRouteSelect: ({ routes, viewar, setActiveRoute, handleRouteDeselect, activeRoute }) => async (label) => {
+    handleRouteSelect: ({ routes, viewar, activeRouteChanged, handleRouteDeselect, activeRoute }) => async (label) => {
 
       if(label === activeRoute) {
         return handleRouteDeselect();
       }
 
-      setActiveRoute(label);
+      activeRouteChanged(label);
 
       if(routes[label].live) {
         viewar.socketConnection.send({ room: routes[label].sender, messageType: 'getSceneState', data: viewar.socketConnection.socket.id });
@@ -93,17 +75,23 @@ export default compose(
       const result = await viewar.sceneManager.setSceneState(sceneState);
       console.log(result);
     },
-    deleteRoutes: ({ viewar, setRoutes, setActiveRoute }) => () => {
+    deleteRoute: ({ viewar, setRoutes, activeRouteChanged }) => async (name) => {
       if(confirm('are you sure?')) {
-        setRoutes({});
-        setActiveRoute(null);
-        return viewar.storage.cloud.write('/public/routes/index.json', JSON.stringify({}));
+        const newRoutes = await viewar.storageService.deleteKey({ path: '/public/routes/index.json', key: name});
+        setRoutes(newRoutes);
       }
     },
+    editRouteName: ({ viewar, setRoutes }) => async (oldName) => {
+      const newName = prompt('Enter a new title', oldName);
+      if(!newName) return;
+
+      const newRoutes = await viewar.storageService.editKey({ path: '/public/routes/index.json', oldKey: oldName, newKey: newName });
+      setRoutes(newRoutes);
+    }
   }),
   lifecycle({
     async componentDidMount() {
-      const { viewar, setRoutes, ballModel, setActiveRoute } = this.props;
+      const { viewar, setRoutes, ballModel, activeRouteChanged } = this.props;
 
       const routes = await viewar.storage.cloud.read('/public/routes/index.json')  || {};
       setRoutes(routes);
@@ -116,7 +104,7 @@ export default compose(
         setRoutes({ ...this.props.routes, [route]: { canceled: true }})
         if(route === this.props.activeRoute) {
           await viewar.sceneManager.clearScene();
-          setActiveRoute(null);
+          activeRouteChanged(null);
         }
       });
 
@@ -149,4 +137,4 @@ export default compose(
     },
   }),
   pure,
-)(RoutesView);
+)(Routes);

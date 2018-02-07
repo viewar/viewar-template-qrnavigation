@@ -1,104 +1,58 @@
 import React from 'react';
-import { compose, lifecycle, withHandlers, pure, withState, withProps } from 'recompose';
-import { connect } from 'react-redux';
+import {compose, withProps, withHandlers, pure, lifecycle, withState} from 'recompose';
 import { withRouter } from 'react-router-dom';
-import styled, { css } from 'styled-components';
-
-import { streamStatus$ } from '../../services/websocket/stream-manager';
+import Button from '../../components/Button';
+import { Container } from "../../components/FullScreenContainer";
 
 import { viewarConnect } from '../../lib/viewar-react';
 
-import scan from '../../../assets/button_scan.svg';
+import Routes from '../../views/routes/routes.view';
+import TrackingSystem from '../../containers/tracking-system/tracking-system';
+import CreateNewRoute from '../../views/new/new.view';
 
+import styles from './styles.css';
+import { removeInstancesByForeignKey } from "../new/new.view";
 
-const IconButton = styled.div`
-  pointer-events: all;
-  background: url(${props => props.src}) center no-repeat;
-  background-size: cover;
-  width: 70px;
-  height: 70px;
-  margin: 0.5em;
-`;
-
-const SnapButton = styled(IconButton)`
-  grid-area: sidebar;
-  align-self: center;
-`;
-
-const Image = styled.img`
-  pointer-events: all;
-  margin: 0.2em;
-  height: 100px;
-  width: auto;
-`;
-
-const Gallery = styled.div`
-  pointer-events: all;
-  display: flex;
-  overflow-x: auto;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;  
-  grid-area: footer;
-`;
-
-const Container = styled.div`
-  width: 100%;
-  height: 100%;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  grid-template-rows: auto 1fr auto;
-    grid-template-areas: 
-    "header header header"
-    "sidebarleft main sidebar"
-    "footer footer footer";
-`
-
-const Info = styled.div`
-  background-color: white;
-  width: 100px;
-  height: 50px;
-  margin: 0.5em;
-  padding: 1em;
-  grid-area: main;
-  justify-self: center;
-  align-self: center;
-`
-
-const AdminView = ({ saveFreezeFrameHandler, history, streamStatus, freezeFrames, showFreezeFrameHandler }) =>
-  <Container>
-    { !streamStatus && <Info>'Waiting for Connection'</Info>}
-    { streamStatus && <SnapButton src={scan} onClick={saveFreezeFrameHandler} /> }
-    { streamStatus && <Gallery>
-      { 
-        freezeFrames.map(freezeFrame => <Image src={freezeFrame.imageUrl} onClick={() => showFreezeFrameHandler(freezeFrame)} />)
-      }
-    </Gallery> }
-  </Container>;
+const AdminView = ({ handleBack, handleCreateNewRouteBack, setActiveRoute, activeRoute, handleNewClick, toggleRoutes, initialized, setInitialized, showRoutes, isAdmin, history, showCreateNewRoute, setShowCreateNewRoute }) =>
+<Container>
+  <TrackingSystem initializationStatusChanged={setInitialized} />
+  { initialized && <div><div className={styles.upperLeftBar}>
+    { !showCreateNewRoute && <Button onClick={handleBack}>Back</Button> }
+    { !showCreateNewRoute && <Button onClick={toggleRoutes}>{ showRoutes ? 'Hide Routes' : 'Show routes' }</Button> }
+  </div>
+    { showRoutes && !showCreateNewRoute && <Routes activeRouteChanged={setActiveRoute} activeRoute={activeRoute} showEditOptions={isAdmin} /> }
+    <div className={styles.bottomRightBar}>
+    { !showCreateNewRoute && <Button onClick={() => {}}>Learn QR Codes</Button> }
+    { !showCreateNewRoute && <Button onClick={() => setShowCreateNewRoute(true)}>New Route</Button> }
+    </div>
+    { showCreateNewRoute && <CreateNewRoute onBack={handleCreateNewRouteBack} /> }
+  </div>
+  }
+</Container>
 
 export default compose(
   viewarConnect(),
-  withState('streamStatus', 'setStreamStatus', false),
-  withState('freezeFrames', 'setFreezeFrames', ({ viewar }) => viewar.cameras.augmentedRealityCamera.freezeFrames ),
   withRouter,
+  withProps(({ viewar }) => ({
+    isAdmin: viewar.appConfig.uiConfig.isAdmin,
+  })),
+  withState('activeRoute', 'setActiveRoute', null),
+  withState('initialized', 'setInitialized', false),
+  withState('showCreateNewRoute', 'setShowCreateNewRoute', false),
+  withState('showRoutes', 'setShowRoutes', false),
   withHandlers({
-    saveFreezeFrameHandler: ({ viewar: { cameras }, setFreezeFrames }) => async () => {
-      await cameras.augmentedRealityCamera.freeze();
-      const freezeFrame = await cameras.augmentedRealityCamera.saveFreezeFrame();
-      setFreezeFrames(cameras.augmentedRealityCamera.freezeFrames);
-      await cameras.augmentedRealityCamera.unfreeze();
-    },
-    showFreezeFrameHandler: ({ viewar: { cameras } }) => async (freezeFrame) => {
-      await cameras.augmentedRealityCamera.activate();
-      //await cameras.augmentedRealityCamera.freeze();
-      await cameras.augmentedRealityCamera.showFreezeFrame(freezeFrame);
-    },
+    removeInstancesByForeignKey,
   }),
-  lifecycle({
-    async componentWillMount() {
-
-      streamStatus$.subscribe(this.props.setStreamStatus)
-
-    }
+  withHandlers({
+    handleBack: ({ history, removeInstancesByForeignKey }) => () => {
+      removeInstancesByForeignKey('ball');
+      history.push('/home');
+    },
+    handleCreateNewRouteBack: ({ setShowCreateNewRoute, setActiveRoute }) => (newRoute) => {
+      setShowCreateNewRoute(false);
+      setActiveRoute(newRoute);
+    },
+    toggleRoutes: ({ setShowRoutes, showRoutes }) => () => setShowRoutes(!showRoutes),
   }),
   pure,
 )(AdminView);

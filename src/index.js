@@ -15,13 +15,13 @@ import { ViewarProvider, viewarReducers, getThunkMiddleware } from './lib/viewar
 
 import Main from './containers/main/main';
 
-import AnnotationService from './services/annotation.service';
 import SocketConnection from './services/websocket/socket-connection';
+import { createStorageService } from "./services/storage";
 
 import './index.css';
 import './spinner.css';
 
-const appId = 'com.accenture.navigation';
+const appId = 'com.viewar.qrnavigation.dev';
 const version = 1.0;
 
 
@@ -36,14 +36,13 @@ injectTapEventPlugin();
 
   api.storage.cloud.storageKey = appId;
 
-  await api.sceneManager.clearScene();
-
   // apply viewar thunk middleware
   const enhancers = [];
 
 
   const socketConnection = SocketConnection();
-  Object.assign(api, { socketConnection });
+  const storageService = createStorageService(api);
+  Object.assign(api, { socketConnection, storageService });
 
   // create store with the viewar thunk middleware
   const store = createStore(viewarReducers(), composeWithDevTools(...enhancers));

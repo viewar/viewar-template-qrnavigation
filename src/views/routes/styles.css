@@ -1,0 +1,30 @@
+.list {
+    pointer-events: all;
+    width: 300px;
+    padding-top: 100px;
+    background-color: rgba(51,51,51,0.86);
+    height: calc(100vh - 100px);
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+
+.listItem {
+    display: flex;
+    margin: 0 9px;
+    height: 35px;
+    align-items: center;
+}
+
+.active {
+    color: #ff5e5e;
+}
+
+.buttonBar {
+    flex: 0;
+    display: flex;
+}
+
+.label {
+    flex: 1;
+}

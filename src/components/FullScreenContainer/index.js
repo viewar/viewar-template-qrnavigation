@@ -1,12 +1,10 @@
-import styled, { css } from 'styled-components';
+import React from 'react';
+import classNames from 'classnames';
 
-export const Container = styled.div`
+import styles from './styles.css';
 
-  pointer-events: all;
-  width: 100vw;
-  height: 100vh;
-  color: green;
-  position: relative;
-  overflow: hidden;
- 
-`;
+export const Container = ({ backgroundColor, children, center }) =>
+  <div style={{ backgroundColor: backgroundColor || 'inherit' }} className={classNames(styles.container, {[styles.center]: center})}>{children}</div>
+
+
+export default Container;

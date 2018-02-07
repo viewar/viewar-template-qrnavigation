@@ -11,6 +11,7 @@ exports.developmentConfig = merge([
   {
     entry: {
       index: [
+        'react-hot-loader/patch',
         PATHS.app + '/polyfills.js',
         PATHS.app,
       ],
@@ -36,7 +37,7 @@ exports.developmentConfig = merge([
           test: /\.css$/,
           use: [
             'style-loader',
-            { loader: 'css-loader', options: { importLoaders: 1, modules: false, localIdentName: '[name]-[local]-[hash:base64:6]' } },
+            { loader: 'css-loader', options: { importLoaders: 1, modules: true, localIdentName: '[name]-[local]-[hash:base64:6]' } },
             { loader: 'postcss-loader', options: { plugins: [
               require('postcss-smart-import')(),
               require('postcss-cssnext')(),
