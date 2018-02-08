@@ -3,13 +3,13 @@ import { compose, withProps, pure, lifecycle } from 'recompose';
 import { withRouter } from 'react-router-dom';
 import { setupStream } from '../../services/websocket/stream-manager';
 
-import { viewarConnect } from '../../lib/viewar-react';
+import { withViewar } from '../../lib/viewar-react';
 import { Container } from "../../components/FullScreenContainer";
 
 const InitView = ({  }) => <Container backgroundColor='#333333' center >Loading...</Container>;
 
 export default compose(
-  viewarConnect(),
+  withViewar(),
   withRouter,
   withProps(({ viewar }) => ({
     serverChannel: viewar.appConfig.uiConfig.serverChannel || 'com.viewar.qrnavigation',

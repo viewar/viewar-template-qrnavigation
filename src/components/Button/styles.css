@@ -9,6 +9,8 @@
     background-color: #2fad77;
     pointer-events: all;
     border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid transparent;
 }
 
 .big {
@@ -36,4 +38,9 @@
     position: absolute;
     bottom: 0;
     left: 0;
+}
+
+.disabled {
+    background-color: #76e0c4;
+    cursor: not-allowed;
 }

@@ -4,8 +4,9 @@ import { Button } from '../../components/Button';
 import { Container } from "../../components/FullScreenContainer";
 
 import { distance } from '../../utils/math';
-import { viewarConnect } from '../../lib/viewar-react';
+import { withViewar } from '../../lib/viewar-react';
 
+import { InputModal } from "../../containers/modal/modal";
 
 const THRESHOLD_POINT_DISTANCE = 200;
 
@@ -20,14 +21,16 @@ export const removeInstancesByForeignKey = ({ viewar }) => (foreignKey) => {
   );
 };
 
-const NewView = ({ handleBack, isTracking, showQRMessage, startHandler, stopHandler, isRecording, cancelHandler }) =>
+const NewView = ({ handleBack, isTracking, showQRMessage, startHandler, stopHandler, isRecording, cancelHandler, showLabelModal, handleModalCancel }) =>
   <Container>
+    { showLabelModal && <InputModal required onOk={startHandler} onCancel={handleModalCancel}>Enter a label for the route</InputModal> }
     { isRecording && <Button onClick={stopHandler}>Stop</Button> }
     { isRecording && <Button onClick={cancelHandler}>Cancel</Button> }
   </Container>
 
 export default compose(
-  viewarConnect(),
+  withViewar(),
+  withState('showLabelModal', 'setShowLabelModal', false),
   withState('isRecording', 'setIsRecording', false),
   withState('label', 'setLabel', ''),
   withProps(({ viewar }) => ({
@@ -39,13 +42,19 @@ export default compose(
   }),
   withHandlers({
     addPoint: ({ viewar, activeCamera, ballModel, label }) => async () => {
-      const pose = await activeCamera.updatePose();
-      viewar.socketConnection.send({ messageType: 'newLiveRoute', data: { route: label, sender: viewar.socketConnection.socket.id } }); //signal for clients which entered show routes after starting
 
-      if (!lastPosition || distance(pose.position, lastPosition) > THRESHOLD_POINT_DISTANCE) {
-        viewar.socketConnection.send({ messageType: 'newLiveRoutePoint', data: { route: label, pose } });
-        lastPosition = pose.position;
-        return viewar.sceneManager.insertModel(ballModel, { pose } );
+      try{
+        const pose = await activeCamera.updatePose();
+
+        viewar.socketConnection.send({ messageType: 'newLiveRoute', data: { route: label, sender: viewar.socketConnection.socket.id } }); //signal for clients which entered show routes after starting
+
+        if (!lastPosition || distance(pose.position, lastPosition) > THRESHOLD_POINT_DISTANCE) {
+          viewar.socketConnection.send({ messageType: 'newLiveRoutePoint', data: { route: label, pose } });
+          lastPosition = pose.position;
+          return viewar.sceneManager.insertModel(ballModel, { pose } );
+        }
+      } catch(e) {
+        console.warn('creation of new Routes is not available in the Web-Version');
       }
     },
     handleBack: ({ removeInstancesByForeignKey, onBack}) => async (activeRoute, keep) => {
@@ -56,14 +65,14 @@ export default compose(
     }
   }),
   withHandlers({
-    startHandler: ({ viewar, addPoint, setIsRecording, setLabel, removeInstancesByForeignKey, handleBack }) => async () => {
+    handleModalCancel: ({ setShowLabelModal, handleBack }) => () => {
+      setShowLabelModal(false);
+      handleBack(null);
+    },
+    startHandler: ({ viewar, addPoint, setIsRecording, setLabel, removeInstancesByForeignKey, setShowLabelModal }) => async (label) => {
       setIsRecording(true);
+      setShowLabelModal(false);
 
-      const label = prompt('enter a label');
-
-      if (!label) {
-        return handleBack(null);
-      }
 
       await removeInstancesByForeignKey('ball');
 
@@ -96,15 +105,14 @@ export default compose(
   }),
   lifecycle({
     async componentDidMount() {
-      const { viewar, startHandler } = this.props;
+      const { viewar, setShowLabelModal } = this.props;
 
       getSceneState$ = viewar.socketConnection.getData('getSceneState').subscribe(async (room) => {
         const sceneState = await viewar.sceneManager.getSceneStateSafe();
         viewar.socketConnection.send({ room, messageType: 'newSceneState', data: sceneState });
       });
 
-      startHandler();
-
+      setShowLabelModal(true);
     },
     async componentWillUnmount() {
       interval && clearInterval(interval);

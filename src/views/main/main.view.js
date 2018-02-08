@@ -3,7 +3,7 @@ import {compose, withHandlers, pure, withState} from 'recompose';
 import { withRouter } from 'react-router-dom';
 import { Button } from '../../components/Button';
 
-import { viewarConnect } from '../../lib/viewar-react';
+import { withViewar } from '../../lib/viewar-react';
 
 import Routes from '../../views/routes/routes.view';
 import TrackingSystem from '../../containers/tracking-system/tracking-system';
@@ -15,17 +15,15 @@ import styles from './styles.css';
 const MainView = ({ handleBack, setActiveRoute, activeRoute, handleNewClick, toggleRoutes, initialized, setInitialized, showRoutes }) =>
   <Container>
     <TrackingSystem initializationStatusChanged={setInitialized} />
-    { initialized && <div><div className={styles.upperLeftBar}>
+    <div className={styles.upperLeftBar}>
       <Button onClick={handleBack}>Back</Button>
-      <Button onClick={toggleRoutes}>{ showRoutes ? 'Hide Routes' : 'Show routes' }</Button>
+      { initialized && <Button onClick={toggleRoutes}>{ showRoutes ? 'Hide Routes' : 'Show routes' }</Button> }
     </div>
-      { showRoutes && <Routes activeRouteChanged={setActiveRoute} activeRoute={activeRoute} showEditOptions={false} /> }
-      </div>
-    }
+      { initialized && showRoutes && <Routes activeRouteChanged={setActiveRoute} activeRoute={activeRoute} showEditOptions={false} /> }
   </Container>
 
 export default compose(
-  viewarConnect(),
+  withViewar(),
   withRouter,
   withState('activeRoute', 'setActiveRoute', null),
   withState('initialized', 'setInitialized', false),

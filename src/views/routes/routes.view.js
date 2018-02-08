@@ -7,7 +7,7 @@ import Button from '../../components/Button';
 
 import { removeInstancesByForeignKey } from "../new/new.view";
 
-import { viewarConnect } from '../../lib/viewar-react';
+import { withViewar } from '../../lib/viewar-react';
 
 import styles from './styles.css';
 
@@ -41,7 +41,7 @@ const Routes = ({ routes, handleRouteSelect, activeRoute, isAdmin, deleteRoute, 
     </List>;
 
 export default compose(
-  viewarConnect(),
+  withViewar(),
   withRouter,
   withState('routes', 'setRoutes', {}),
   withProps(({ viewar }) => ({

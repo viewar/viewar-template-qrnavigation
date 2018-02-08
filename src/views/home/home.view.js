@@ -4,11 +4,10 @@ import { withRouter } from 'react-router-dom';
 
 import styles from './styles.css';
 
-import { viewarConnect } from '../../lib/viewar-react';
+import { withViewar } from '../../lib/viewar-react';
 import { Button } from "../../components/Button";
 
 import { Container } from "../../components/FullScreenContainer";
-
 
 const HomeView = ({ isAdmin, handleStartClick, handleAdminClick }) =>
   <Container backgroundColor='#333333'>
@@ -20,7 +19,7 @@ const HomeView = ({ isAdmin, handleStartClick, handleAdminClick }) =>
   </Container>
 
 export default compose(
-  viewarConnect(),
+  withViewar(),
   withRouter,
   withProps(({ viewar }) => ({
     isAdmin: viewar.appConfig.uiConfig.isAdmin,

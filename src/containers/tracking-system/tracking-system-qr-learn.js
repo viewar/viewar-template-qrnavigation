@@ -7,47 +7,25 @@ import { Container } from "../../components/FullScreenContainer";
 
 import styles from './styles.css';
 
-
-//HELPER FUNCTIONS//
-
-
-const concatObjValues = (obj) => Object.values(obj).join('');
-
-const isObjectInArr = (objArr, obj) => {
-  const concatenated = concatObjValues(obj);
-  return objArr.map(concatObjValues).find(str => str === concatenated);
-};
-
-const getUniqueTargetsByPosition = (targets) => {
-  return targets.filter(target => target.pose)
-    .reduce((acc, target) => {
-      const positions = acc.map(({ pose }) => pose.position);
-      if( isObjectInArr(positions, target.pose.position) ) {
-        return acc;
-      }
-      else {
-        acc.push(target);
-        return acc;
-      }
-    }, []);
-};
-
+let interval;
 
 ///////////////
 
-const TrackingSystem = ({ isTracking, showQRMessage, initialized }) =>
+const TrackingSystemQRLearn = ({ isTracking, initialized, showInstructions }) =>
     <span>{ !initialized ? <Container>
-        { !isTracking && <div className={styles.overlay}> Please do a few sidesteps </div> }
-        { showQRMessage && <div className={styles.overlay}> Please film the QR-Code </div> }
-    </Container> : <div></div> }</span>
+        { !isTracking && <div className={styles.overlay}>Please do a few sidesteps</div> }
+        { isTracking && showInstructions && <div className={styles.overlay}>Start scanning QR-Codes</div> }
+    </Container> : <div></div> }</span>;
 
 export default  compose(
   withViewar(),
+  withState('showInstructions', 'setShowInstructions', false),
   withState('showQRMessage', 'setShowQRMessage', false),
   withState('isTracking', 'setIsTracking', false),
   withState('initialized', 'setInitialized', false),
   defaultProps({
-    initializationStatusChanged: () => {}
+    initializationStatusChanged: () => {},
+    onNewQR: () => {}
   }),
   withProps(({ viewar }) => ({
     tracker: Object.values(viewar.trackers)[0],
@@ -59,10 +37,11 @@ export default  compose(
        viewar,
        targetModel,
        setIsTracking,
-       setShowQRMessage,
+       setShowInstructions,
        setInitialized,
        initialized,
-       initializationStatusChanged
+       initializationStatusChanged,
+       onScan
     }) => async ({ tracking, targetName }) => {
 
       // for mock
@@ -70,42 +49,47 @@ export default  compose(
         setInitialized(true);
         initializationStatusChanged(true);
         setIsTracking(true);
-        setShowQRMessage(false);
         return;
       }
 
       if (targetName.includes('planeTarget')) {
         setIsTracking(tracking);
         setInitialized(false);
-        initializationStatusChanged(false);
-        if (tracking) setShowQRMessage(true);
-      }
-
-      if (tracking && !initialized && !targetName.includes('planeTarget')) {
-        setShowQRMessage(false);
-        setInitialized(true);
         initializationStatusChanged(true);
+        if (tracking) {
+          setShowInstructions(true);
+          setTimeout(() => setShowInstructions(false), 3000);
 
-        const targets = getUniqueTargetsByPosition(viewar.appConfig.trackerList[0].targets);
+          interval = setInterval(async() => {
+            //TODO check for new QRcode;
+            const QRCodes = await viewar.coreInterface.call('customTrackingCommand', 'ARKit', 'getLearnedTargets', '');
+            const scannedQRCodes = QRCodes.filter(QRCode => {
+              const { x, y, z } = QRCode.pose.position;
+              return x !== 0 && y !== 0 && z !== 0;
+            })
+            onScan(scannedQRCodes);
+          }, 5000);
 
-        return Promise.all(targets.map(({ pose }) => viewar.sceneManager.insertModel(targetModel, { pose }) ));
+        }
       }
-    }
+    },
   }),
   lifecycle({
     async componentDidMount() {
       const { viewar, tracker, handleTracking } = this.props;
 
-      await viewar.cameras.augmentedRealityCamera.activate();
+      await viewar.sceneManager.clearScene();
 
-      await tracker.activate();
+      await viewar.cameras.augmentedRealityCamera.activate();
+      await tracker.reset();
       tracker.on('trackingStatusChanged', handleTracking);
     },
     async componentWillUnmount() {
       const { tracker, handleTracking } = this.props;
 
       tracker && tracker.off('trackingStatusChanged', handleTracking);
+      clearInterval(interval);
     },
   }),
   pure,
-)(TrackingSystem);
+)(TrackingSystemQRLearn);

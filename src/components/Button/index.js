@@ -3,9 +3,11 @@ import styles from './styles.css';
 
 import classNames from 'classnames';
 
-export const Button = ({ big, small, round,upperRight, bottomLeft, children, onClick }) =>
-  <div onClick={onClick} className={classNames(
+export const Button = ({ disabled, className, big, small, round,upperRight, bottomLeft, children, onClick }) =>
+  <div onClick={(e) => !disabled && onClick(e)} className={classNames(
     styles.button,
+    className,
+    disabled && styles.disabled,
     big && styles.big,
     small && styles.small,
     round && styles.round,

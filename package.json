@@ -1,11 +1,11 @@
 {
-  "name": "appfiles",
+  "name": "qrnavigation",
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/matthiasklan/viewar-react-boilerplate.git"
+    "url": "git://github.com/viewar/viewar-template-qrnavigation.git"
   },
   "scripts": {
     "watch": "webpack --env production_debug --watch --config ./config/webpack.config.js & viewar-cli zip --watch",
@@ -18,33 +18,22 @@
     "build:debug": "webpack --env production_debug --config ./config/webpack.config.js  && viewar-cli zip",
     "start": "webpack-dev-server --hot --env development --open --config ./config/webpack.config.js",
     "start:mock": "webpack-dev-server --hot --env development_mock  --open --config ./config/webpack.config.js",
-    "start:remote": "npm run start:mock",
-    "test": "babel-tape-runner \"./src/**/*.test.js\""
+    "postinstall": "npm install -g viewar-cli"
   },
-  "author": "Matthias Klan for ViewAR GmbH",
+  "author": "Matthias Klan <mk@viewar.com>",
   "license": "ISC",
   "dependencies": {
-    "async-reactor": "^1.2.1",
     "classnames": "^2.2.5",
-    "create-react-class": "^15.6.0",
-    "immutable": "^3.8.1",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "react-redux": "^5.0.5",
     "react-router-dom": "^4.2.2",
     "react-tap-event-plugin": "^2.0.1",
     "recompose": "^0.26.0",
-    "redux": "^3.7.1",
-    "redux-devtools-extension": "^2.13.2",
-    "redux-observable": "^0.14.1",
-    "redux-thunk": "^2.2.0",
     "rxjs": "^5.4.2",
     "socket.io-client": "^2.0.4",
-    "styled-components": "^2.1.1",
-    "viewar-api": "^0.10.22",
-    "viewar-core": "^5.4.1",
-    "viewar-room-planner": "^0.1.0"
+    "viewar-api": "file:./src/lib/patched-viewar-api",
+    "viewar-core": "^5.4.1"
   },
   "devDependencies": {
     "axios": "^0.16.2",
