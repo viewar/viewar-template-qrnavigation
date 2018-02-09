@@ -1,13 +1,15 @@
+.listWrapper {
+    padding-top: 75px;
+    width: 300px;
+    background-color: rgba(51, 51, 51, .86);
+}
+
 .list {
     pointer-events: all;
-    width: 300px;
-    padding-top: 100px;
-    background-color: rgba(51,51,51,0.86);
-    height: calc(100vh - 100px);
+    height: calc(100vh - 75px);
     overflow: auto;
     -webkit-overflow-scrolling: touch;
 }
-
 
 .listItem {
     display: flex;

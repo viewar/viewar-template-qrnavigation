@@ -1,5 +1,5 @@
 {
-  "name": "qrnavigation",
+  "name": "qr-navigation",
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
@@ -8,17 +8,8 @@
     "url": "git://github.com/viewar/viewar-template-qrnavigation.git"
   },
   "scripts": {
-    "watch": "webpack --env production_debug --watch --config ./config/webpack.config.js & viewar-cli zip --watch",
-    "deploy": "npm run bundle && npm run quick-deploy",
-    "bundle": "npm run build",
-    "build": "webpack --env production --config ./config/webpack.config.js && viewar-cli zip",
-    "quick-deploy": "viewar-cli deploy",
-    "deploy:debug": "npm run bundle:debug && npm run quick-deploy",
-    "bundle:debug": "npm run build:debug && viewar-cli zip",
-    "build:debug": "webpack --env production_debug --config ./config/webpack.config.js  && viewar-cli zip",
     "start": "webpack-dev-server --hot --env development --open --config ./config/webpack.config.js",
-    "start:mock": "webpack-dev-server --hot --env development_mock  --open --config ./config/webpack.config.js",
-    "postinstall": "npm install -g viewar-cli"
+    "start:mock": "webpack-dev-server --hot --env development_mock  --open --config ./config/webpack.config.js"
   },
   "author": "Matthias Klan <mk@viewar.com>",
   "license": "ISC",

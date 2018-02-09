@@ -5,7 +5,7 @@ import { compose, withProps, withState, withHandlers, pure, lifecycle } from 're
 import { withRouter } from 'react-router-dom';
 import Button from '../../components/Button';
 
-import { removeInstancesByForeignKey } from "../new/new.view";
+import { removeInstancesByForeignKey } from "../../views/new/new.view";
 
 import { withViewar } from '../../lib/viewar-react';
 
@@ -20,6 +20,7 @@ const ButtonBar = ({ children }) => <div className={styles.buttonBar}>{children}
 const Label = ({ children, onClick }) => <div onClick={onClick} className={styles.label}>{children}</div>;
 
 const Routes = ({ routes, handleRouteSelect, activeRoute, isAdmin, deleteRoute, editRouteName, showEditOptions }) =>
+    <div className={styles.listWrapper}>
     <List>
       { Object.entries(routes)
         .filter(([label, { canceled }]) => !canceled)
@@ -38,7 +39,8 @@ const Routes = ({ routes, handleRouteSelect, activeRoute, isAdmin, deleteRoute, 
           </ListItem>
         )
       }
-    </List>;
+    </List>
+    </div>;
 
 export default compose(
   withViewar(),

@@ -5,7 +5,7 @@ import { Button } from '../../components/Button';
 
 import { withViewar } from '../../lib/viewar-react';
 
-import Routes from '../../views/routes/routes.view';
+import Routes from '../../containers/routes/routes';
 import TrackingSystem from '../../containers/tracking-system/tracking-system';
 import { Container } from "../../components/FullScreenContainer";
 import { removeInstancesByForeignKey } from "../new/new.view";
