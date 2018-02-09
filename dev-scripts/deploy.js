@@ -1,9 +1,9 @@
 const fs = require('fs');
 const request = require('request');
-const config = require('../.viewar-config');
+//const config = require('../.viewar-config');
 
 
-uploadBundle(config.token, '../bundle/dev/bundle.zip');
+uploadBundle('uy9rp92g8j-dev_kgn5rq3b759', '../bundle/dev/bundle.zip');
 
 function uploadBundle(token, path) {
 

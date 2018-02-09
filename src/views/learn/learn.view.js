@@ -10,12 +10,14 @@ import { Container } from "../../components/FullScreenContainer";
 import { InfoModal, InputModal } from "../../containers/modal/modal";
 import { removeInstancesByForeignKey } from "../new/new.view";
 
+import axios from 'axios';
+
 import styles from './styles.css';
 
-const LearnView = ({ error, setError, showPasswordModal, setShowPasswordModal, QRCodes, handleUpload, handleBack, initialized, setInitialized, handleNewQRCodes }) =>
+const LearnView = ({ infoMessage, setInfoMessage, showPasswordModal, setShowPasswordModal, QRCodes, handleUpload, handleBack, initialized, setInitialized, handleNewQRCodes }) =>
   <Container>
     { showPasswordModal && <InputModal required type="password" onOk={handleUpload} onCancel={() => setShowPasswordModal(false)}>Enter your account password</InputModal> }
-    { error && <InfoModal onOk={() => setError(null)}>{ error }</InfoModal> }
+    { infoMessage && <InfoModal onOk={() => setInfoMessage(null)}>{ infoMessage }</InfoModal> }
     <div className={styles.upperLeftBar}>
       <Button onClick={handleBack}>Back</Button>
     </div>
@@ -35,7 +37,7 @@ const LearnView = ({ error, setError, showPasswordModal, setShowPasswordModal, Q
 export default compose(
   withViewar(),
   withRouter,
-  withState('error', 'setError', null),
+  withState('infoMessage', 'setInfoMessage', null),
   withState('showPasswordModal', 'setShowPasswordModal', false),
   withState('initialized', 'setInitialized', false),
   withState('QRCodes', 'setQRCodes', []),
@@ -49,10 +51,24 @@ export default compose(
     handleNewQRCodes: ({ setQRCodes, QRCodes }) => (newQRCodes) => {
       setQRCodes(newQRCodes);
     },
-    handleUpload: ({ QRCodes, setError, setShowPasswordModal }) => (password) => {
+    handleUpload: ({ QRCodes, setInfoMessage, setShowPasswordModal, viewar }) => async (password) => {
       setShowPasswordModal(false);
-      //TODO talk to API with given password
-      setError('Password is wrong');
+
+      const { appId, version } = viewar.appConfig;
+
+      const payload = new FormData();
+      payload.append('password', password);
+      payload.append('QRCodes', QRCodes);
+      payload.append('appId', appId);
+      payload.append('version', version.app);
+
+      const response = await axios.post(
+        'http://dev2.viewar.com/templates/custom/qrnavigation/action:saveQRCodes/',
+        payload,
+        { headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        });
+
+      setInfoMessage(response.data.message);
     }
   }),
   pure,

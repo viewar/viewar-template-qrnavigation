@@ -70,7 +70,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 141);
+/******/ 	return __webpack_require__(__webpack_require__.s = 139);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -5700,7 +5700,7 @@ module.exports = ret;
 
 },{"./es5":13}]},{},[4])(4)
 });                    ;if (typeof window !== 'undefined' && window !== null) {                               window.P = window.Promise;                                                     } else if (typeof self !== 'undefined' && self !== null) {                             self.P = self.Promise;                                                         }
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(55), __webpack_require__(32), __webpack_require__(142).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(55), __webpack_require__(32), __webpack_require__(140).setImmediate))
 
 /***/ }),
 /* 1 */
@@ -5752,7 +5752,7 @@ var _assign2 = __webpack_require__(1);
 
 var _assign3 = _interopRequireDefault(_assign2);
 
-var _fail = __webpack_require__(235);
+var _fail = __webpack_require__(233);
 
 var _fail2 = _interopRequireDefault(_fail);
 
@@ -5842,7 +5842,7 @@ var _toString = __webpack_require__(33);
 
 var _toString2 = _interopRequireDefault(_toString);
 
-var _castArray = __webpack_require__(213);
+var _castArray = __webpack_require__(211);
 
 var _castArray2 = _interopRequireDefault(_castArray);
 
@@ -5854,9 +5854,9 @@ var _utils = __webpack_require__(6);
 
 var _constants = __webpack_require__(4);
 
-var _resolveAdapter = __webpack_require__(214);
+var _resolveAdapter = __webpack_require__(212);
 
-var _uwpInterface = __webpack_require__(221);
+var _uwpInterface = __webpack_require__(219);
 
 var _global = __webpack_require__(47);
 
@@ -6086,85 +6086,122 @@ var ASYNC_CALLS = exports.ASYNC_CALLS = ['prepareAppData', 'prepareModelResource
 // NEW CONSTANTS
 //======================================================================================================================
 
+/**
+ * @typedef {Object} ContainerInsertionParams
+ * @property {?Container} parent
+ * @property {?Pose} position
+ * @property {?Interaction} interaction
+ * @property {?boolean} visible
+ * @property {?string} type
+ */
+
+/**
+ * @typedef {Object} ModelInsertionParams
+ * @property {?Container} parent
+ * @property {?Pose} position
+ * @property {?Interaction} interaction
+ * @property {?boolean} visible
+ */
+
+/**
+ * @typedef {Object} Vector3d
+ * @property {!number} x
+ * @property {!number} y
+ * @property {!number} z
+ */
+
+/**
+ * @typedef {Object} Quaternion
+ * @property {!number} w
+ * @property {!number} x
+ * @property {!number} y
+ * @property {!number} z
+ */
+
+/**
+ * @typedef {Object} ControllableCameraPose
+ * @property {?Vector3d} position
+ * @property {?Quaternion} orientation
+ */
+
+/**
+ * @typedef {Object} PerspectiveCameraPose
+ * @property {?Vector3d} position
+ * @property {?Vector3d} lookAt
+ */
+
+/**
+ * @typedef {Object} Pose
+ * @property {?Vector3d} position
+ * @property {?Quaternion} orientation
+ * @property {?Vector3d} scale
+ */
+
+/**
+ * @typedef {Object} Interaction
+ * @property {?string} manipulationPlane
+ * @property {?boolean} translation
+ * @property {?boolean} rotation
+ * @property {?boolean} scaling
+ */
+
+/**
+ * @private
+ */
+var DEFAULT_API_CONFIG = exports.DEFAULT_API_CONFIG = {
+  logToScreen: false,
+  debug: false,
+  checkForUpdate: false,
+  waitForDebugger: false,
+  exportToGlobal: true,
+  logCoreCalls: true
+};
+
 var HTTPS_PROXY_URL = exports.HTTPS_PROXY_URL = 'https://www.viewar.com/proxy2.php?url=';
+var DEFAULT_SYNC_URL = exports.DEFAULT_SYNC_URL = 'https://api.viewar.com/sync/sync';
 
 var MEDIUM_MEMORY_LIMIT = exports.MEDIUM_MEMORY_LIMIT = 1.5 * 1024 * 1024 * 1024;
 var LOW_MEMORY_LIMIT = exports.LOW_MEMORY_LIMIT = 1 * 1024 * 1024 * 1024;
 
 var REFERENCE_POSE_SCALE_FACTOR = exports.REFERENCE_POSE_SCALE_FACTOR = 10;
 
-var DEFAULT_SYNC = exports.DEFAULT_SYNC = {
-  pollInterval: 33,
-  send: true,
-  receive: true
-};
-
-var DEFAULT_SYNC_URL = exports.DEFAULT_SYNC_URL = 'https://api.viewar.com/sync/sync';
-
-var DEFAULT_API_CONFIG = exports.DEFAULT_API_CONFIG = {
-  logToScreen: false,
-  debug: false,
-  checkForUpdate: false,
-  waitForDebugger: false,
-  appId: 'com.viewar.demo',
-  exportToGlobal: true,
-  logCoreCalls: false
-};
-
 var PATH_SEPARATOR = exports.PATH_SEPARATOR = '::';
 
-var KEY_SEPARATOR = exports.KEY_SEPARATOR = '_';
-
 /**
- * @typedef Interaction
- * @type {object}
- * @property {string} manipulationPlane
- * @property {boolean} translation
- * @property {boolean} rotation
- * @property {boolean} scaling
+ * @type {Interaction}
  */
 var DEFAULT_INTERACTION = exports.DEFAULT_INTERACTION = {
   manipulationPlane: 'horizontal',
   translation: true,
   rotation: true,
   scaling: false
-};
 
-/**
- * @typedef Vector3d
- * @type {object}
- * @property {number} x
- * @property {number} y
- * @property {number} z
- */
-var DEFAULT_POSITION = exports.DEFAULT_POSITION = { x: 0, y: 0, z: 0 };
+  /**
+   * @type {Vector3d}
+   */
+};var DEFAULT_POSITION = exports.DEFAULT_POSITION = { x: 0, y: 0, z: 0
 
-/**
- * @typedef Quaternion
- * @type {object}
- * @property {number} w
- * @property {number} x
- * @property {number} y
- * @property {number} z
- */
-var DEFAULT_ORIENTATION = exports.DEFAULT_ORIENTATION = { w: 1, x: 0, y: 0, z: 0 };
+  /**
+   * @type {Quaternion}
+   */
+};var DEFAULT_ORIENTATION = exports.DEFAULT_ORIENTATION = { w: 1, x: 0, y: 0, z: 0
 
-var DEFAULT_SCALE = exports.DEFAULT_SCALE = { x: 1, y: 1, z: 1 };
+  /**
+   * @type {Vector3d}
+   */
+};var DEFAULT_SCALE = exports.DEFAULT_SCALE = { x: 1, y: 1, z: 1
 
-/**
- * @typedef Pose
- * @type {object}
- * @property {Vector3d} position
- * @property {Quaternion} orientation
- * @property {Vector3d} scale
- */
-var DEFAULT_POSE = exports.DEFAULT_POSE = {
+  /**
+   * @type {Pose}
+   */
+};var DEFAULT_POSE = exports.DEFAULT_POSE = {
   position: DEFAULT_POSITION,
   orientation: DEFAULT_ORIENTATION,
   scale: DEFAULT_SCALE
-};
-
-var DEFAULT_VISIBLE = exports.DEFAULT_VISIBLE = true;
+  /**
+   * @type {boolean}
+   */
+};var DEFAULT_VISIBLE = exports.DEFAULT_VISIBLE = true;
 
 /**
  * @typedef HighlightInfo
@@ -6177,61 +6214,57 @@ var DEFAULT_HIGHLIGHT_INFO = exports.DEFAULT_HIGHLIGHT_INFO = {
   visible: false
 
   /**
-   * @typedef ContainerInsertionParams
-   * @type {object}
-   * @property {Pose} pose
-   * @property {Interaction} interaction
-   * @property {boolean} visible
-   * @property {string} type
+   * @type {ControllableCameraPose}
    */
+};var DEFAULT_AR_CAMERA_POSE = exports.DEFAULT_AR_CAMERA_POSE = {
+  position: DEFAULT_POSITION,
+  orientation: DEFAULT_ORIENTATION
 
   /**
-   * @typedef ModelInsertionParams
-   * @type {object}
-   * @property {Pose} pose
-   * @property {Interaction} interaction
-   * @property {boolean} visible
+   * @type {ControllableCameraPose}
    */
+};var DEFAULT_VR_CAMERA_POSE = exports.DEFAULT_VR_CAMERA_POSE = {
+  position: DEFAULT_POSITION,
+  orientation: DEFAULT_ORIENTATION
 
-};var AR_CAMERA_DEFAULTS = exports.AR_CAMERA_DEFAULTS = {
+  /**
+   * @type {PerspectiveCameraPose}
+   */
+};var DEFAULT_PERSPECTIVE_CAMERA_POSE = exports.DEFAULT_PERSPECTIVE_CAMERA_POSE = {
+  position: { x: 0, y: 4000, z: 4000 },
+  lookAt: { x: 0, y: 0, z: 0 }
+};
+
+var AR_CAMERA_DEFAULTS = exports.AR_CAMERA_DEFAULTS = {
   name: 'AugmentedRealityStageCamera',
   stageName: 'AR',
   poseUpdateCall: 'getAugmentedRealityCameraPose',
-  pose: {
-    position: { x: 0, y: 0, z: 0 },
-    orientation: { w: 1, x: 0, y: 0, z: 0 }
-  }
+  pose: DEFAULT_AR_CAMERA_POSE
 };
 
 var VR_CAMERA_DEFAULTS = exports.VR_CAMERA_DEFAULTS = {
   name: 'ExperienceStageCamera',
   stageName: 'Walk',
   poseUpdateCall: 'getWalkCameraPose',
-  pose: {
-    position: { x: 0, y: 0, z: 0 },
-    orientation: { w: 1, x: 0, y: 0, z: 0 }
-  }
+  pose: DEFAULT_VR_CAMERA_POSE
 };
 
 var PERSPECTIVE_CAMERA_DEFAULTS = exports.PERSPECTIVE_CAMERA_DEFAULTS = {
   name: 'GridStageCamera',
   stageName: 'Grid',
   poseUpdateCall: 'getGridCameraPose',
-  pose: {
-    position: { x: 0, y: 4000, z: 4000 },
-    lookAt: { x: 0, y: 0, z: 0 }
-  },
+  pose: DEFAULT_PERSPECTIVE_CAMERA_POSE,
   interaction: {
-    "primaryDrag": "rotationAroundPivot",
-    "secondaryDrag": "translationScreenSpace",
-    "rotate": "disabled",
-    "pinch": "translationDolly"
+    'primaryDrag': 'rotationAroundPivot',
+    'secondaryDrag': 'translationScreenSpace',
+    'rotate': 'disabled',
+    'pinch': 'translationDolly'
   }
 };
 
 var MATERIAL_MODEL_FOREIGN_KEY = exports.MATERIAL_MODEL_FOREIGN_KEY = 'floor_wall_dummy';
 var MATERIAL_MODEL_FALLBACK_ID = exports.MATERIAL_MODEL_FALLBACK_ID = '24068';
-var WALL_OBJECT_MODEL_FALLBACK_IDS = exports.WALL_OBJECT_MODEL_FALLBACK_IDS = ['39919', '39923', '39922', '39921', '39920'];
+var WALL_OBJECT_MODEL_FALLBACK_IDS = exports.WALL_OBJECT_MODEL_FALLBACK_IDS = ['39919', '39923', '39922', '50402', '50419', '50417', '50418'];
 
 var SCENE_ID = exports.SCENE_ID = 'DefaultLayer';
 
@@ -6306,7 +6339,7 @@ var _isString = __webpack_require__(88);
 
 var _isString2 = _interopRequireDefault(_isString);
 
-var _omit = __webpack_require__(148);
+var _omit = __webpack_require__(146);
 
 var _omit2 = _interopRequireDefault(_omit);
 
@@ -6871,7 +6904,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _namespace = __webpack_require__(236);
+var _namespace = __webpack_require__(234);
 
 var _namespace2 = _interopRequireDefault(_namespace);
 
@@ -6987,8 +7020,8 @@ module.exports = arrayMap;
 /***/ (function(module, exports, __webpack_require__) {
 
 var Symbol = __webpack_require__(20),
-    getRawTag = __webpack_require__(146),
-    objectToString = __webpack_require__(147);
+    getRawTag = __webpack_require__(144),
+    objectToString = __webpack_require__(145);
 
 /** `Object#toString` result references. */
 var nullTag = '[object Null]',
@@ -7020,8 +7053,8 @@ module.exports = baseGetTag;
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsNative = __webpack_require__(159),
-    getValue = __webpack_require__(162);
+var baseIsNative = __webpack_require__(157),
+    getValue = __webpack_require__(160);
 
 /**
  * Gets the native function at `key` of `object`.
@@ -7218,7 +7251,7 @@ module.exports = isArrayLike;
 
 var isArray = __webpack_require__(5),
     isKey = __webpack_require__(71),
-    stringToPath = __webpack_require__(202),
+    stringToPath = __webpack_require__(200),
     toString = __webpack_require__(33);
 
 /**
@@ -7354,11 +7387,11 @@ var _compose = __webpack_require__(2);
 
 var _parseDescription = __webpack_require__(119);
 
-var _model = __webpack_require__(238);
+var _model = __webpack_require__(236);
 
 var _model2 = _interopRequireDefault(_model);
 
-var _category = __webpack_require__(311);
+var _category = __webpack_require__(309);
 
 var _category2 = _interopRequireDefault(_category);
 
@@ -7846,7 +7879,7 @@ exports.default = modelManager;
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayLikeKeys = __webpack_require__(92),
-    baseKeys = __webpack_require__(181),
+    baseKeys = __webpack_require__(179),
     isArrayLike = __webpack_require__(22);
 
 /**
@@ -7889,7 +7922,7 @@ module.exports = keys;
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayLikeKeys = __webpack_require__(92),
-    baseKeysIn = __webpack_require__(184),
+    baseKeysIn = __webpack_require__(182),
     isArrayLike = __webpack_require__(22);
 
 /**
@@ -7941,7 +7974,7 @@ var _global = __webpack_require__(47);
 
 var _global2 = _interopRequireDefault(_global);
 
-var _domLogger = __webpack_require__(223);
+var _domLogger = __webpack_require__(221);
 
 var _domLogger2 = _interopRequireDefault(_domLogger);
 
@@ -8158,11 +8191,11 @@ module.exports = isSymbol;
 /***/ (function(module, exports, __webpack_require__) {
 
 var ListCache = __webpack_require__(36),
-    stackClear = __webpack_require__(154),
-    stackDelete = __webpack_require__(155),
-    stackGet = __webpack_require__(156),
-    stackHas = __webpack_require__(157),
-    stackSet = __webpack_require__(158);
+    stackClear = __webpack_require__(152),
+    stackDelete = __webpack_require__(153),
+    stackGet = __webpack_require__(154),
+    stackHas = __webpack_require__(155),
+    stackSet = __webpack_require__(156);
 
 /**
  * Creates a stack cache object to store key-value pairs.
@@ -8190,11 +8223,11 @@ module.exports = Stack;
 /* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var listCacheClear = __webpack_require__(149),
-    listCacheDelete = __webpack_require__(150),
-    listCacheGet = __webpack_require__(151),
-    listCacheHas = __webpack_require__(152),
-    listCacheSet = __webpack_require__(153);
+var listCacheClear = __webpack_require__(147),
+    listCacheDelete = __webpack_require__(148),
+    listCacheGet = __webpack_require__(149),
+    listCacheHas = __webpack_require__(150),
+    listCacheSet = __webpack_require__(151);
 
 /**
  * Creates an list cache object.
@@ -8310,7 +8343,7 @@ module.exports = nativeCreate;
 /* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isKeyable = __webpack_require__(171);
+var isKeyable = __webpack_require__(169);
 
 /**
  * Gets the data for `map`.
@@ -8334,7 +8367,7 @@ module.exports = getMapData;
 /* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsArguments = __webpack_require__(177),
+var baseIsArguments = __webpack_require__(175),
     isObjectLike = __webpack_require__(13);
 
 /** Used for built-in method references. */
@@ -8377,7 +8410,7 @@ module.exports = isArguments;
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(9),
-    stubFalse = __webpack_require__(178);
+    stubFalse = __webpack_require__(176);
 
 /** Detect free variable `exports`. */
 var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
@@ -8504,7 +8537,7 @@ module.exports = baseGet;
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayPush = __webpack_require__(68),
-    isFlattenable = __webpack_require__(209);
+    isFlattenable = __webpack_require__(207);
 
 /**
  * The base implementation of `_.flatten` with support for restricting flattening.
@@ -8561,8 +8594,8 @@ exports.default = typeof window !== 'undefined' ? window : typeof global !== 'un
 /***/ (function(module, exports, __webpack_require__) {
 
 var MapCache = __webpack_require__(58),
-    setCacheAdd = __webpack_require__(226),
-    setCacheHas = __webpack_require__(227);
+    setCacheAdd = __webpack_require__(224),
+    setCacheHas = __webpack_require__(225);
 
 /**
  *
@@ -8613,9 +8646,9 @@ module.exports = cacheHas;
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = __webpack_require__(112),
-    assignInWith = __webpack_require__(232),
+    assignInWith = __webpack_require__(230),
     baseRest = __webpack_require__(26),
-    customDefaultsAssignIn = __webpack_require__(234);
+    customDefaultsAssignIn = __webpack_require__(232);
 
 /**
  * Assigns own and inherited enumerable string keyed properties of source
@@ -10748,11 +10781,11 @@ module.exports = Map;
 /* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var mapCacheClear = __webpack_require__(163),
-    mapCacheDelete = __webpack_require__(170),
-    mapCacheGet = __webpack_require__(172),
-    mapCacheHas = __webpack_require__(173),
-    mapCacheSet = __webpack_require__(174);
+var mapCacheClear = __webpack_require__(161),
+    mapCacheDelete = __webpack_require__(168),
+    mapCacheGet = __webpack_require__(170),
+    mapCacheHas = __webpack_require__(171),
+    mapCacheSet = __webpack_require__(172);
 
 /**
  * Creates a map cache object to store key-value pairs.
@@ -10879,9 +10912,9 @@ module.exports = function(module) {
 /* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsTypedArray = __webpack_require__(179),
+var baseIsTypedArray = __webpack_require__(177),
     baseUnary = __webpack_require__(64),
-    nodeUtil = __webpack_require__(180);
+    nodeUtil = __webpack_require__(178);
 
 /* Node.js helper references. */
 var nodeIsTypedArray = nodeUtil && nodeUtil.isTypedArray;
@@ -11270,7 +11303,7 @@ exports.default = {
 /* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsEqualDeep = __webpack_require__(225),
+var baseIsEqualDeep = __webpack_require__(223),
     isObjectLike = __webpack_require__(13);
 
 /**
@@ -11386,9 +11419,9 @@ module.exports = arrayIncludes;
 /* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseFindIndex = __webpack_require__(243),
-    baseIsNaN = __webpack_require__(244),
-    strictIndexOf = __webpack_require__(245);
+var baseFindIndex = __webpack_require__(241),
+    baseIsNaN = __webpack_require__(242),
+    strictIndexOf = __webpack_require__(243);
 
 /**
  * The base implementation of `_.indexOf` without `fromIndex` bounds checks.
@@ -11557,7 +11590,7 @@ var _appConfig = __webpack_require__(19);
 
 var _appConfig2 = _interopRequireDefault(_appConfig);
 
-var _http = __webpack_require__(135);
+var _http = __webpack_require__(84);
 
 var _http2 = _interopRequireDefault(_http);
 
@@ -11593,7 +11626,7 @@ function createCloudStorage(specification) {
 
   var provider = {
     get storageKey() {
-      return storageKey;
+      return storageKey || appConfig.storageKey;
     },
     set storageKey(key) {
       storageKey = key;
@@ -11731,452 +11764,78 @@ function createAuthenticationManager() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.ArCamera = undefined;
 
 var _bluebird = __webpack_require__(0);
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
 
-var _cameraBase = __webpack_require__(85);
-
-var _cameraBase2 = _interopRequireDefault(_cameraBase);
-
 var _constants = __webpack_require__(4);
-
-var _compose = __webpack_require__(2);
-
-var _clone = __webpack_require__(11);
-
-var _clone2 = _interopRequireDefault(_clone);
-
-var _assign = __webpack_require__(1);
-
-var _assign2 = _interopRequireDefault(_assign);
-
-var _freezeFrame = __webpack_require__(315);
-
-var _freezeFrame2 = _interopRequireDefault(_freezeFrame);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-var STATE_LIVE = Symbol();
-var STATE_FROZEN = Symbol();
-var STATE_FRAME_VISIBLE = Symbol();
-
-/**
- * Uses arCamera feed together with device sensors and various trackers to provide an AR experience for the user.
- *
- * @interface ArCamera
- * @extends Camera
- */
-/**
- * arCamera pose
- * @member {ControllableCameraPose} ArCamera#pose
- */
-
-/**
- * @private
- * @param {object} props
- * @param {ArCamera} arCamera
- */
-var ArCamera = exports.ArCamera = function ArCamera(props, arCamera) {
-
-  //======================================================================================================================
-
-  var init = function () {
-    var _ref = (0, _bluebird.method)(function () {
-      available = appConfig.stageList.includes(stageName);
-      if (appConfig.stageList[0] === stageName) {
-        cameraController.activeCamera = arCamera;
-      }
-      freezeFramesAvailable = appConfig.stageList.includes(stageName);
-      if (freezeFramesAvailable) {
-        freezeFrames = appConfig.freezeFrameInfo.map(function (info) {
-          return FreezeFrame(info);
-        });
-      }
-    });
-
-    return function init() {
-      return _ref.apply(this, arguments);
-    };
-  }();
-
-  var activate = function () {
-    var _ref2 = (0, _bluebird.coroutine)( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-      return regeneratorRuntime.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              if (!available) {
-                _context.next = 11;
-                break;
-              }
-
-              if (!(state === STATE_FRAME_VISIBLE && activeFreezeFrame)) {
-                _context.next = 6;
-                break;
-              }
-
-              _context.next = 4;
-              return showFreezeFrame(activeFreezeFrame);
-
-            case 4:
-              _context.next = 8;
-              break;
-
-            case 6:
-              _context.next = 8;
-              return coreInterface.call('activateStage', stageName);
-
-            case 8:
-
-              cameraController.activeCamera = arCamera;
-              _context.next = 12;
-              break;
-
-            case 11:
-              throw new Error('ViewAR API: Error! arCamera is not available! Check your app configuration!');
-
-            case 12:
-            case 'end':
-              return _context.stop();
-          }
-        }
-      }, _callee, this);
-    }));
-
-    return function activate() {
-      return _ref2.apply(this, arguments);
-    };
-  }();
-
-  /**
-   * Freezes arCamera feed and the scene.
-   * @async
-   * @function ArCamera#freeze
-   * @returns {Promise}
-   */
-
-
-  /**
-   * Unfreezes arCamera feed and the scene.
-   * @async
-   * @function ArCamera#unfreeze
-   * @returns {Promise}
-   */
-  var unfreeze = function () {
-    var _ref3 = (0, _bluebird.coroutine)( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-      return regeneratorRuntime.wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              _context2.t0 = state;
-              _context2.next = _context2.t0 === STATE_FRAME_VISIBLE ? 3 : 6;
-              break;
-
-            case 3:
-              _context2.next = 5;
-              return coreInterface.call('activateStage', stageName);
-
-            case 5:
-              return _context2.abrupt('break', 6);
-
-            case 6:
-              _context2.next = 8;
-              return coreInterface.call('unfreeze');
-
-            case 8:
-              state = STATE_LIVE;
-
-            case 9:
-            case 'end':
-              return _context2.stop();
-          }
-        }
-      }, _callee2, this);
-    }));
-
-    return function unfreeze() {
-      return _ref3.apply(this, arguments);
-    };
-  }();
-
-  /**
-   * Freezes the arCamera feed and displays the given freezeFrame
-   * @async
-   * @function ArCamera#showFreezeFrame
-   * @param {FreezeFrame} freezeFrame
-   * @returns {Promise}
-   */
-
-
-  var showFreezeFrame = function () {
-    var _ref4 = (0, _bluebird.coroutine)( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(freezeFrame) {
-      return regeneratorRuntime.wrap(function _callee3$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              if (freezeFramesAvailable) {
-                _context3.next = 2;
-                break;
-              }
-
-              throw new Error('ViewAR API: Error! Freeze frame functionality not available! Check your app configuration!');
-
-            case 2:
-              _context3.t0 = state;
-              _context3.next = _context3.t0 === STATE_FROZEN ? 5 : 9;
-              break;
-
-            case 5:
-              _context3.next = 7;
-              return coreInterface.call('activateStage', stageName);
-
-            case 7:
-              state = STATE_FRAME_VISIBLE;
-              return _context3.abrupt('break', 9);
-
-            case 9:
-              _context3.next = 11;
-              return coreInterface.call('showFreezeFrame', freezeFrame.name);
-
-            case 11:
-              activeFreezeFrame = freezeFrame;
-
-            case 12:
-            case 'end':
-              return _context3.stop();
-          }
-        }
-      }, _callee3, this);
-    }));
-
-    return function showFreezeFrame(_x) {
-      return _ref4.apply(this, arguments);
-    };
-  }();
-
-  /**
-   * Downloads a previously saved freezeFrame from the server and creates a freezeFrame Object
-   * @async
-   * @function ArCamera#downloadFreezeFrame
-   * @param name freezeFrame's name
-   * @returns {Promise.<FreezeFrame>}
-   */
-
-
-  var downloadFreezeFrame = function () {
-    var _ref5 = (0, _bluebird.coroutine)( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(name) {
-      var freezeFrame;
-      return regeneratorRuntime.wrap(function _callee4$(_context4) {
-        while (1) {
-          switch (_context4.prev = _context4.next) {
-            case 0:
-              if (freezeFramesAvailable) {
-                _context4.next = 2;
-                break;
-              }
-
-              throw new Error('ViewAR API: Error! Freeze frame functionality not available! Check your app configuration!');
-
-            case 2:
-              freezeFrame = FreezeFrame({ name: name });
-              _context4.next = 5;
-              return coreInterface.call('downloadFreezeFrameFromServer', name);
-
-            case 5:
-              freezeFrames.push(freezeFrame);
-
-              return _context4.abrupt('return', freezeFrame);
-
-            case 7:
-            case 'end':
-              return _context4.stop();
-          }
-        }
-      }, _callee4, this);
-    }));
-
-    return function downloadFreezeFrame(_x2) {
-      return _ref5.apply(this, arguments);
-    };
-  }();
-
-  /**
-   * Freezes the arCamera feed and saves the current feed frame and arCamera pose as a new freezeFrame
-   * @async
-   * @function ArCamera#freezeFrame
-   * @returns {Promise.<FreezeFrame>}
-   */
-
-
-  var saveFreezeFrame = function () {
-    var _ref6 = (0, _bluebird.coroutine)( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(name) {
-      var freezeFrame;
-      return regeneratorRuntime.wrap(function _callee5$(_context5) {
-        while (1) {
-          switch (_context5.prev = _context5.next) {
-            case 0:
-              if (freezeFramesAvailable) {
-                _context5.next = 2;
-                break;
-              }
-
-              throw new Error('ViewAR API: Error! Freeze frame functionality not available! Check your app configuration!');
-
-            case 2:
-              _context5.t0 = state;
-              _context5.next = _context5.t0 === STATE_FROZEN ? 5 : 11;
-              break;
-
-            case 5:
-              _context5.next = 7;
-              return (0, _bluebird.all)([new _bluebird2.default(function (resolve) {
-                return coreInterface.once('freezeFrameTaken', resolve);
-              }), coreInterface.emit('saveFreezeFrame', name || 'freeze_frame__' + Date.now(), false)]);
-
-            case 7:
-              freezeFrame = FreezeFrame({ name: name, coreInterface: coreInterface });
-
-              freezeFrames.push(freezeFrame);
-              activeFreezeFrame = freezeFrame;
-              return _context5.abrupt('return', activeFreezeFrame);
-
-            case 11:
-              return _context5.abrupt('return', activeFreezeFrame);
-
-            case 12:
-            case 'end':
-              return _context5.stop();
-          }
-        }
-      }, _callee5, this);
-    }));
-
-    return function saveFreezeFrame(_x3) {
-      return _ref6.apply(this, arguments);
-    };
-  }();
-
-  /**
-   * Removes the given freeze frame. Unfreezes camera if the frozen frame was currently active.
-   * @async
-   * @function ArCamera#removeFreezeFrame
-   * @param {FreezeFrame} freezeFrame
-   * @returns {Promise}
-   */
-
-
-  var removeFreezeFrame = function () {
-    var _ref7 = (0, _bluebird.coroutine)( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(freezeFrame) {
-      var index;
-      return regeneratorRuntime.wrap(function _callee6$(_context6) {
-        while (1) {
-          switch (_context6.prev = _context6.next) {
-            case 0:
-              if (freezeFramesAvailable) {
-                _context6.next = 2;
-                break;
-              }
-
-              throw new Error('ViewAR API: Error! Freeze frame functionality not available! Check your app configuration!');
-
-            case 2:
-              index = freezeFrames.indexOf(freezeFrame);
-
-              if (!~index) {
-                _context6.next = 11;
-                break;
-              }
-
-              _context6.next = 6;
-              return coreInterface.call('removeFreezeFrame', freezeFrame.name);
-
-            case 6:
-              freezeFrames.splice(index, 1);
-
-              if (!(activeFreezeFrame === freezeFrame)) {
-                _context6.next = 11;
-                break;
-              }
-
-              activeFreezeFrame = null;
-              _context6.next = 11;
-              return unfreeze();
-
-            case 11:
-            case 'end':
-              return _context6.stop();
-          }
-        }
-      }, _callee6, this);
-    }));
-
-    return function removeFreezeFrame(_x4) {
-      return _ref7.apply(this, arguments);
-    };
-  }();
-
-  var appConfig = props.appConfig,
-      pose = props.pose,
-      cameraController = props.cameraController,
-      coreInterface = props.coreInterface,
-      stageName = props.stageName,
-      FreezeFrame = props.FreezeFrame;
-
-
-  var available = false;
-  var freezeFramesAvailable = false;
-  var state = STATE_LIVE;
-  var activeFreezeFrame = null;
-  var freezeFrames = [];
-
-  (0, _assign2.default)(arCamera, {
-    init: init,
-    activate: activate,
-    freeze: freeze,
-    unfreeze: unfreeze,
-
-    get pose() {
-      return (0, _clone2.default)(pose);
-    },
-    get frozen() {
-      return state !== STATE_LIVE;
-    },
-    get freezeFrames() {
-      return [].concat(_toConsumableArray(freezeFrames));
-    },
-    showFreezeFrame: showFreezeFrame,
-    removeFreezeFrame: removeFreezeFrame,
-    saveFreezeFrame: saveFreezeFrame,
-    downloadFreezeFrame: downloadFreezeFrame
-  });function freeze() {
-    return (0, _bluebird.resolve)().then(function () {
-      switch (state) {
-        case STATE_LIVE:
-          return coreInterface.call('freeze').then(function () {
-            return state = STATE_FROZEN;
-          });
-        default:
-          return;
-      }
-    });
+//======================================================================================================================
+
+function getSecureUrl(url) {
+  if (url.startsWith('http://')) {
+    return _constants.HTTPS_PROXY_URL + url;
+  } else {
+    return url;
   }
-};
+}
 
-/**
- * @type {ArCamera}
- */
-var arCamera = (0, _compose.compose)((0, _compose.defaultProps)(function () {
-  return (0, _clone2.default)(_constants.AR_CAMERA_DEFAULTS);
-}), (0, _compose.injectProps)({
-  FreezeFrame: _freezeFrame2.default
-}), _cameraBase2.default, ArCamera)();
+var http = function http() {};
 
-exports.default = arCamera;
+Object.assign(http, {
+  get: function get(url) {
+    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      args[_key - 1] = arguments[_key];
+    }
+
+    return send.apply(undefined, ['GET', getSecureUrl(url)].concat(_toConsumableArray(args)));
+  },
+  post: function post(url) {
+    for (var _len2 = arguments.length, args = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+      args[_key2 - 1] = arguments[_key2];
+    }
+
+    return send.apply(undefined, ['POST', getSecureUrl(url)].concat(_toConsumableArray(args)));
+  }
+});
+
+exports.default = http;
+
+
+function send(method, url, data) {
+  var timeout = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 10000;
+
+
+  return new _bluebird2.default(function (resolve, reject) {
+    var xhr = new XMLHttpRequest();
+
+    xhr.open(method.toUpperCase(), url, true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4) {
+        if (xhr.status == 200) {
+          resolve(xhr.responseText);
+        } else {
+          reject(new Error(xhr.responseText));
+        }
+      }
+    };
+
+    xhr.timeout = timeout;
+    xhr.ontimeout = function (e) {
+      reject(new Error('XML HTTP request timed out.'));
+    };
+
+    xhr.send(Object.entries(data || {}).map(function (pair) {
+      return pair.map(encodeURIComponent).join('=');
+    }).join('&'));
+  });
+}
 
 /***/ }),
 /* 85 */
@@ -12447,19 +12106,19 @@ module.exports = isString;
 /***/ (function(module, exports, __webpack_require__) {
 
 var Stack = __webpack_require__(35),
-    arrayEach = __webpack_require__(175),
+    arrayEach = __webpack_require__(173),
     assignValue = __webpack_require__(59),
-    baseAssign = __webpack_require__(176),
-    baseAssignIn = __webpack_require__(183),
+    baseAssign = __webpack_require__(174),
+    baseAssignIn = __webpack_require__(181),
     cloneBuffer = __webpack_require__(95),
     copyArray = __webpack_require__(96),
-    copySymbols = __webpack_require__(186),
-    copySymbolsIn = __webpack_require__(187),
+    copySymbols = __webpack_require__(184),
+    copySymbolsIn = __webpack_require__(185),
     getAllKeys = __webpack_require__(99),
     getAllKeysIn = __webpack_require__(101),
     getTag = __webpack_require__(102),
-    initCloneArray = __webpack_require__(191),
-    initCloneByTag = __webpack_require__(192),
+    initCloneArray = __webpack_require__(189),
+    initCloneByTag = __webpack_require__(190),
     initCloneObject = __webpack_require__(108),
     isArray = __webpack_require__(5),
     isBuffer = __webpack_require__(42),
@@ -12955,11 +12614,11 @@ module.exports = getAllKeysIn;
 /* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var DataView = __webpack_require__(188),
+var DataView = __webpack_require__(186),
     Map = __webpack_require__(57),
-    Promise = __webpack_require__(189),
+    Promise = __webpack_require__(187),
     Set = __webpack_require__(103),
-    WeakMap = __webpack_require__(190),
+    WeakMap = __webpack_require__(188),
     baseGetTag = __webpack_require__(15),
     toSource = __webpack_require__(90);
 
@@ -13122,7 +12781,7 @@ module.exports = cloneTypedArray;
 /* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseCreate = __webpack_require__(200),
+var baseCreate = __webpack_require__(198),
     getPrototype = __webpack_require__(69),
     isPrototype = __webpack_require__(65);
 
@@ -13183,7 +12842,7 @@ module.exports = baseSlice;
 /* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var flatten = __webpack_require__(208),
+var flatten = __webpack_require__(206),
     overRest = __webpack_require__(111),
     setToString = __webpack_require__(113);
 
@@ -13274,8 +12933,8 @@ module.exports = apply;
 /* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseSetToString = __webpack_require__(210),
-    shortOut = __webpack_require__(212);
+var baseSetToString = __webpack_require__(208),
+    shortOut = __webpack_require__(210);
 
 /**
  * Sets the `toString` method of `func` to return `string`.
@@ -13294,7 +12953,7 @@ module.exports = setToString;
 /* 114 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"viewar-api","version":"0.10.25","description":"ViewAR API","license":"UNLICENSED","main":"dist/viewar-api.js","scripts":{"test":"node ./scripts/test.js './src/**/*.test.js' | faucet","docs":"rm -rf docs && jsdoc -c ./config/jsdoc.config.json","docs:md":"rm -rf docs && mkdir -p docs && jsdoc2md -c ./config/jsdoc.config.json src/**/*.js > docs/docs.md","preversion":"npm test","version":"npm run build && git add -A","postversion":"git push origin HEAD && git push --tags","prepack":"npm test && node ./scripts/prepack.js","clean":"rm -rf dist","build":"npm run clean && webpack --config ./config/webpack.config.js","build:prod":"npm run clean && webpack --config ./config/webpack.prod.config.js","watch":"npm run clean && webpack --watch --config ./config/webpack.config.js","watch:prod":"npm run clean && webpack --watch --config ./config/webpack.prod.config.js","deploy":"npm run build:prod && npm pack && node ./scripts/deploy.js"},"author":"Ivan Šakić <is@viewar.com>","contributors":["Karl Hofer <kh@viewar.com>","Matthias Klan <mk@viewar.com>"],"dependencies":{"babel-polyfill":"^6.26.0","viewar-core":"^5.4.1"},"devDependencies":{"babel-core":"^6.26.0","babel-loader":"^7.1.2","babel-plugin-transform-runtime":"^6.23.0","babel-preset-bluebird":"^1.0.1","babel-preset-env":"^1.6.1","babel-preset-stage-0":"^6.24.1","bluebird":"^3.5.1","component-emitter":"^1.2.1","faucet":"^0.0.1","ink-docstrap":"^1.3.2","jsdoc":"^3.5.5","jsdoc-babel":"^0.3.0","jsdoc-to-markdown":"^3.0.4","jsdom":"11.5.1","jsdom-global":"3.0.2","lodash":"^4.17.4","nearley":"^2.11.0","nearley-loader":"0.0.3","request":"^2.83.0","semver":"^5.4.1","tap":"^11.0.1","tape":"^4.8.0","webpack":"^3.10.0"},"files":["dist/viewar-api.js"]}
+module.exports = {"name":"viewar-api","version":"0.10.31","description":"ViewAR API","license":"UNLICENSED","main":"dist/viewar-api.js","scripts":{"test":"node ./scripts/test.js './src/**/*.test.js' | faucet","docs":"rm -rf docs && jsdoc -c ./config/jsdoc.config.json","docs:md":"rm -rf docs && mkdir -p docs && jsdoc2md -c ./config/jsdoc.config.json src/**/*.js > docs/docs.md","preversion":"npm test","version":"npm run build && git add -A","postversion":"git push origin HEAD && git push --tags","prepack":"npm test && node ./scripts/prepack.js","clean":"rm -rf dist","build":"npm run clean && webpack --config ./config/webpack.config.js","build:prod":"npm run clean && webpack --config ./config/webpack.prod.config.js","watch":"npm run clean && webpack --watch --config ./config/webpack.config.js","watch:prod":"npm run clean && webpack --watch --config ./config/webpack.prod.config.js","deploy":"npm run build:prod && npm pack && node ./scripts/deploy.js"},"author":"Ivan Šakić <is@viewar.com>","contributors":["Karl Hofer <kh@viewar.com>","Matthias Klan <mk@viewar.com>"],"dependencies":{"babel-polyfill":"^6.26.0","viewar-core":"^5.4.1"},"devDependencies":{"babel-core":"^6.26.0","babel-loader":"^7.1.2","babel-plugin-transform-runtime":"^6.23.0","babel-preset-bluebird":"^1.0.1","babel-preset-env":"^1.6.1","babel-preset-stage-0":"^6.24.1","bluebird":"^3.5.1","component-emitter":"^1.2.1","faucet":"^0.0.1","ink-docstrap":"^1.3.2","jsdoc":"^3.5.5","jsdoc-babel":"^0.3.0","jsdoc-to-markdown":"^3.0.4","jsdom":"11.5.1","jsdom-global":"3.0.2","lodash":"^4.17.4","nearley":"^2.11.0","nearley-loader":"0.0.3","request":"^2.83.0","semver":"^5.4.1","tap":"^11.0.1","tape":"^4.8.0","webpack":"^3.10.0"},"files":["dist/viewar-api.js"]}
 
 /***/ }),
 /* 115 */
@@ -13316,7 +12975,7 @@ var _isEqual = __webpack_require__(25);
 
 var _isEqual2 = _interopRequireDefault(_isEqual);
 
-var _isUndefined = __webpack_require__(231);
+var _isUndefined = __webpack_require__(229);
 
 var _isUndefined2 = _interopRequireDefault(_isUndefined);
 
@@ -13324,7 +12983,7 @@ var _container = __webpack_require__(117);
 
 var _container2 = _interopRequireDefault(_container);
 
-var _updateScene = __webpack_require__(237);
+var _updateScene = __webpack_require__(235);
 
 var _shared = __webpack_require__(10);
 
@@ -14018,7 +13677,7 @@ exports.default = sceneManager;
 /***/ (function(module, exports, __webpack_require__) {
 
 var SetCache = __webpack_require__(48),
-    arraySome = __webpack_require__(228),
+    arraySome = __webpack_require__(226),
     cacheHas = __webpack_require__(49);
 
 /** Used to compose bitmasks for value comparisons. */
@@ -14292,7 +13951,7 @@ exports.default = (0, _compose.compose)((0, _compose.defaultProps)(function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseRest = __webpack_require__(26),
-    isIterateeCall = __webpack_require__(233);
+    isIterateeCall = __webpack_require__(231);
 
 /**
  * Creates a function like `_.assign`.
@@ -14420,7 +14079,7 @@ var parseBasicModelDescription = exports.parseBasicModelDescription = function p
     foreignKey: description.foreignKey || description.foreign_key || '',
     version: description.version,
     name: description.name || '',
-    type: description.type,
+    type: description.type === 'snapable' ? 'basic' : description.type,
     tags: [].concat(_toConsumableArray(description.tags || [])),
     imageUrl: _coreInterface2.default.resolveUrl('/Models/Images/' + description.id + '.png'),
     resources: [].concat(_toConsumableArray(description.resources || [])).map(function (_ref4) {
@@ -14545,6 +14204,37 @@ var parseModelDescription = exports.parseModelDescription = function parseModelD
     preset: configuration && configuration.preset || preset
   };
 
+  var propNames = new Set();
+
+  var _iteratorNormalCompletion = true;
+  var _didIteratorError = false;
+  var _iteratorError = undefined;
+
+  try {
+    for (var _iterator = configurationDescription.properties[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      var prop = _step.value;
+
+      if (!propNames.has(prop.name)) {
+        propNames.add(prop.name);
+      } else {
+        throw new Error('ViewAR API: Error! Model ' + description.id + ' has multiple properties with the same name!');
+      }
+    }
+  } catch (err) {
+    _didIteratorError = true;
+    _iteratorError = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion && _iterator.return) {
+        _iterator.return();
+      }
+    } finally {
+      if (_didIteratorError) {
+        throw _iteratorError;
+      }
+    }
+  }
+
   var constants = configuration && configuration.dataSource.constants || [];
   constants.forEach(function (_ref9) {
     var _ref9$parts = _ref9.parts,
@@ -14637,7 +14327,7 @@ var _shared = __webpack_require__(10);
 
 var _shared2 = _interopRequireDefault(_shared);
 
-var _animation = __webpack_require__(239);
+var _animation = __webpack_require__(237);
 
 var _animation2 = _interopRequireDefault(_animation);
 
@@ -14649,11 +14339,11 @@ var _property = __webpack_require__(125);
 
 var _property2 = _interopRequireDefault(_property);
 
-var _simpleModelInstance = __webpack_require__(279);
+var _simpleModelInstance = __webpack_require__(277);
 
 var _simpleModelInstance2 = _interopRequireDefault(_simpleModelInstance);
 
-var _video = __webpack_require__(291);
+var _video = __webpack_require__(289);
 
 var _video2 = _interopRequireDefault(_video);
 
@@ -14800,7 +14490,7 @@ var createInstance = exports.createInstance = function createInstance(props, sim
               configurationDescription = _ref10.configurationDescription;
               properties = configurationDescription.properties, displayTemplate = configurationDescription.displayTemplate, preset = configurationDescription.preset;
               propertyValues = (0, _defaults2.default)(instantiationParams.propertyValues, preset);
-              id = instantiationParams.id || (0, _generateId2.default)();
+              id = instantiationParams.id || simpleModel.id + ':' + (0, _generateId2.default)();
               instance = SimpleModelInstance(_extends({}, instantiationParams, {
                 id: id,
                 model: simpleModel,
@@ -14885,7 +14575,7 @@ var _assign2 = _interopRequireDefault(_assign);
 
 var _compose = __webpack_require__(2);
 
-var _deprecate = __webpack_require__(240);
+var _deprecate = __webpack_require__(238);
 
 var _deprecate2 = _interopRequireDefault(_deprecate);
 
@@ -15022,15 +14712,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Taggable = undefined;
 
-var _intersection = __webpack_require__(241);
+var _intersection = __webpack_require__(239);
 
 var _intersection2 = _interopRequireDefault(_intersection);
 
-var _difference = __webpack_require__(247);
+var _difference = __webpack_require__(245);
 
 var _difference2 = _interopRequireDefault(_difference);
 
-var _xor = __webpack_require__(248);
+var _xor = __webpack_require__(246);
 
 var _xor2 = _interopRequireDefault(_xor);
 
@@ -15179,7 +14869,7 @@ var SetCache = __webpack_require__(48),
     arrayIncludes = __webpack_require__(77),
     arrayIncludesWith = __webpack_require__(79),
     cacheHas = __webpack_require__(49),
-    createSet = __webpack_require__(250),
+    createSet = __webpack_require__(248),
     setToArray = __webpack_require__(44);
 
 /** Used as the size to enable large array optimizations. */
@@ -15266,41 +14956,41 @@ exports.createProperty = createProperty;
 
 var _compose = __webpack_require__(2);
 
-var _parser = __webpack_require__(252);
+var _parser = __webpack_require__(250);
 
-var _pattern = __webpack_require__(255);
+var _pattern = __webpack_require__(253);
 
 var _pattern2 = _interopRequireDefault(_pattern);
 
-var _range = __webpack_require__(266);
+var _range = __webpack_require__(264);
 
 var _range2 = _interopRequireDefault(_range);
 
-var _property = __webpack_require__(267);
+var _property = __webpack_require__(265);
 
 var _property2 = _interopRequireDefault(_property);
 
-var _nullProperty = __webpack_require__(268);
+var _nullProperty = __webpack_require__(266);
 
 var _nullProperty2 = _interopRequireDefault(_nullProperty);
 
-var _materialProperty = __webpack_require__(269);
+var _materialProperty = __webpack_require__(267);
 
 var _materialProperty2 = _interopRequireDefault(_materialProperty);
 
-var _partProperty = __webpack_require__(270);
+var _partProperty = __webpack_require__(268);
 
 var _partProperty2 = _interopRequireDefault(_partProperty);
 
-var _geometricProperty = __webpack_require__(271);
+var _geometricProperty = __webpack_require__(269);
 
 var _geometricProperty2 = _interopRequireDefault(_geometricProperty);
 
-var _rangeProperty = __webpack_require__(272);
+var _rangeProperty = __webpack_require__(270);
 
 var _rangeProperty2 = _interopRequireDefault(_rangeProperty);
 
-var _enumeratedProperty = __webpack_require__(278);
+var _enumeratedProperty = __webpack_require__(276);
 
 var _enumeratedProperty2 = _interopRequireDefault(_enumeratedProperty);
 
@@ -15524,7 +15214,7 @@ exports.default = (0, _compose.compose)(_taggable2.default, Option);
 /* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseMerge = __webpack_require__(281),
+var baseMerge = __webpack_require__(279),
     createAssigner = __webpack_require__(118);
 
 /**
@@ -15595,7 +15285,7 @@ module.exports = assignMergeValue;
 /* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var createBaseFor = __webpack_require__(282);
+var createBaseFor = __webpack_require__(280);
 
 /**
  * The base implementation of `baseForOwn` which iterates over `object`
@@ -15617,8 +15307,8 @@ module.exports = baseFor;
 /* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseHasIn = __webpack_require__(289),
-    hasPath = __webpack_require__(290);
+var baseHasIn = __webpack_require__(287),
+    hasPath = __webpack_require__(288);
 
 /**
  * Checks if `path` is a direct or inherited property of `object`.
@@ -15658,7 +15348,7 @@ module.exports = hasIn;
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseFlatten = __webpack_require__(46),
-    map = __webpack_require__(295);
+    map = __webpack_require__(293);
 
 /**
  * Creates a flattened array of values by running each element in `collection`
@@ -15748,92 +15438,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _bluebird = __webpack_require__(0);
 
-var _bluebird2 = _interopRequireDefault(_bluebird);
-
-var _constants = __webpack_require__(4);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-//======================================================================================================================
-
-function getSecureUrl(url) {
-  if (url.startsWith('http://')) {
-    return _constants.HTTPS_PROXY_URL + url;
-  } else {
-    return url;
-  }
-}
-
-var http = function http() {};
-
-Object.assign(http, {
-  get: function get(url) {
-    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      args[_key - 1] = arguments[_key];
-    }
-
-    return send.apply(undefined, ['GET', getSecureUrl(url)].concat(_toConsumableArray(args)));
-  },
-  post: function post(url) {
-    for (var _len2 = arguments.length, args = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-      args[_key2 - 1] = arguments[_key2];
-    }
-
-    return send.apply(undefined, ['POST', getSecureUrl(url)].concat(_toConsumableArray(args)));
-  }
-});
-
-exports.default = http;
-
-
-function send(method, url, data) {
-  var timeout = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 10000;
-
-
-  return new _bluebird2.default(function (resolve, reject) {
-    var xhr = new XMLHttpRequest();
-
-    xhr.open(method.toUpperCase(), url, true);
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState == 4) {
-        if (xhr.status == 200) {
-          resolve(xhr.responseText);
-        } else {
-          reject(new Error(xhr.responseText));
-        }
-      }
-    };
-
-    xhr.timeout = timeout;
-    xhr.ontimeout = function (e) {
-      reject(new Error('XML HTTP request timed out.'));
-    };
-
-    xhr.send(Object.entries(data || {}).map(function (pair) {
-      return pair.map(encodeURIComponent).join('=');
-    }).join('&'));
-  });
-}
-
-/***/ }),
-/* 136 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _bluebird = __webpack_require__(0);
-
 exports.createProjectManager = createProjectManager;
 
-var _project = __webpack_require__(312);
+var _project = __webpack_require__(310);
 
 var _project2 = _interopRequireDefault(_project);
 
@@ -16323,7 +15930,7 @@ function createProjectManager(_ref) {
 }
 
 /***/ }),
-/* 137 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseClone = __webpack_require__(89);
@@ -16358,7 +15965,7 @@ module.exports = cloneDeep;
 
 
 /***/ }),
-/* 138 */
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16598,7 +16205,7 @@ function createAppUtils(specification) {
 }
 
 /***/ }),
-/* 139 */
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17062,7 +16669,7 @@ function createRoomManager(_ref) {
 }
 
 /***/ }),
-/* 140 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17071,184 +16678,7 @@ function createRoomManager(_ref) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.VrCamera = undefined;
-
-var _bluebird = __webpack_require__(0);
-
-var _compose = __webpack_require__(2);
-
-var _assign = __webpack_require__(1);
-
-var _assign2 = _interopRequireDefault(_assign);
-
-var _clone = __webpack_require__(11);
-
-var _clone2 = _interopRequireDefault(_clone);
-
-var _constants = __webpack_require__(4);
-
-var _cameraBase = __webpack_require__(85);
-
-var _cameraBase2 = _interopRequireDefault(_cameraBase);
-
-var _arCamera = __webpack_require__(84);
-
-var _arCamera2 = _interopRequireDefault(_arCamera);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Uses camera sensors and joystick input to provide a first-person VR experience. Behaves like a first-person camera in
- * computer games (i.e. has no roll).
- *
- * @interface VrCamera
- * @extends Camera
- */
-var VrCamera = exports.VrCamera = function VrCamera(props, vrCamera) {
-
-  //======================================================================================================================
-  // PUBLIC INTERFACE
-  //======================================================================================================================
-
-  var init = function () {
-    var _ref = (0, _bluebird.method)(function () {
-      available = appConfig.stageList.includes(stageName);
-      if (appConfig.stageList[0] === stageName) {
-        cameraController.activeCamera = _arCamera2.default;
-      }
-    });
-
-    return function init() {
-      return _ref.apply(this, arguments);
-    };
-  }();
-
-  var activate = function () {
-    var _ref2 = (0, _bluebird.coroutine)( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-      return regeneratorRuntime.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              if (!available) {
-                _context.next = 6;
-                break;
-              }
-
-              _context.next = 3;
-              return coreInterface.call('activateStage', stageName);
-
-            case 3:
-              cameraController.activeCamera = vrCamera;
-              _context.next = 7;
-              break;
-
-            case 6:
-              throw new Error('ViewAR API: Error! vrCamera is not available! Check your app configuration!');
-
-            case 7:
-            case 'end':
-              return _context.stop();
-          }
-        }
-      }, _callee, this);
-    }));
-
-    return function activate() {
-      return _ref2.apply(this, arguments);
-    };
-  }();
-
-  /**
-   * Enables the gyroscope for this camera.
-   * @async
-   * @function VrCamera#enableGyroscope
-   * @returns {Promise} resolved on completion.
-   */
-
-
-  var appConfig = props.appConfig,
-      pose = props.pose,
-      stageName = props.stageName,
-      cameraController = props.cameraController,
-      coreInterface = props.coreInterface;
-
-  var gyroscopeActive = true;
-  var available = false;
-
-  (0, _assign2.default)(vrCamera, {
-    init: init,
-    activate: activate,
-
-    enableGyroscope: enableGyroscope,
-    disableGyroscope: disableGyroscope,
-    translate: translate,
-    rotate: rotate,
-
-    get pose() {
-      return (0, _clone2.default)(pose);
-    },
-    get gyroscopeActive() {
-      return gyroscopeActive;
-    }
-  });function enableGyroscope() {
-    return gyroscopeActive ? (0, _bluebird.resolve)() : coreInterface.call('enableGyroscopeForExperienceStage').then(function () {
-      return gyroscopeActive = true;
-    });
-  }
-
-  /**
-   * Disables the gyroscope for this camera.
-   * @async
-   * @function VrCamera#disableGyroscope
-   * @returns {Promise} resolved on completion.
-   */
-  function disableGyroscope() {
-    return !gyroscopeActive ? (0, _bluebird.resolve)() : coreInterface.call('disableGyroscopeForExperienceStage').then(function () {
-      return gyroscopeActive = false;
-    });
-  }
-
-  /**
-   * Translates the camera using joystick input
-   * @async
-   * @function VrCamera#translate
-   * @param {Vector3d} joystick axis values
-   */
-  function translate(controllerInputVector) {
-    coreInterface.emit('translateCamera', controllerInputVector);
-  }
-
-  /**
-   * Rotates the camera using joystick input
-   * @async
-   * @function VrCamera#rotate
-   * @param {Vector3d} joystick axis values
-   */
-  function rotate(controllerInputVector) {
-    coreInterface.emit('rotateCamera', controllerInputVector);
-  }
-};
-
-/**
- * @type {VrCamera}
- */
-var vrCamera = (0, _compose.compose)((0, _compose.defaultProps)(function () {
-  return (0, _clone2.default)(_constants.VR_CAMERA_DEFAULTS);
-}), _cameraBase2.default, VrCamera)();
-
-exports.default = vrCamera;
-
-/***/ }),
-/* 141 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.perspectiveCamera = exports.vrCamera = exports.arCamera = exports.roomManager = exports.projectManager = exports.sceneManager = exports.modelManager = exports.screenshotManager = exports.syncManager = exports.coreInterface = exports.logger = exports.appUtils = exports.init = undefined;
+exports.perspectiveCamera = exports.vrCamera = exports.arCamera = exports.roomManager = exports.projectManager = exports.sceneManager = exports.modelManager = exports.screenshotManager = exports.syncManager = exports.coreInterface = exports.logger = exports.appUtils = exports.init = exports.defaults = undefined;
 
 var _bluebird = __webpack_require__(0);
 
@@ -17433,7 +16863,7 @@ var _semver2 = _interopRequireDefault(_semver);
 
 var _constants = __webpack_require__(4);
 
-var _ui = __webpack_require__(144);
+var _ui = __webpack_require__(142);
 
 var _utils = __webpack_require__(6);
 
@@ -17461,19 +16891,19 @@ var _cloud = __webpack_require__(82);
 
 var _cloud2 = _interopRequireDefault(_cloud);
 
-var _projectManager2 = __webpack_require__(136);
+var _projectManager2 = __webpack_require__(135);
 
 var _projectManager3 = _interopRequireDefault(_projectManager2);
 
-var _roomManager2 = __webpack_require__(139);
+var _roomManager2 = __webpack_require__(138);
 
 var _roomManager3 = _interopRequireDefault(_roomManager2);
 
-var _appUtils2 = __webpack_require__(138);
+var _appUtils2 = __webpack_require__(137);
 
 var _appUtils3 = _interopRequireDefault(_appUtils2);
 
-var _syncManager2 = __webpack_require__(313);
+var _syncManager2 = __webpack_require__(311);
 
 var _syncManager3 = _interopRequireDefault(_syncManager2);
 
@@ -17481,9 +16911,13 @@ var _authenticationManager = __webpack_require__(83);
 
 var _authenticationManager2 = _interopRequireDefault(_authenticationManager);
 
-var _screenshotManager2 = __webpack_require__(314);
+var _screenshotManager2 = __webpack_require__(312);
 
 var _screenshotManager3 = _interopRequireDefault(_screenshotManager2);
+
+var _http = __webpack_require__(84);
+
+var _http2 = _interopRequireDefault(_http);
 
 var _versionInfo = __webpack_require__(74);
 
@@ -17505,15 +16939,15 @@ var _logger2 = __webpack_require__(30);
 
 var _logger3 = _interopRequireDefault(_logger2);
 
-var _arCamera2 = __webpack_require__(84);
+var _arCamera2 = __webpack_require__(313);
 
 var _arCamera3 = _interopRequireDefault(_arCamera2);
 
-var _perspectiveCamera2 = __webpack_require__(316);
+var _perspectiveCamera2 = __webpack_require__(315);
 
 var _perspectiveCamera3 = _interopRequireDefault(_perspectiveCamera2);
 
-var _vrCamera2 = __webpack_require__(140);
+var _vrCamera2 = __webpack_require__(316);
 
 var _vrCamera3 = _interopRequireDefault(_vrCamera2);
 
@@ -17532,6 +16966,13 @@ _bluebird.config && (0, _bluebird.config)({
 
 var initialized = false;
 
+var defaults = exports.defaults = {
+  DEFAULT_API_CONFIG: _constants.DEFAULT_API_CONFIG,
+  DEFAULT_POSE: _constants.DEFAULT_POSE, DEFAULT_POSITION: _constants.DEFAULT_POSITION, DEFAULT_ORIENTATION: _constants.DEFAULT_ORIENTATION, DEFAULT_SCALE: _constants.DEFAULT_SCALE,
+  DEFAULT_INTERACTION: _constants.DEFAULT_INTERACTION, DEFAULT_HIGHLIGHT_INFO: _constants.DEFAULT_HIGHLIGHT_INFO, DEFAULT_VISIBLE: _constants.DEFAULT_VISIBLE,
+  DEFAULT_AR_CAMERA_POSE: _constants.DEFAULT_AR_CAMERA_POSE, DEFAULT_VR_CAMERA_POSE: _constants.DEFAULT_VR_CAMERA_POSE, DEFAULT_PERSPECTIVE_CAMERA_POSE: _constants.DEFAULT_PERSPECTIVE_CAMERA_POSE
+};
+
 var viewarApi = {
   init: init,
   coreInterface: _coreInterface3.default,
@@ -17548,6 +16989,7 @@ var viewarApi = {
   appConfig: _appConfig2.default,
   logger: _logger3.default,
   versionInfo: _versionInfo2.default,
+  http: _http2.default,
 
   cameras: {
     perspectiveCamera: _perspectiveCamera3.default,
@@ -17560,7 +17002,8 @@ var viewarApi = {
   storage: {
     local: _local2.default,
     cloud: _cloud2.default
-  }
+  },
+  defaults: defaults
 };
 
 function fetchAppConfig(_ref2, coreInterface) {
@@ -17608,7 +17051,7 @@ exports.perspectiveCamera = _perspectiveCamera3.default;
 exports.default = viewarApi;
 
 /***/ }),
-/* 142 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -17661,13 +17104,13 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(143);
+__webpack_require__(141);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 143 */
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -17860,7 +17303,7 @@ exports.clearImmediate = clearImmediate;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(32), __webpack_require__(55)))
 
 /***/ }),
-/* 144 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17879,7 +17322,7 @@ exports.waitForAppUpdate = waitForAppUpdate;
 exports.showFakedBundleOverlay = showFakedBundleOverlay;
 exports.waitForSwitchBundleId = waitForSwitchBundleId;
 
-var _uiStyles = __webpack_require__(145);
+var _uiStyles = __webpack_require__(143);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -18115,7 +17558,7 @@ function waitForSwitchBundleId(window, coreInterface, bundleId) {
 }
 
 /***/ }),
-/* 145 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18189,7 +17632,7 @@ var CONFIRM_BUTTON_STYLE = exports.CONFIRM_BUTTON_STYLE = {
 };
 
 /***/ }),
-/* 146 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Symbol = __webpack_require__(20);
@@ -18241,7 +17684,7 @@ module.exports = getRawTag;
 
 
 /***/ }),
-/* 147 */
+/* 145 */
 /***/ (function(module, exports) {
 
 /** Used for built-in method references. */
@@ -18269,15 +17712,15 @@ module.exports = objectToString;
 
 
 /***/ }),
-/* 148 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayMap = __webpack_require__(14),
     baseClone = __webpack_require__(89),
-    baseUnset = __webpack_require__(201),
+    baseUnset = __webpack_require__(199),
     castPath = __webpack_require__(23),
     copyObject = __webpack_require__(17),
-    customOmitClone = __webpack_require__(207),
+    customOmitClone = __webpack_require__(205),
     flatRest = __webpack_require__(110),
     getAllKeysIn = __webpack_require__(101);
 
@@ -18332,7 +17775,7 @@ module.exports = omit;
 
 
 /***/ }),
-/* 149 */
+/* 147 */
 /***/ (function(module, exports) {
 
 /**
@@ -18351,7 +17794,7 @@ module.exports = listCacheClear;
 
 
 /***/ }),
-/* 150 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var assocIndexOf = __webpack_require__(37);
@@ -18392,7 +17835,7 @@ module.exports = listCacheDelete;
 
 
 /***/ }),
-/* 151 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var assocIndexOf = __webpack_require__(37);
@@ -18417,7 +17860,7 @@ module.exports = listCacheGet;
 
 
 /***/ }),
-/* 152 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var assocIndexOf = __webpack_require__(37);
@@ -18439,7 +17882,7 @@ module.exports = listCacheHas;
 
 
 /***/ }),
-/* 153 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var assocIndexOf = __webpack_require__(37);
@@ -18471,7 +17914,7 @@ module.exports = listCacheSet;
 
 
 /***/ }),
-/* 154 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ListCache = __webpack_require__(36);
@@ -18492,7 +17935,7 @@ module.exports = stackClear;
 
 
 /***/ }),
-/* 155 */
+/* 153 */
 /***/ (function(module, exports) {
 
 /**
@@ -18516,7 +17959,7 @@ module.exports = stackDelete;
 
 
 /***/ }),
-/* 156 */
+/* 154 */
 /***/ (function(module, exports) {
 
 /**
@@ -18536,7 +17979,7 @@ module.exports = stackGet;
 
 
 /***/ }),
-/* 157 */
+/* 155 */
 /***/ (function(module, exports) {
 
 /**
@@ -18556,7 +17999,7 @@ module.exports = stackHas;
 
 
 /***/ }),
-/* 158 */
+/* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ListCache = __webpack_require__(36),
@@ -18596,11 +18039,11 @@ module.exports = stackSet;
 
 
 /***/ }),
-/* 159 */
+/* 157 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isFunction = __webpack_require__(38),
-    isMasked = __webpack_require__(160),
+    isMasked = __webpack_require__(158),
     isObject = __webpack_require__(7),
     toSource = __webpack_require__(90);
 
@@ -18649,10 +18092,10 @@ module.exports = baseIsNative;
 
 
 /***/ }),
-/* 160 */
+/* 158 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var coreJsData = __webpack_require__(161);
+var coreJsData = __webpack_require__(159);
 
 /** Used to detect methods masquerading as native. */
 var maskSrcKey = (function() {
@@ -18675,7 +18118,7 @@ module.exports = isMasked;
 
 
 /***/ }),
-/* 161 */
+/* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var root = __webpack_require__(9);
@@ -18687,7 +18130,7 @@ module.exports = coreJsData;
 
 
 /***/ }),
-/* 162 */
+/* 160 */
 /***/ (function(module, exports) {
 
 /**
@@ -18706,10 +18149,10 @@ module.exports = getValue;
 
 
 /***/ }),
-/* 163 */
+/* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Hash = __webpack_require__(164),
+var Hash = __webpack_require__(162),
     ListCache = __webpack_require__(36),
     Map = __webpack_require__(57);
 
@@ -18733,14 +18176,14 @@ module.exports = mapCacheClear;
 
 
 /***/ }),
-/* 164 */
+/* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var hashClear = __webpack_require__(165),
-    hashDelete = __webpack_require__(166),
-    hashGet = __webpack_require__(167),
-    hashHas = __webpack_require__(168),
-    hashSet = __webpack_require__(169);
+var hashClear = __webpack_require__(163),
+    hashDelete = __webpack_require__(164),
+    hashGet = __webpack_require__(165),
+    hashHas = __webpack_require__(166),
+    hashSet = __webpack_require__(167);
 
 /**
  * Creates a hash object.
@@ -18771,7 +18214,7 @@ module.exports = Hash;
 
 
 /***/ }),
-/* 165 */
+/* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var nativeCreate = __webpack_require__(39);
@@ -18792,7 +18235,7 @@ module.exports = hashClear;
 
 
 /***/ }),
-/* 166 */
+/* 164 */
 /***/ (function(module, exports) {
 
 /**
@@ -18815,7 +18258,7 @@ module.exports = hashDelete;
 
 
 /***/ }),
-/* 167 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var nativeCreate = __webpack_require__(39);
@@ -18851,7 +18294,7 @@ module.exports = hashGet;
 
 
 /***/ }),
-/* 168 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var nativeCreate = __webpack_require__(39);
@@ -18880,7 +18323,7 @@ module.exports = hashHas;
 
 
 /***/ }),
-/* 169 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var nativeCreate = __webpack_require__(39);
@@ -18909,7 +18352,7 @@ module.exports = hashSet;
 
 
 /***/ }),
-/* 170 */
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var getMapData = __webpack_require__(40);
@@ -18933,7 +18376,7 @@ module.exports = mapCacheDelete;
 
 
 /***/ }),
-/* 171 */
+/* 169 */
 /***/ (function(module, exports) {
 
 /**
@@ -18954,7 +18397,7 @@ module.exports = isKeyable;
 
 
 /***/ }),
-/* 172 */
+/* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var getMapData = __webpack_require__(40);
@@ -18976,7 +18419,7 @@ module.exports = mapCacheGet;
 
 
 /***/ }),
-/* 173 */
+/* 171 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var getMapData = __webpack_require__(40);
@@ -18998,7 +18441,7 @@ module.exports = mapCacheHas;
 
 
 /***/ }),
-/* 174 */
+/* 172 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var getMapData = __webpack_require__(40);
@@ -19026,7 +18469,7 @@ module.exports = mapCacheSet;
 
 
 /***/ }),
-/* 175 */
+/* 173 */
 /***/ (function(module, exports) {
 
 /**
@@ -19054,7 +18497,7 @@ module.exports = arrayEach;
 
 
 /***/ }),
-/* 176 */
+/* 174 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var copyObject = __webpack_require__(17),
@@ -19077,7 +18520,7 @@ module.exports = baseAssign;
 
 
 /***/ }),
-/* 177 */
+/* 175 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseGetTag = __webpack_require__(15),
@@ -19101,7 +18544,7 @@ module.exports = baseIsArguments;
 
 
 /***/ }),
-/* 178 */
+/* 176 */
 /***/ (function(module, exports) {
 
 /**
@@ -19125,7 +18568,7 @@ module.exports = stubFalse;
 
 
 /***/ }),
-/* 179 */
+/* 177 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseGetTag = __webpack_require__(15),
@@ -19191,7 +18634,7 @@ module.exports = baseIsTypedArray;
 
 
 /***/ }),
-/* 180 */
+/* 178 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {var freeGlobal = __webpack_require__(87);
@@ -19220,11 +18663,11 @@ module.exports = nodeUtil;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(61)(module)))
 
 /***/ }),
-/* 181 */
+/* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isPrototype = __webpack_require__(65),
-    nativeKeys = __webpack_require__(182);
+    nativeKeys = __webpack_require__(180);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -19256,7 +18699,7 @@ module.exports = baseKeys;
 
 
 /***/ }),
-/* 182 */
+/* 180 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var overArg = __webpack_require__(94);
@@ -19268,7 +18711,7 @@ module.exports = nativeKeys;
 
 
 /***/ }),
-/* 183 */
+/* 181 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var copyObject = __webpack_require__(17),
@@ -19291,12 +18734,12 @@ module.exports = baseAssignIn;
 
 
 /***/ }),
-/* 184 */
+/* 182 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(7),
     isPrototype = __webpack_require__(65),
-    nativeKeysIn = __webpack_require__(185);
+    nativeKeysIn = __webpack_require__(183);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -19330,7 +18773,7 @@ module.exports = baseKeysIn;
 
 
 /***/ }),
-/* 185 */
+/* 183 */
 /***/ (function(module, exports) {
 
 /**
@@ -19356,7 +18799,7 @@ module.exports = nativeKeysIn;
 
 
 /***/ }),
-/* 186 */
+/* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var copyObject = __webpack_require__(17),
@@ -19378,7 +18821,7 @@ module.exports = copySymbols;
 
 
 /***/ }),
-/* 187 */
+/* 185 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var copyObject = __webpack_require__(17),
@@ -19400,7 +18843,7 @@ module.exports = copySymbolsIn;
 
 
 /***/ }),
-/* 188 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(16),
@@ -19413,7 +18856,7 @@ module.exports = DataView;
 
 
 /***/ }),
-/* 189 */
+/* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(16),
@@ -19426,7 +18869,7 @@ module.exports = Promise;
 
 
 /***/ }),
-/* 190 */
+/* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(16),
@@ -19439,7 +18882,7 @@ module.exports = WeakMap;
 
 
 /***/ }),
-/* 191 */
+/* 189 */
 /***/ (function(module, exports) {
 
 /** Used for built-in method references. */
@@ -19471,15 +18914,15 @@ module.exports = initCloneArray;
 
 
 /***/ }),
-/* 192 */
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var cloneArrayBuffer = __webpack_require__(70),
-    cloneDataView = __webpack_require__(193),
-    cloneMap = __webpack_require__(194),
-    cloneRegExp = __webpack_require__(196),
-    cloneSet = __webpack_require__(197),
-    cloneSymbol = __webpack_require__(199),
+    cloneDataView = __webpack_require__(191),
+    cloneMap = __webpack_require__(192),
+    cloneRegExp = __webpack_require__(194),
+    cloneSet = __webpack_require__(195),
+    cloneSymbol = __webpack_require__(197),
     cloneTypedArray = __webpack_require__(107);
 
 /** `Object#toString` result references. */
@@ -19557,7 +19000,7 @@ module.exports = initCloneByTag;
 
 
 /***/ }),
-/* 193 */
+/* 191 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var cloneArrayBuffer = __webpack_require__(70);
@@ -19579,10 +19022,10 @@ module.exports = cloneDataView;
 
 
 /***/ }),
-/* 194 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var addMapEntry = __webpack_require__(195),
+var addMapEntry = __webpack_require__(193),
     arrayReduce = __webpack_require__(105),
     mapToArray = __webpack_require__(106);
 
@@ -19607,7 +19050,7 @@ module.exports = cloneMap;
 
 
 /***/ }),
-/* 195 */
+/* 193 */
 /***/ (function(module, exports) {
 
 /**
@@ -19628,7 +19071,7 @@ module.exports = addMapEntry;
 
 
 /***/ }),
-/* 196 */
+/* 194 */
 /***/ (function(module, exports) {
 
 /** Used to match `RegExp` flags from their coerced string values. */
@@ -19651,10 +19094,10 @@ module.exports = cloneRegExp;
 
 
 /***/ }),
-/* 197 */
+/* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var addSetEntry = __webpack_require__(198),
+var addSetEntry = __webpack_require__(196),
     arrayReduce = __webpack_require__(105),
     setToArray = __webpack_require__(44);
 
@@ -19679,7 +19122,7 @@ module.exports = cloneSet;
 
 
 /***/ }),
-/* 198 */
+/* 196 */
 /***/ (function(module, exports) {
 
 /**
@@ -19700,7 +19143,7 @@ module.exports = addSetEntry;
 
 
 /***/ }),
-/* 199 */
+/* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Symbol = __webpack_require__(20);
@@ -19724,7 +19167,7 @@ module.exports = cloneSymbol;
 
 
 /***/ }),
-/* 200 */
+/* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(7);
@@ -19760,12 +19203,12 @@ module.exports = baseCreate;
 
 
 /***/ }),
-/* 201 */
+/* 199 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var castPath = __webpack_require__(23),
-    last = __webpack_require__(205),
-    parent = __webpack_require__(206),
+    last = __webpack_require__(203),
+    parent = __webpack_require__(204),
     toKey = __webpack_require__(24);
 
 /**
@@ -19786,10 +19229,10 @@ module.exports = baseUnset;
 
 
 /***/ }),
-/* 202 */
+/* 200 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var memoizeCapped = __webpack_require__(203);
+var memoizeCapped = __webpack_require__(201);
 
 /** Used to match property names within property paths. */
 var reLeadingDot = /^\./,
@@ -19820,10 +19263,10 @@ module.exports = stringToPath;
 
 
 /***/ }),
-/* 203 */
+/* 201 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var memoize = __webpack_require__(204);
+var memoize = __webpack_require__(202);
 
 /** Used as the maximum memoize cache size. */
 var MAX_MEMOIZE_SIZE = 500;
@@ -19852,7 +19295,7 @@ module.exports = memoizeCapped;
 
 
 /***/ }),
-/* 204 */
+/* 202 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var MapCache = __webpack_require__(58);
@@ -19931,7 +19374,7 @@ module.exports = memoize;
 
 
 /***/ }),
-/* 205 */
+/* 203 */
 /***/ (function(module, exports) {
 
 /**
@@ -19957,7 +19400,7 @@ module.exports = last;
 
 
 /***/ }),
-/* 206 */
+/* 204 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseGet = __webpack_require__(45),
@@ -19979,7 +19422,7 @@ module.exports = parent;
 
 
 /***/ }),
-/* 207 */
+/* 205 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isPlainObject = __webpack_require__(72);
@@ -20001,7 +19444,7 @@ module.exports = customOmitClone;
 
 
 /***/ }),
-/* 208 */
+/* 206 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseFlatten = __webpack_require__(46);
@@ -20029,7 +19472,7 @@ module.exports = flatten;
 
 
 /***/ }),
-/* 209 */
+/* 207 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Symbol = __webpack_require__(20),
@@ -20055,10 +19498,10 @@ module.exports = isFlattenable;
 
 
 /***/ }),
-/* 210 */
+/* 208 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var constant = __webpack_require__(211),
+var constant = __webpack_require__(209),
     defineProperty = __webpack_require__(91),
     identity = __webpack_require__(73);
 
@@ -20083,7 +19526,7 @@ module.exports = baseSetToString;
 
 
 /***/ }),
-/* 211 */
+/* 209 */
 /***/ (function(module, exports) {
 
 /**
@@ -20115,7 +19558,7 @@ module.exports = constant;
 
 
 /***/ }),
-/* 212 */
+/* 210 */
 /***/ (function(module, exports) {
 
 /** Used to detect hot functions by number of calls within a span of milliseconds. */
@@ -20158,7 +19601,7 @@ module.exports = shortOut;
 
 
 /***/ }),
-/* 213 */
+/* 211 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isArray = __webpack_require__(5);
@@ -20208,7 +19651,7 @@ module.exports = castArray;
 
 
 /***/ }),
-/* 214 */
+/* 212 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20309,18 +19752,18 @@ var resolveAdapter = exports.resolveAdapter = function () {
   };
 }();
 
-var _iosAdapter = __webpack_require__(215);
+var _iosAdapter = __webpack_require__(213);
 
-var _windowsAdapter = __webpack_require__(216);
+var _windowsAdapter = __webpack_require__(214);
 
-var _androidAdapter = __webpack_require__(217);
+var _androidAdapter = __webpack_require__(215);
 
-var _emscriptenAdapter = __webpack_require__(218);
+var _emscriptenAdapter = __webpack_require__(216);
 
-var _mockAdapter = __webpack_require__(219);
+var _mockAdapter = __webpack_require__(217);
 
 /***/ }),
-/* 215 */
+/* 213 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20465,7 +19908,7 @@ function createIosAdapter(window, coreInterface) {
 }
 
 /***/ }),
-/* 216 */
+/* 214 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20577,7 +20020,7 @@ function createWindowsAdapter(window, coreInterface) {
 }
 
 /***/ }),
-/* 217 */
+/* 215 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20770,7 +20213,7 @@ function createAndroidAdapter(window, coreInterface) {
 }
 
 /***/ }),
-/* 218 */
+/* 216 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20827,7 +20270,7 @@ function createEmscriptenAdapter(window, coreInterface) {
               }
 
               _context.next = 4;
-              return window.Module.init({ appId: _config2.default.appId });
+              return window.Module.init(_config2.default);
 
             case 4:
 
@@ -20990,7 +20433,17 @@ function createEmscriptenAdapter(window, coreInterface) {
       return relativeUrl;
     }
 
-    return '';
+    if (!urlCache[relativeUrl]) {
+      var URL = window.URL;
+
+
+      var relativePath = relativeUrl.replace(/^\//, '');
+      var blob = getBlob(relativePath);
+
+      urlCache[relativeUrl] = blob ? URL.createObjectURL(blob) : '';
+    }
+
+    return urlCache[relativeUrl];
   }
 
   function getBlob(path) {
@@ -21137,7 +20590,7 @@ function createEmscriptenAdapter(window, coreInterface) {
 }
 
 /***/ }),
-/* 219 */
+/* 217 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21151,7 +20604,7 @@ var _bluebird = __webpack_require__(0);
 
 exports.createMockAdapter = createMockAdapter;
 
-var _mockCalls = __webpack_require__(220);
+var _mockCalls = __webpack_require__(218);
 
 var _mockCalls2 = _interopRequireDefault(_mockCalls);
 
@@ -21245,7 +20698,7 @@ function createMockAdapter(window, coreInterface, viewarApi) {
 }
 
 /***/ }),
-/* 220 */
+/* 218 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22656,7 +22109,7 @@ function addMockCalls(_ref) {
 }
 
 /***/ }),
-/* 221 */
+/* 219 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22676,7 +22129,7 @@ var _utils = __webpack_require__(6);
 
 var _constants = __webpack_require__(4);
 
-var _coherent = __webpack_require__(222);
+var _coherent = __webpack_require__(220);
 
 var _appConfig = __webpack_require__(19);
 
@@ -22858,7 +22311,7 @@ function createUwpInterface(_ref) {
 }
 
 /***/ }),
-/* 222 */
+/* 220 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23175,7 +22628,7 @@ function createEngine(global, engine, hasOnLoad) {
 }
 
 /***/ }),
-/* 223 */
+/* 221 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23193,7 +22646,7 @@ var _global = __webpack_require__(47);
 
 var _global2 = _interopRequireDefault(_global);
 
-var _dummyLogger = __webpack_require__(224);
+var _dummyLogger = __webpack_require__(222);
 
 var _dummyLogger2 = _interopRequireDefault(_dummyLogger);
 
@@ -23357,7 +22810,7 @@ exports.default = _global2.default && _global2.default.document ? createDomLogge
 }) : _dummyLogger2.default;
 
 /***/ }),
-/* 224 */
+/* 222 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23374,13 +22827,13 @@ exports.default = {
 };
 
 /***/ }),
-/* 225 */
+/* 223 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Stack = __webpack_require__(35),
     equalArrays = __webpack_require__(116),
-    equalByTag = __webpack_require__(229),
-    equalObjects = __webpack_require__(230),
+    equalByTag = __webpack_require__(227),
+    equalObjects = __webpack_require__(228),
     getTag = __webpack_require__(102),
     isArray = __webpack_require__(5),
     isBuffer = __webpack_require__(42),
@@ -23463,7 +22916,7 @@ module.exports = baseIsEqualDeep;
 
 
 /***/ }),
-/* 226 */
+/* 224 */
 /***/ (function(module, exports) {
 
 /** Used to stand-in for `undefined` hash values. */
@@ -23488,7 +22941,7 @@ module.exports = setCacheAdd;
 
 
 /***/ }),
-/* 227 */
+/* 225 */
 /***/ (function(module, exports) {
 
 /**
@@ -23508,7 +22961,7 @@ module.exports = setCacheHas;
 
 
 /***/ }),
-/* 228 */
+/* 226 */
 /***/ (function(module, exports) {
 
 /**
@@ -23537,7 +22990,7 @@ module.exports = arraySome;
 
 
 /***/ }),
-/* 229 */
+/* 227 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Symbol = __webpack_require__(20),
@@ -23655,7 +23108,7 @@ module.exports = equalByTag;
 
 
 /***/ }),
-/* 230 */
+/* 228 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var getAllKeys = __webpack_require__(99);
@@ -23750,7 +23203,7 @@ module.exports = equalObjects;
 
 
 /***/ }),
-/* 231 */
+/* 229 */
 /***/ (function(module, exports) {
 
 /**
@@ -23778,7 +23231,7 @@ module.exports = isUndefined;
 
 
 /***/ }),
-/* 232 */
+/* 230 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var copyObject = __webpack_require__(17),
@@ -23822,7 +23275,7 @@ module.exports = assignInWith;
 
 
 /***/ }),
-/* 233 */
+/* 231 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var eq = __webpack_require__(21),
@@ -23858,7 +23311,7 @@ module.exports = isIterateeCall;
 
 
 /***/ }),
-/* 234 */
+/* 232 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var eq = __webpack_require__(21);
@@ -23893,7 +23346,7 @@ module.exports = customDefaultsAssignIn;
 
 
 /***/ }),
-/* 235 */
+/* 233 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23912,7 +23365,7 @@ function fail(error) {
 }
 
 /***/ }),
-/* 236 */
+/* 234 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23936,7 +23389,7 @@ function createNamespace() {
 }
 
 /***/ }),
-/* 237 */
+/* 235 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24038,7 +23491,7 @@ function analyzeNodes(parent, oldScene, newScene) {
 }
 
 /***/ }),
-/* 238 */
+/* 236 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24054,15 +23507,15 @@ var _simpleModel = __webpack_require__(120);
 
 var _simpleModel2 = _interopRequireDefault(_simpleModel);
 
-var _assemblyModel = __webpack_require__(292);
+var _assemblyModel = __webpack_require__(290);
 
 var _assemblyModel2 = _interopRequireDefault(_assemblyModel);
 
-var _configurableModel = __webpack_require__(294);
+var _configurableModel = __webpack_require__(292);
 
 var _configurableModel2 = _interopRequireDefault(_configurableModel);
 
-var _referenceModel = __webpack_require__(310);
+var _referenceModel = __webpack_require__(308);
 
 var _referenceModel2 = _interopRequireDefault(_referenceModel);
 
@@ -24090,7 +23543,7 @@ var Model = function Model(props, model) {
 exports.default = (0, _compose.compose)(Model);
 
 /***/ }),
-/* 239 */
+/* 237 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24289,7 +23742,7 @@ exports.default = (0, _compose.compose)((0, _compose.injectProps)({
  */
 
 /***/ }),
-/* 240 */
+/* 238 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24313,13 +23766,13 @@ function deprecate(fn, msg) {
 }
 
 /***/ }),
-/* 241 */
+/* 239 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayMap = __webpack_require__(14),
-    baseIntersection = __webpack_require__(242),
+    baseIntersection = __webpack_require__(240),
     baseRest = __webpack_require__(26),
-    castArrayLikeObject = __webpack_require__(246);
+    castArrayLikeObject = __webpack_require__(244);
 
 /**
  * Creates an array of unique values that are included in all given arrays
@@ -24349,7 +23802,7 @@ module.exports = intersection;
 
 
 /***/ }),
-/* 242 */
+/* 240 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var SetCache = __webpack_require__(48),
@@ -24429,7 +23882,7 @@ module.exports = baseIntersection;
 
 
 /***/ }),
-/* 243 */
+/* 241 */
 /***/ (function(module, exports) {
 
 /**
@@ -24459,7 +23912,7 @@ module.exports = baseFindIndex;
 
 
 /***/ }),
-/* 244 */
+/* 242 */
 /***/ (function(module, exports) {
 
 /**
@@ -24477,7 +23930,7 @@ module.exports = baseIsNaN;
 
 
 /***/ }),
-/* 245 */
+/* 243 */
 /***/ (function(module, exports) {
 
 /**
@@ -24506,7 +23959,7 @@ module.exports = strictIndexOf;
 
 
 /***/ }),
-/* 246 */
+/* 244 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isArrayLikeObject = __webpack_require__(31);
@@ -24526,7 +23979,7 @@ module.exports = castArrayLikeObject;
 
 
 /***/ }),
-/* 247 */
+/* 245 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseDifference = __webpack_require__(123),
@@ -24565,12 +24018,12 @@ module.exports = difference;
 
 
 /***/ }),
-/* 248 */
+/* 246 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayFilter = __webpack_require__(67),
     baseRest = __webpack_require__(26),
-    baseXor = __webpack_require__(249),
+    baseXor = __webpack_require__(247),
     isArrayLikeObject = __webpack_require__(31);
 
 /**
@@ -24599,7 +24052,7 @@ module.exports = xor;
 
 
 /***/ }),
-/* 249 */
+/* 247 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseDifference = __webpack_require__(123),
@@ -24641,11 +24094,11 @@ module.exports = baseXor;
 
 
 /***/ }),
-/* 250 */
+/* 248 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Set = __webpack_require__(103),
-    noop = __webpack_require__(251),
+    noop = __webpack_require__(249),
     setToArray = __webpack_require__(44);
 
 /** Used as references for various `Number` constants. */
@@ -24666,7 +24119,7 @@ module.exports = createSet;
 
 
 /***/ }),
-/* 251 */
+/* 249 */
 /***/ (function(module, exports) {
 
 /**
@@ -24689,7 +24142,7 @@ module.exports = noop;
 
 
 /***/ }),
-/* 252 */
+/* 250 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24700,9 +24153,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.createParser = createParser;
 
-var _nearley = __webpack_require__(253);
+var _nearley = __webpack_require__(251);
 
-var _grammar = __webpack_require__(254);
+var _grammar = __webpack_require__(252);
 
 var _grammar2 = _interopRequireDefault(_grammar);
 
@@ -24713,7 +24166,7 @@ function createParser() {
 }
 
 /***/ }),
-/* 253 */
+/* 251 */
 /***/ (function(module, exports) {
 
 (function(root, factory) {
@@ -25112,7 +24565,7 @@ return {
 
 
 /***/ }),
-/* 254 */
+/* 252 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25604,7 +25057,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 })();
 
 /***/ }),
-/* 255 */
+/* 253 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25617,11 +25070,11 @@ exports.Pattern = undefined;
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-var _zip = __webpack_require__(256);
+var _zip = __webpack_require__(254);
 
 var _zip2 = _interopRequireDefault(_zip);
 
-var _trim = __webpack_require__(258);
+var _trim = __webpack_require__(256);
 
 var _trim2 = _interopRequireDefault(_trim);
 
@@ -25679,11 +25132,11 @@ var Pattern = exports.Pattern = function Pattern(_ref, pattern) {
 exports.default = (0, _compose.compose)(Pattern);
 
 /***/ }),
-/* 256 */
+/* 254 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseRest = __webpack_require__(26),
-    unzip = __webpack_require__(257);
+    unzip = __webpack_require__(255);
 
 /**
  * Creates an array of grouped elements, the first of which contains the
@@ -25707,7 +25160,7 @@ module.exports = zip;
 
 
 /***/ }),
-/* 257 */
+/* 255 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayFilter = __webpack_require__(67),
@@ -25758,14 +25211,14 @@ module.exports = unzip;
 
 
 /***/ }),
-/* 258 */
+/* 256 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseToString = __webpack_require__(86),
-    castSlice = __webpack_require__(259),
-    charsEndIndex = __webpack_require__(260),
-    charsStartIndex = __webpack_require__(261),
-    stringToArray = __webpack_require__(262),
+    castSlice = __webpack_require__(257),
+    charsEndIndex = __webpack_require__(258),
+    charsStartIndex = __webpack_require__(259),
+    stringToArray = __webpack_require__(260),
     toString = __webpack_require__(33);
 
 /** Used to match leading and trailing whitespace. */
@@ -25813,7 +25266,7 @@ module.exports = trim;
 
 
 /***/ }),
-/* 259 */
+/* 257 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseSlice = __webpack_require__(109);
@@ -25837,7 +25290,7 @@ module.exports = castSlice;
 
 
 /***/ }),
-/* 260 */
+/* 258 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseIndexOf = __webpack_require__(78);
@@ -25862,7 +25315,7 @@ module.exports = charsEndIndex;
 
 
 /***/ }),
-/* 261 */
+/* 259 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseIndexOf = __webpack_require__(78);
@@ -25888,12 +25341,12 @@ module.exports = charsStartIndex;
 
 
 /***/ }),
-/* 262 */
+/* 260 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var asciiToArray = __webpack_require__(263),
-    hasUnicode = __webpack_require__(264),
-    unicodeToArray = __webpack_require__(265);
+var asciiToArray = __webpack_require__(261),
+    hasUnicode = __webpack_require__(262),
+    unicodeToArray = __webpack_require__(263);
 
 /**
  * Converts `string` to an array.
@@ -25912,7 +25365,7 @@ module.exports = stringToArray;
 
 
 /***/ }),
-/* 263 */
+/* 261 */
 /***/ (function(module, exports) {
 
 /**
@@ -25930,7 +25383,7 @@ module.exports = asciiToArray;
 
 
 /***/ }),
-/* 264 */
+/* 262 */
 /***/ (function(module, exports) {
 
 /** Used to compose unicode character classes. */
@@ -25962,7 +25415,7 @@ module.exports = hasUnicode;
 
 
 /***/ }),
-/* 265 */
+/* 263 */
 /***/ (function(module, exports) {
 
 /** Used to compose unicode character classes. */
@@ -26008,7 +25461,7 @@ module.exports = unicodeToArray;
 
 
 /***/ }),
-/* 266 */
+/* 264 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26090,7 +25543,7 @@ exports.default = (0, _assign2.default)((0, _compose.compose)((0, _compose.defau
 }), Range), fromRangeExpression);
 
 /***/ }),
-/* 267 */
+/* 265 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26140,7 +25593,7 @@ var Property = exports.Property = function Property(_ref, property) {
 exports.default = (0, _compose.compose)(Property);
 
 /***/ }),
-/* 268 */
+/* 266 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26172,7 +25625,7 @@ var NullProperty = exports.NullProperty = function NullProperty(props, nullPrope
 exports.default = NullProperty;
 
 /***/ }),
-/* 269 */
+/* 267 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26218,7 +25671,7 @@ var MaterialProperty = exports.MaterialProperty = function MaterialProperty(prop
 exports.default = MaterialProperty;
 
 /***/ }),
-/* 270 */
+/* 268 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26267,7 +25720,7 @@ var PartProperty = exports.PartProperty = function PartProperty(props, partPrope
 exports.default = PartProperty;
 
 /***/ }),
-/* 271 */
+/* 269 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26309,7 +25762,7 @@ var GeometricProperty = exports.GeometricProperty = function GeometricProperty(p
 exports.default = GeometricProperty;
 
 /***/ }),
-/* 272 */
+/* 270 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26320,7 +25773,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.RangeProperty = undefined;
 
-var _isInteger = __webpack_require__(273);
+var _isInteger = __webpack_require__(271);
 
 var _isInteger2 = _interopRequireDefault(_isInteger);
 
@@ -26332,7 +25785,7 @@ var _isObject = __webpack_require__(7);
 
 var _isObject2 = _interopRequireDefault(_isObject);
 
-var _compact = __webpack_require__(277);
+var _compact = __webpack_require__(275);
 
 var _compact2 = _interopRequireDefault(_compact);
 
@@ -26614,10 +26067,10 @@ var RangeProperty = exports.RangeProperty = function RangeProperty(_ref, rangePr
 exports.default = RangeProperty;
 
 /***/ }),
-/* 273 */
+/* 271 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var toInteger = __webpack_require__(274);
+var toInteger = __webpack_require__(272);
 
 /**
  * Checks if `value` is an integer.
@@ -26653,10 +26106,10 @@ module.exports = isInteger;
 
 
 /***/ }),
-/* 274 */
+/* 272 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var toFinite = __webpack_require__(275);
+var toFinite = __webpack_require__(273);
 
 /**
  * Converts `value` to an integer.
@@ -26695,10 +26148,10 @@ module.exports = toInteger;
 
 
 /***/ }),
-/* 275 */
+/* 273 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var toNumber = __webpack_require__(276);
+var toNumber = __webpack_require__(274);
 
 /** Used as references for various `Number` constants. */
 var INFINITY = 1 / 0,
@@ -26743,7 +26196,7 @@ module.exports = toFinite;
 
 
 /***/ }),
-/* 276 */
+/* 274 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(7),
@@ -26815,7 +26268,7 @@ module.exports = toNumber;
 
 
 /***/ }),
-/* 277 */
+/* 275 */
 /***/ (function(module, exports) {
 
 /**
@@ -26852,7 +26305,7 @@ module.exports = compact;
 
 
 /***/ }),
-/* 278 */
+/* 276 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26965,7 +26418,7 @@ var EnumeratedProperty = exports.EnumeratedProperty = function EnumeratedPropert
 exports.default = EnumeratedProperty;
 
 /***/ }),
-/* 279 */
+/* 277 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26982,7 +26435,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-var _isNil = __webpack_require__(280);
+var _isNil = __webpack_require__(278);
 
 var _isNil2 = _interopRequireDefault(_isNil);
 
@@ -26994,7 +26447,7 @@ var _mergeWith3 = __webpack_require__(128);
 
 var _mergeWith4 = _interopRequireDefault(_mergeWith3);
 
-var _pick = __webpack_require__(285);
+var _pick = __webpack_require__(283);
 
 var _pick2 = _interopRequireDefault(_pick);
 
@@ -27423,7 +26876,7 @@ exports.default = (0, _compose.compose)((0, _compose.injectProps)({
  */
 
 /***/ }),
-/* 280 */
+/* 278 */
 /***/ (function(module, exports) {
 
 /**
@@ -27454,13 +26907,13 @@ module.exports = isNil;
 
 
 /***/ }),
-/* 281 */
+/* 279 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Stack = __webpack_require__(35),
     assignMergeValue = __webpack_require__(129),
     baseFor = __webpack_require__(130),
-    baseMergeDeep = __webpack_require__(283),
+    baseMergeDeep = __webpack_require__(281),
     isObject = __webpack_require__(7),
     keysIn = __webpack_require__(29);
 
@@ -27501,7 +26954,7 @@ module.exports = baseMerge;
 
 
 /***/ }),
-/* 282 */
+/* 280 */
 /***/ (function(module, exports) {
 
 /**
@@ -27532,7 +26985,7 @@ module.exports = createBaseFor;
 
 
 /***/ }),
-/* 283 */
+/* 281 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var assignMergeValue = __webpack_require__(129),
@@ -27548,7 +27001,7 @@ var assignMergeValue = __webpack_require__(129),
     isObject = __webpack_require__(7),
     isPlainObject = __webpack_require__(72),
     isTypedArray = __webpack_require__(62),
-    toPlainObject = __webpack_require__(284);
+    toPlainObject = __webpack_require__(282);
 
 /**
  * A specialized version of `baseMerge` for arrays and objects which performs
@@ -27631,7 +27084,7 @@ module.exports = baseMergeDeep;
 
 
 /***/ }),
-/* 284 */
+/* 282 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var copyObject = __webpack_require__(17),
@@ -27669,10 +27122,10 @@ module.exports = toPlainObject;
 
 
 /***/ }),
-/* 285 */
+/* 283 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var basePick = __webpack_require__(286),
+var basePick = __webpack_require__(284),
     flatRest = __webpack_require__(110);
 
 /**
@@ -27700,10 +27153,10 @@ module.exports = pick;
 
 
 /***/ }),
-/* 286 */
+/* 284 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var basePickBy = __webpack_require__(287),
+var basePickBy = __webpack_require__(285),
     hasIn = __webpack_require__(131);
 
 /**
@@ -27725,11 +27178,11 @@ module.exports = basePick;
 
 
 /***/ }),
-/* 287 */
+/* 285 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseGet = __webpack_require__(45),
-    baseSet = __webpack_require__(288),
+    baseSet = __webpack_require__(286),
     castPath = __webpack_require__(23);
 
 /**
@@ -27761,7 +27214,7 @@ module.exports = basePickBy;
 
 
 /***/ }),
-/* 288 */
+/* 286 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var assignValue = __webpack_require__(59),
@@ -27814,7 +27267,7 @@ module.exports = baseSet;
 
 
 /***/ }),
-/* 289 */
+/* 287 */
 /***/ (function(module, exports) {
 
 /**
@@ -27833,7 +27286,7 @@ module.exports = baseHasIn;
 
 
 /***/ }),
-/* 290 */
+/* 288 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var castPath = __webpack_require__(23),
@@ -27878,7 +27331,7 @@ module.exports = hasPath;
 
 
 /***/ }),
-/* 291 */
+/* 289 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28010,7 +27463,7 @@ exports.default = (0, _compose.compose)((0, _compose.injectProps)({
 }), _emitter2.default, Video);
 
 /***/ }),
-/* 292 */
+/* 290 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28051,7 +27504,7 @@ var _shared = __webpack_require__(10);
 
 var _shared2 = _interopRequireDefault(_shared);
 
-var _assemblyInstance = __webpack_require__(293);
+var _assemblyInstance = __webpack_require__(291);
 
 var _assemblyInstance2 = _interopRequireDefault(_assemblyInstance);
 
@@ -28311,7 +27764,7 @@ var update = exports.update = function update(_ref8) {
   return (0, _bluebird.method)(function () {});
 };
 
-var createInstance = exports.createInstance = function createInstance(_ref10, model) {
+var createInstance = exports.createInstance = function createInstance(_ref10, assemblyModel) {
   var fetchData = _ref10.fetchData,
       coreInterface = _ref10.coreInterface,
       fetchModelFromRepository = _ref10.fetchModelFromRepository,
@@ -28332,7 +27785,7 @@ var createInstance = exports.createInstance = function createInstance(_ref10, mo
             case 2:
               _ref12 = _context4.sent;
               content = _ref12.content;
-              id = (0, _generateId2.default)();
+              id = assemblyModel.id + ':' + (0, _generateId2.default)();
               containerProxy = createContainer(_extends({ id: id }, instantiationParams));
               assembly = (0, _assemblyInstance2.default)(_extends({ id: id, content: content, containerProxy: containerProxy, coreInterface: coreInterface, model: model }, instantiationParams));
 
@@ -28381,7 +27834,7 @@ exports.default = (0, _compose.compose)((0, _compose.requireProps)({
 }), _modelBase2.default);
 
 /***/ }),
-/* 293 */
+/* 291 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28639,7 +28092,7 @@ exports.default = (0, _compose.compose)((0, _compose.injectProps)({
 }), _sceneNode2.default, AssemblyInstance);
 
 /***/ }),
-/* 294 */
+/* 292 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28690,7 +28143,7 @@ var _shared = __webpack_require__(10);
 
 var _shared2 = _interopRequireDefault(_shared);
 
-var _configurableInstance = __webpack_require__(308);
+var _configurableInstance = __webpack_require__(306);
 
 var _configurableInstance2 = _interopRequireDefault(_configurableInstance);
 
@@ -29101,10 +28554,11 @@ var addMaterialThumbnails = function () {
                             return option.id === key;
                           });
                           if (materialOption) {
+                            var materialSystem = material.materialSystem;
                             var thumb = materialOption.thumb;
-                            var resourcePackId = thumb.split('_')[0];
+                            var resourcePackId = materialOption.resource || thumb.split('_')[1];
 
-                            option.imageUrl = coreInterface.resolveUrl('/Models/Resources/' + resourcePackId + '/' + thumb);
+                            option.imageUrl = !materialSystem || materialSystem === '1.0' ? coreInterface.resolveUrl('/Models/Resources/' + resourcePackId + '/' + thumb) : coreInterface.resolveUrl('/ResourceThumbnails/' + thumb);
                           } else {
                             console.warn('ViewAR API: Warning! Material option "' + key + '" for material property "' + property.name + '" not found! Can\'t set option thumbnail.');
                           }
@@ -29188,7 +28642,7 @@ var createInstance = exports.createInstance = function createInstance(props, con
             case 11:
               setPropertyValues(properties, instantiationParams.propertyValues, configurationDescription.preset);
 
-              id = instantiationParams.id || (0, _generateId2.default)();
+              id = instantiationParams.id || configurableModel.id + ':' + (0, _generateId2.default)();
               containerProxy = Container(_extends({}, instantiationParams, { id: id }));
               instance = ConfigurableInstance(_extends({}, instantiationParams, {
                 id: id,
@@ -29249,12 +28703,12 @@ exports.default = (0, _compose.compose)((0, _compose.requireProps)({
 }), _modelBase2.default);
 
 /***/ }),
-/* 295 */
+/* 293 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayMap = __webpack_require__(14),
-    baseIteratee = __webpack_require__(296),
-    baseMap = __webpack_require__(304),
+    baseIteratee = __webpack_require__(294),
+    baseMap = __webpack_require__(302),
     isArray = __webpack_require__(5);
 
 /**
@@ -29308,14 +28762,14 @@ module.exports = map;
 
 
 /***/ }),
-/* 296 */
+/* 294 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseMatches = __webpack_require__(297),
-    baseMatchesProperty = __webpack_require__(300),
+var baseMatches = __webpack_require__(295),
+    baseMatchesProperty = __webpack_require__(298),
     identity = __webpack_require__(73),
     isArray = __webpack_require__(5),
-    property = __webpack_require__(302);
+    property = __webpack_require__(300);
 
 /**
  * The base implementation of `_.iteratee`.
@@ -29345,11 +28799,11 @@ module.exports = baseIteratee;
 
 
 /***/ }),
-/* 297 */
+/* 295 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsMatch = __webpack_require__(298),
-    getMatchData = __webpack_require__(299),
+var baseIsMatch = __webpack_require__(296),
+    getMatchData = __webpack_require__(297),
     matchesStrictComparable = __webpack_require__(134);
 
 /**
@@ -29373,7 +28827,7 @@ module.exports = baseMatches;
 
 
 /***/ }),
-/* 298 */
+/* 296 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Stack = __webpack_require__(35),
@@ -29441,7 +28895,7 @@ module.exports = baseIsMatch;
 
 
 /***/ }),
-/* 299 */
+/* 297 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isStrictComparable = __webpack_require__(133),
@@ -29471,11 +28925,11 @@ module.exports = getMatchData;
 
 
 /***/ }),
-/* 300 */
+/* 298 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseIsEqual = __webpack_require__(75),
-    get = __webpack_require__(301),
+    get = __webpack_require__(299),
     hasIn = __webpack_require__(131),
     isKey = __webpack_require__(71),
     isStrictComparable = __webpack_require__(133),
@@ -29510,7 +28964,7 @@ module.exports = baseMatchesProperty;
 
 
 /***/ }),
-/* 301 */
+/* 299 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseGet = __webpack_require__(45);
@@ -29549,11 +29003,11 @@ module.exports = get;
 
 
 /***/ }),
-/* 302 */
+/* 300 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseProperty = __webpack_require__(126),
-    basePropertyDeep = __webpack_require__(303),
+    basePropertyDeep = __webpack_require__(301),
     isKey = __webpack_require__(71),
     toKey = __webpack_require__(24);
 
@@ -29587,7 +29041,7 @@ module.exports = property;
 
 
 /***/ }),
-/* 303 */
+/* 301 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseGet = __webpack_require__(45);
@@ -29609,10 +29063,10 @@ module.exports = basePropertyDeep;
 
 
 /***/ }),
-/* 304 */
+/* 302 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseEach = __webpack_require__(305),
+var baseEach = __webpack_require__(303),
     isArrayLike = __webpack_require__(22);
 
 /**
@@ -29637,11 +29091,11 @@ module.exports = baseMap;
 
 
 /***/ }),
-/* 305 */
+/* 303 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseForOwn = __webpack_require__(306),
-    createBaseEach = __webpack_require__(307);
+var baseForOwn = __webpack_require__(304),
+    createBaseEach = __webpack_require__(305);
 
 /**
  * The base implementation of `_.forEach` without support for iteratee shorthands.
@@ -29657,7 +29111,7 @@ module.exports = baseEach;
 
 
 /***/ }),
-/* 306 */
+/* 304 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseFor = __webpack_require__(130),
@@ -29679,7 +29133,7 @@ module.exports = baseForOwn;
 
 
 /***/ }),
-/* 307 */
+/* 305 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isArrayLike = __webpack_require__(22);
@@ -29717,7 +29171,7 @@ module.exports = createBaseEach;
 
 
 /***/ }),
-/* 308 */
+/* 306 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29770,7 +29224,7 @@ var _constants = __webpack_require__(4);
 
 var _utils = __webpack_require__(6);
 
-var _valueCombinationIterator = __webpack_require__(309);
+var _valueCombinationIterator = __webpack_require__(307);
 
 var _valueCombinationIterator2 = _interopRequireDefault(_valueCombinationIterator);
 
@@ -29786,19 +29240,26 @@ var ConfigurableInstance = exports.ConfigurableInstance = (0, _compose.compose)(
           _ref7$propertyValues = _ref7.propertyValues,
           propertyValues = _ref7$propertyValues === undefined ? {} : _ref7$propertyValues;
 
-      var oldInstances, instancesByModelId, models, parent, pose, previousInstances, usedSnappingPoints, _iteratorNormalCompletion3, _didIteratorError3, _iteratorError3, _iterator3, _step3, _model, plugPoint, _getMatchingSnappingP, socketInstance, socketPoint, instance, connectionName, _connectionName, _instance;
+      var oldInstances, models, parent, pose, previousInstances, usedSnappingPoints, _iteratorNormalCompletion3, _didIteratorError3, _iteratorError3, _iterator3, _step3, _model, plugPoint, _getMatchingSnappingP, socketInstance, socketPoint, connectionName;
 
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               oldInstances = [].concat(_toConsumableArray(containerProxy.children));
-              instancesByModelId = {};
+              _context.next = 3;
+              return (0, _bluebird.all)(oldInstances.map(function () {
+                var _ref8 = (0, _bluebird.method)(function (unusedInstance) {
+                  getSharedInterface(containerProxy).removeChild(unusedInstance);
+                  return getSharedInterface(unusedInstance).remove();
+                });
 
-              oldInstances.forEach(function (instance) {
-                return (instancesByModelId[instance.model.id] = instancesByModelId[instance.model.id] || []).push(instance);
-              });
+                return function (_x3) {
+                  return _ref8.apply(this, arguments);
+                };
+              }()));
 
+            case 3:
               models = parts.map(function (key) {
                 return partsByKey[key] || console.warn('ViewAR API: Warning! Missing part foreign key: ' + key + ' for model ' + model.id + ' (' + model.name + ')!');
               }).filter(function (model) {
@@ -29816,7 +29277,7 @@ var ConfigurableInstance = exports.ConfigurableInstance = (0, _compose.compose)(
 
             case 13:
               if (_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done) {
-                _context.next = 56;
+                _context.next = 37;
                 break;
               }
 
@@ -29828,133 +29289,81 @@ var ConfigurableInstance = exports.ConfigurableInstance = (0, _compose.compose)(
               plugPoint = getFirstSnappingPoint({ model: _model });
               _getMatchingSnappingP = getMatchingSnappingPoint(plugPoint, usedSnappingPoints, previousInstances), socketInstance = _getMatchingSnappingP.socketInstance, socketPoint = _getMatchingSnappingP.socketPoint;
 
-              if (!(instancesByModelId[_model.id] && instancesByModelId[_model.id].length)) {
-                _context.next = 35;
-                break;
-              }
-
-              instance = instancesByModelId[_model.id].pop();
-
               if (!(plugPoint && socketPoint)) {
-                _context.next = 28;
+                _context.next = 29;
                 break;
               }
 
               connectionName = plugPoint.plugs[0].connection;
+
+              usedSnappingPoints.push(socketPoint);
+              _context.t0 = previousInstances;
               _context.next = 25;
-              return coreInterface.call('snapTo', instance.id, plugPoint.name, socketInstance.id, socketPoint.name, connectionName);
+              return getSharedInterface(_model).instantiate({ propertyValues: propertyValues, parent: parent, pose: pose }, { snapTo: connectionName });
 
             case 25:
-              usedSnappingPoints.push(socketPoint);
-              _context.next = 30;
-              break;
-
-            case 28:
-              _context.next = 30;
-              return instance.setPose(pose);
-
-            case 30:
-              _context.next = 32;
-              return instance.setPropertyValues(propertyValues);
-
-            case 32:
-              previousInstances.push(instance);
-              _context.next = 53;
-              break;
-
-            case 35:
-              if (!(plugPoint && socketPoint)) {
-                _context.next = 48;
-                break;
-              }
-
-              _connectionName = plugPoint.plugs[0].connection;
-              _context.next = 39;
-              return getSharedInterface(_model).instantiate({ propertyValues: propertyValues, parent: parent, pose: pose, visible: false });
-
-            case 39:
-              _instance = _context.sent;
-              _context.next = 42;
-              return coreInterface.call('snapTo', _instance.id, plugPoint.name, socketInstance.id, socketPoint.name, _connectionName);
-
-            case 42:
-              usedSnappingPoints.push(socketPoint);
-              _context.next = 45;
-              return _instance.setVisible(true);
-
-            case 45:
-              previousInstances.push(_instance);
-              _context.next = 53;
-              break;
-
-            case 48:
-              _context.t0 = previousInstances;
-              _context.next = 51;
-              return getSharedInterface(_model).instantiate({ propertyValues: propertyValues, parent: parent, pose: pose });
-
-            case 51:
               _context.t1 = _context.sent;
 
               _context.t0.push.call(_context.t0, _context.t1);
 
-            case 53:
+              _context.next = 34;
+              break;
+
+            case 29:
+              _context.t2 = previousInstances;
+              _context.next = 32;
+              return getSharedInterface(_model).instantiate({ propertyValues: propertyValues, parent: parent, pose: pose });
+
+            case 32:
+              _context.t3 = _context.sent;
+
+              _context.t2.push.call(_context.t2, _context.t3);
+
+            case 34:
               _iteratorNormalCompletion3 = true;
               _context.next = 13;
               break;
 
-            case 56:
-              _context.next = 62;
+            case 37:
+              _context.next = 43;
               break;
 
-            case 58:
-              _context.prev = 58;
-              _context.t2 = _context['catch'](11);
+            case 39:
+              _context.prev = 39;
+              _context.t4 = _context['catch'](11);
               _didIteratorError3 = true;
-              _iteratorError3 = _context.t2;
+              _iteratorError3 = _context.t4;
 
-            case 62:
-              _context.prev = 62;
-              _context.prev = 63;
+            case 43:
+              _context.prev = 43;
+              _context.prev = 44;
 
               if (!_iteratorNormalCompletion3 && _iterator3.return) {
                 _iterator3.return();
               }
 
-            case 65:
-              _context.prev = 65;
+            case 46:
+              _context.prev = 46;
 
               if (!_didIteratorError3) {
-                _context.next = 68;
+                _context.next = 49;
                 break;
               }
 
               throw _iteratorError3;
 
-            case 68:
-              return _context.finish(65);
+            case 49:
+              return _context.finish(46);
 
-            case 69:
-              return _context.finish(62);
+            case 50:
+              return _context.finish(43);
 
-            case 70:
-              _context.next = 72;
-              return (0, _bluebird.all)((0, _flatMap2.default)(Object.values(instancesByModelId)).map(function () {
-                var _ref8 = (0, _bluebird.method)(function (unusedInstance) {
-                  getSharedInterface(containerProxy).removeChild(unusedInstance);
-                  return getSharedInterface(unusedInstance).remove();
-                });
-
-                return function (_x3) {
-                  return _ref8.apply(this, arguments);
-                };
-              }()));
-
-            case 72:
+            case 51:
             case 'end':
               return _context.stop();
           }
         }
-      }, _callee, this, [[11, 58, 62, 70], [63,, 65, 69]]);
+      }, _callee, this, [[11, 39, 43, 51], [44,, 46, 50]]);
     }));
 
     return function updateInstances(_x2) {
@@ -30280,7 +29689,7 @@ exports.default = (0, _compose.compose)((0, _compose.injectProps)({
 }), _sceneNode2.default, ConfigurableInstance);
 
 /***/ }),
-/* 309 */
+/* 307 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30317,7 +29726,7 @@ function createValueCombinationIterator(_ref) {
           }
 
           fixedValue = fixedValues[currentProperty.name];
-          values = fixedValue ? [fixedValue] : [].concat(_toConsumableArray(currentProperty.values));
+          values = fixedValue ? [fixedValue] : [].concat(_toConsumableArray(currentProperty.getValueIterator()));
           setValue = currentProperty.value;
           index = values.indexOf(setValue);
 
@@ -30397,7 +29806,7 @@ function createValueCombinationIterator(_ref) {
 }
 
 /***/ }),
-/* 310 */
+/* 308 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30678,7 +30087,7 @@ var update = exports.update = function update(_ref9) {
   return (0, _bluebird.method)(function () {});
 };
 
-var createInstance = exports.createInstance = function createInstance(_ref11) {
+var createInstance = exports.createInstance = function createInstance(_ref11, referenceModel) {
   var _ref11$walkCamera = _ref11.walkCamera,
       walkCamera = _ref11$walkCamera === undefined ? {} : _ref11$walkCamera,
       fetchData = _ref11.fetchData,
@@ -30688,7 +30097,7 @@ var createInstance = exports.createInstance = function createInstance(_ref11) {
       getSharedInterface = _ref11.getSharedInterface;
   return function () {
     var _ref12 = (0, _bluebird.coroutine)( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(instantiationParams, insertionParams) {
-      var _ref13, references, container, _iteratorNormalCompletion3, _didIteratorError3, _iteratorError3, _iterator3, _step3, _ref14, id, name, pose, model;
+      var _ref13, references, id, container, _iteratorNormalCompletion3, _didIteratorError3, _iteratorError3, _iterator3, _step3, _ref14, _id, name, pose, model;
 
       return regeneratorRuntime.wrap(function _callee4$(_context4) {
         while (1) {
@@ -30700,84 +30109,85 @@ var createInstance = exports.createInstance = function createInstance(_ref11) {
             case 2:
               _ref13 = _context4.sent;
               references = _ref13.references;
-              container = createContainer(_extends({}, instantiationParams, { type: 'ungrouped' }));
+              id = instantiationParams.id || referenceModel.id + ':' + (0, _generateId2.default)();
+              container = createContainer(_extends({}, instantiationParams, { id: id, type: 'ungrouped' }));
 
               getSharedInterface(instantiationParams.parent).addChild(container);
 
-              _context4.next = 8;
+              _context4.next = 9;
               return getSharedInterface(container).insert(insertionParams);
 
-            case 8:
+            case 9:
               _iteratorNormalCompletion3 = true;
               _didIteratorError3 = false;
               _iteratorError3 = undefined;
-              _context4.prev = 11;
+              _context4.prev = 12;
               _iterator3 = references[Symbol.iterator]();
 
-            case 13:
+            case 14:
               if (_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done) {
-                _context4.next = 24;
+                _context4.next = 25;
                 break;
               }
 
               _ref14 = _step3.value;
-              id = _ref14.id, name = _ref14.name, pose = _ref14.pose;
-              _context4.next = 18;
-              return fetchModelFromRepository(id);
+              _id = _ref14.id, name = _ref14.name, pose = _ref14.pose;
+              _context4.next = 19;
+              return fetchModelFromRepository(_id);
 
-            case 18:
+            case 19:
               model = _context4.sent;
-              _context4.next = 21;
+              _context4.next = 22;
               return getSharedInterface(model).instantiate({ parent: container, pose: pose, visible: !/panorama/i.exec(name) || walkCamera.active });
 
-            case 21:
+            case 22:
               _iteratorNormalCompletion3 = true;
-              _context4.next = 13;
+              _context4.next = 14;
               break;
 
-            case 24:
-              _context4.next = 30;
+            case 25:
+              _context4.next = 31;
               break;
 
-            case 26:
-              _context4.prev = 26;
-              _context4.t0 = _context4['catch'](11);
+            case 27:
+              _context4.prev = 27;
+              _context4.t0 = _context4['catch'](12);
               _didIteratorError3 = true;
               _iteratorError3 = _context4.t0;
 
-            case 30:
-              _context4.prev = 30;
+            case 31:
               _context4.prev = 31;
+              _context4.prev = 32;
 
               if (!_iteratorNormalCompletion3 && _iterator3.return) {
                 _iterator3.return();
               }
 
-            case 33:
-              _context4.prev = 33;
+            case 34:
+              _context4.prev = 34;
 
               if (!_didIteratorError3) {
-                _context4.next = 36;
+                _context4.next = 37;
                 break;
               }
 
               throw _iteratorError3;
 
-            case 36:
-              return _context4.finish(33);
-
             case 37:
-              return _context4.finish(30);
+              return _context4.finish(34);
 
             case 38:
-              return _context4.abrupt('return', container);
+              return _context4.finish(31);
 
             case 39:
+              return _context4.abrupt('return', container);
+
+            case 40:
             case 'end':
               return _context4.stop();
           }
         }
-      }, _callee4, undefined, [[11, 26, 30, 38], [31,, 33, 37]]);
+      }, _callee4, undefined, [[12, 27, 31, 39], [32,, 34, 38]]);
     }));
 
     return function (_x5, _x6) {
@@ -30812,7 +30222,7 @@ exports.default = (0, _compose.compose)((0, _compose.requireProps)({
 }), _modelBase2.default);
 
 /***/ }),
-/* 311 */
+/* 309 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30858,7 +30268,7 @@ exports.default = (0, _compose.compose)((0, _compose.requireProps)({
 }, 'Category'), _catalogItem2.default, Category);
 
 /***/ }),
-/* 312 */
+/* 310 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30878,7 +30288,7 @@ var _defaults2 = __webpack_require__(50);
 
 var _defaults3 = _interopRequireDefault(_defaults2);
 
-var _cloneDeep = __webpack_require__(137);
+var _cloneDeep = __webpack_require__(136);
 
 var _cloneDeep2 = _interopRequireDefault(_cloneDeep);
 
@@ -30886,7 +30296,7 @@ var _generateId = __webpack_require__(12);
 
 var _generateId2 = _interopRequireDefault(_generateId);
 
-var _appUtils = __webpack_require__(138);
+var _appUtils = __webpack_require__(137);
 
 var _appUtils2 = _interopRequireDefault(_appUtils);
 
@@ -30894,11 +30304,11 @@ var _sceneManager = __webpack_require__(115);
 
 var _sceneManager2 = _interopRequireDefault(_sceneManager);
 
-var _roomManager = __webpack_require__(139);
+var _roomManager = __webpack_require__(138);
 
 var _roomManager2 = _interopRequireDefault(_roomManager);
 
-var _projectManager = __webpack_require__(136);
+var _projectManager = __webpack_require__(135);
 
 var _projectManager2 = _interopRequireDefault(_projectManager);
 
@@ -31399,7 +30809,7 @@ function Project(specification) {
 }
 
 /***/ }),
-/* 313 */
+/* 311 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31425,7 +30835,7 @@ var _isEqual = __webpack_require__(25);
 
 var _isEqual2 = _interopRequireDefault(_isEqual);
 
-var _cloneDeep = __webpack_require__(137);
+var _cloneDeep = __webpack_require__(136);
 
 var _cloneDeep2 = _interopRequireDefault(_cloneDeep);
 
@@ -31433,7 +30843,7 @@ var _config = __webpack_require__(18);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _http = __webpack_require__(135);
+var _http = __webpack_require__(84);
 
 var _http2 = _interopRequireDefault(_http);
 
@@ -31738,7 +31148,7 @@ function createSyncManager(_ref) {
  */
 
 /***/ }),
-/* 314 */
+/* 312 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31851,7 +31261,463 @@ var screenshotManager = createScreenshotManager({ coreInterface: _coreInterface2
 exports.default = screenshotManager;
 
 /***/ }),
-/* 315 */
+/* 313 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.ArCamera = undefined;
+
+var _bluebird = __webpack_require__(0);
+
+var _bluebird2 = _interopRequireDefault(_bluebird);
+
+var _cameraBase = __webpack_require__(85);
+
+var _cameraBase2 = _interopRequireDefault(_cameraBase);
+
+var _constants = __webpack_require__(4);
+
+var _compose = __webpack_require__(2);
+
+var _clone = __webpack_require__(11);
+
+var _clone2 = _interopRequireDefault(_clone);
+
+var _assign = __webpack_require__(1);
+
+var _assign2 = _interopRequireDefault(_assign);
+
+var _freezeFrame = __webpack_require__(314);
+
+var _freezeFrame2 = _interopRequireDefault(_freezeFrame);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+var STATE_LIVE = Symbol();
+var STATE_FROZEN = Symbol();
+var STATE_FRAME_VISIBLE = Symbol();
+
+/**
+ * Uses camera feed together with device sensors and various trackers to provide an AR experience for the user.
+ *
+ * @interface ArCamera
+ * @extends Camera
+ */
+/**
+ * Camera pose. Doesn't update automatically, but can be updated by calling {@link ArCamera#updatePose}
+ * @member {ControllableCameraPose} ArCamera#pose
+ */
+/**
+ * @private
+ * @param {object} props
+ * @param {ArCamera} arCamera
+ */
+var ArCamera = exports.ArCamera = function ArCamera(props, arCamera) {
+
+  //======================================================================================================================
+
+  var init = function () {
+    var _ref = (0, _bluebird.method)(function () {
+      available = appConfig.stageList.includes(stageName);
+      if (appConfig.stageList[0] === stageName) {
+        cameraController.activeCamera = arCamera;
+      }
+      freezeFramesAvailable = appConfig.stageList.includes(stageName);
+      if (freezeFramesAvailable) {
+        freezeFrames = appConfig.freezeFrameInfo.map(function (info) {
+          return FreezeFrame(info);
+        });
+      }
+    });
+
+    return function init() {
+      return _ref.apply(this, arguments);
+    };
+  }();
+
+  var activate = function () {
+    var _ref2 = (0, _bluebird.coroutine)( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              if (!available) {
+                _context.next = 11;
+                break;
+              }
+
+              if (!(state === STATE_FRAME_VISIBLE && activeFreezeFrame)) {
+                _context.next = 6;
+                break;
+              }
+
+              _context.next = 4;
+              return showFreezeFrame(activeFreezeFrame);
+
+            case 4:
+              _context.next = 8;
+              break;
+
+            case 6:
+              _context.next = 8;
+              return coreInterface.call('activateStage', stageName);
+
+            case 8:
+
+              cameraController.activeCamera = arCamera;
+              _context.next = 12;
+              break;
+
+            case 11:
+              throw new Error('ViewAR API: Error! arCamera is not available! Check your app configuration!');
+
+            case 12:
+            case 'end':
+              return _context.stop();
+          }
+        }
+      }, _callee, this);
+    }));
+
+    return function activate() {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+
+  /**
+   * Freezes arCamera feed and the scene.
+   * @async
+   * @function ArCamera#freeze
+   * @returns {Promise}
+   */
+
+
+  /**
+   * Unfreezes arCamera feed and the scene.
+   * @async
+   * @function ArCamera#unfreeze
+   * @returns {Promise}
+   */
+  var unfreeze = function () {
+    var _ref3 = (0, _bluebird.coroutine)( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+      return regeneratorRuntime.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.t0 = state;
+              _context2.next = _context2.t0 === STATE_FRAME_VISIBLE ? 3 : 6;
+              break;
+
+            case 3:
+              _context2.next = 5;
+              return coreInterface.call('activateStage', stageName);
+
+            case 5:
+              return _context2.abrupt('break', 6);
+
+            case 6:
+              _context2.next = 8;
+              return coreInterface.call('unfreeze');
+
+            case 8:
+              state = STATE_LIVE;
+
+            case 9:
+            case 'end':
+              return _context2.stop();
+          }
+        }
+      }, _callee2, this);
+    }));
+
+    return function unfreeze() {
+      return _ref3.apply(this, arguments);
+    };
+  }();
+
+  /**
+   * Freezes the arCamera feed and displays the given freezeFrame
+   * @async
+   * @function ArCamera#showFreezeFrame
+   * @param {FreezeFrame} freezeFrame
+   * @returns {Promise}
+   */
+
+
+  var showFreezeFrame = function () {
+    var _ref4 = (0, _bluebird.coroutine)( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(freezeFrame) {
+      return regeneratorRuntime.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              if (freezeFramesAvailable) {
+                _context3.next = 2;
+                break;
+              }
+
+              throw new Error('ViewAR API: Error! Freeze frame functionality not available! Check your app configuration!');
+
+            case 2:
+              _context3.t0 = state;
+              _context3.next = _context3.t0 === STATE_FROZEN ? 5 : 9;
+              break;
+
+            case 5:
+              _context3.next = 7;
+              return coreInterface.call('activateStage', stageName);
+
+            case 7:
+              state = STATE_FRAME_VISIBLE;
+              return _context3.abrupt('break', 9);
+
+            case 9:
+              _context3.next = 11;
+              return coreInterface.call('showFreezeFrame', freezeFrame.name);
+
+            case 11:
+              activeFreezeFrame = freezeFrame;
+
+            case 12:
+            case 'end':
+              return _context3.stop();
+          }
+        }
+      }, _callee3, this);
+    }));
+
+    return function showFreezeFrame(_x) {
+      return _ref4.apply(this, arguments);
+    };
+  }();
+
+  /**
+   * Downloads a previously saved freezeFrame from the server and creates a freezeFrame Object
+   * @async
+   * @function ArCamera#downloadFreezeFrame
+   * @param name freezeFrame's name
+   * @returns {Promise.<FreezeFrame>}
+   */
+
+
+  var downloadFreezeFrame = function () {
+    var _ref5 = (0, _bluebird.coroutine)( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(name) {
+      var freezeFrame;
+      return regeneratorRuntime.wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              if (freezeFramesAvailable) {
+                _context4.next = 2;
+                break;
+              }
+
+              throw new Error('ViewAR API: Error! Freeze frame functionality not available! Check your app configuration!');
+
+            case 2:
+              freezeFrame = FreezeFrame({ name: name });
+              _context4.next = 5;
+              return coreInterface.call('downloadFreezeFrameFromServer', name);
+
+            case 5:
+              freezeFrames.push(freezeFrame);
+
+              return _context4.abrupt('return', freezeFrame);
+
+            case 7:
+            case 'end':
+              return _context4.stop();
+          }
+        }
+      }, _callee4, this);
+    }));
+
+    return function downloadFreezeFrame(_x2) {
+      return _ref5.apply(this, arguments);
+    };
+  }();
+
+  /**
+   * Freezes the arCamera feed and saves the current feed frame and arCamera pose as a new freezeFrame
+   * @async
+   * @function ArCamera#freezeFrame
+   * @returns {Promise.<FreezeFrame>}
+   */
+
+
+  var saveFreezeFrame = function () {
+    var _ref6 = (0, _bluebird.coroutine)( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(name) {
+      var freezeFrame;
+      return regeneratorRuntime.wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              if (freezeFramesAvailable) {
+                _context5.next = 2;
+                break;
+              }
+
+              throw new Error('ViewAR API: Error! Freeze frame functionality not available! Check your app configuration!');
+
+            case 2:
+              _context5.t0 = state;
+              _context5.next = _context5.t0 === STATE_FROZEN ? 5 : 11;
+              break;
+
+            case 5:
+              _context5.next = 7;
+              return (0, _bluebird.all)([new _bluebird2.default(function (resolve) {
+                return coreInterface.once('freezeFrameTaken', resolve);
+              }), coreInterface.emit('saveFreezeFrame', name || 'freeze_frame__' + Date.now(), false)]);
+
+            case 7:
+              freezeFrame = FreezeFrame({ name: name, coreInterface: coreInterface });
+
+              freezeFrames.push(freezeFrame);
+              activeFreezeFrame = freezeFrame;
+              return _context5.abrupt('return', activeFreezeFrame);
+
+            case 11:
+              return _context5.abrupt('return', activeFreezeFrame);
+
+            case 12:
+            case 'end':
+              return _context5.stop();
+          }
+        }
+      }, _callee5, this);
+    }));
+
+    return function saveFreezeFrame(_x3) {
+      return _ref6.apply(this, arguments);
+    };
+  }();
+
+  /**
+   * Removes the given freeze frame. Unfreezes camera if the frozen frame was currently active.
+   * @async
+   * @function ArCamera#removeFreezeFrame
+   * @param {FreezeFrame} freezeFrame
+   * @returns {Promise}
+   */
+
+
+  var removeFreezeFrame = function () {
+    var _ref7 = (0, _bluebird.coroutine)( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(freezeFrame) {
+      var index;
+      return regeneratorRuntime.wrap(function _callee6$(_context6) {
+        while (1) {
+          switch (_context6.prev = _context6.next) {
+            case 0:
+              if (freezeFramesAvailable) {
+                _context6.next = 2;
+                break;
+              }
+
+              throw new Error('ViewAR API: Error! Freeze frame functionality not available! Check your app configuration!');
+
+            case 2:
+              index = freezeFrames.indexOf(freezeFrame);
+
+              if (!~index) {
+                _context6.next = 11;
+                break;
+              }
+
+              _context6.next = 6;
+              return coreInterface.call('removeFreezeFrame', freezeFrame.name);
+
+            case 6:
+              freezeFrames.splice(index, 1);
+
+              if (!(activeFreezeFrame === freezeFrame)) {
+                _context6.next = 11;
+                break;
+              }
+
+              activeFreezeFrame = null;
+              _context6.next = 11;
+              return unfreeze();
+
+            case 11:
+            case 'end':
+              return _context6.stop();
+          }
+        }
+      }, _callee6, this);
+    }));
+
+    return function removeFreezeFrame(_x4) {
+      return _ref7.apply(this, arguments);
+    };
+  }();
+
+  var appConfig = props.appConfig,
+      pose = props.pose,
+      cameraController = props.cameraController,
+      coreInterface = props.coreInterface,
+      stageName = props.stageName,
+      FreezeFrame = props.FreezeFrame;
+
+
+  var available = false;
+  var freezeFramesAvailable = false;
+  var state = STATE_LIVE;
+  var activeFreezeFrame = null;
+  var freezeFrames = [];
+
+  (0, _assign2.default)(arCamera, {
+    init: init,
+    activate: activate,
+    freeze: freeze,
+    unfreeze: unfreeze,
+
+    get pose() {
+      return (0, _clone2.default)(pose);
+    },
+    get frozen() {
+      return state !== STATE_LIVE;
+    },
+    get freezeFrames() {
+      return [].concat(_toConsumableArray(freezeFrames));
+    },
+    showFreezeFrame: showFreezeFrame,
+    removeFreezeFrame: removeFreezeFrame,
+    saveFreezeFrame: saveFreezeFrame,
+    downloadFreezeFrame: downloadFreezeFrame
+  });function freeze() {
+    return (0, _bluebird.resolve)().then(function () {
+      switch (state) {
+        case STATE_LIVE:
+          return coreInterface.call('freeze').then(function () {
+            return state = STATE_FROZEN;
+          });
+        default:
+          return;
+      }
+    });
+  }
+};
+
+/**
+ * @type {ArCamera}
+ */
+var arCamera = (0, _compose.compose)((0, _compose.defaultProps)(function () {
+  return (0, _clone2.default)(_constants.AR_CAMERA_DEFAULTS);
+}), (0, _compose.injectProps)({
+  FreezeFrame: _freezeFrame2.default
+}), _cameraBase2.default, ArCamera)();
+
+exports.default = arCamera;
+
+/***/ }),
+/* 314 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31889,7 +31755,7 @@ exports.default = (0, _compose.compose)((0, _compose.injectProps)({
 }), FreezeFrame);
 
 /***/ }),
-/* 316 */
+/* 315 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31901,8 +31767,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.PerspectiveCamera = undefined;
 
 var _bluebird = __webpack_require__(0);
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _assign = __webpack_require__(1);
 
@@ -31922,14 +31786,6 @@ var _cameraBase = __webpack_require__(85);
 
 var _cameraBase2 = _interopRequireDefault(_cameraBase);
 
-var _vrCamera = __webpack_require__(140);
-
-var _vrCamera2 = _interopRequireDefault(_vrCamera);
-
-var _arCamera = __webpack_require__(84);
-
-var _arCamera2 = _interopRequireDefault(_arCamera);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
@@ -31939,6 +31795,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @interface PerspectiveCamera
  * @extends Camera
  */
+/**
+ * Camera pose. Doesn't update automatically, but can be updated by calling {@link ArCamera#updatePose}
+ * @member {PerspectiveCameraPose} PerspectiveCamera#pose
+ */
+
+/**
+ * @private
+ * @param {object} props
+ * @param {PerspectiveCamera} perspectiveCamera
+ */
 var PerspectiveCamera = exports.PerspectiveCamera = function PerspectiveCamera(props, perspectiveCamera) {
 
   //======================================================================================================================
@@ -31947,7 +31813,7 @@ var PerspectiveCamera = exports.PerspectiveCamera = function PerspectiveCamera(p
     var _ref = (0, _bluebird.method)(function () {
       available = appConfig.stageList.includes(stageName);
       if (appConfig.stageList[0] === stageName) {
-        cameraController.activeCamera = _arCamera2.default;
+        cameraController.activeCamera = perspectiveCamera;
       }
     });
 
@@ -32003,7 +31869,7 @@ var PerspectiveCamera = exports.PerspectiveCamera = function PerspectiveCamera(p
    * Sets camera pose.
    * @async
    * @function PerspectiveCamera#setPose
-   * @param {CameraPose} newPose
+   * @param {PerspectiveCameraPose} newPose
    * @returns {Promise} resolved on completion
    */
   var setPose = function () {
@@ -32017,7 +31883,7 @@ var PerspectiveCamera = exports.PerspectiveCamera = function PerspectiveCamera(p
               return perspectiveCamera.updatePose();
 
             case 2:
-              sanitizedPose = _extends({ pose: pose }, (0, _utils.sanitizeCameraPose)(newPose));
+              sanitizedPose = Object.assign({}, pose, (0, _utils.sanitizeCameraPose)(newPose));
               _context2.next = 5;
               return coreInterface.call('setGridCameraPose', name, sanitizedPose);
 
@@ -32181,6 +32047,188 @@ var perspectiveCamera = (0, _compose.compose)((0, _compose.defaultProps)(functio
 }), _cameraBase2.default, PerspectiveCamera)();
 
 exports.default = perspectiveCamera;
+
+/***/ }),
+/* 316 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.VrCamera = undefined;
+
+var _bluebird = __webpack_require__(0);
+
+var _compose = __webpack_require__(2);
+
+var _assign = __webpack_require__(1);
+
+var _assign2 = _interopRequireDefault(_assign);
+
+var _clone = __webpack_require__(11);
+
+var _clone2 = _interopRequireDefault(_clone);
+
+var _constants = __webpack_require__(4);
+
+var _cameraBase = __webpack_require__(85);
+
+var _cameraBase2 = _interopRequireDefault(_cameraBase);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Uses camera sensors and joystick input to provide a first-person VR experience. Behaves like a first-person camera in
+ * computer games (i.e. has no roll).
+ *
+ * @interface VrCamera
+ * @extends Camera
+ */
+/**
+ * Camera pose. Doesn't update automatically, but can be updated by calling {@link ArCamera#updatePose}
+ * @member {ControllableCameraPose} VrCamera#pose
+ */
+/**
+ * @private
+ * @param {object} props
+ * @param {VrCamera} vrCamera
+ */
+var VrCamera = exports.VrCamera = function VrCamera(props, vrCamera) {
+
+  //======================================================================================================================
+  // PUBLIC INTERFACE
+  //======================================================================================================================
+
+  var init = function () {
+    var _ref = (0, _bluebird.method)(function () {
+      available = appConfig.stageList.includes(stageName);
+      if (appConfig.stageList[0] === stageName) {
+        cameraController.activeCamera = vrCamera;
+      }
+    });
+
+    return function init() {
+      return _ref.apply(this, arguments);
+    };
+  }();
+
+  var activate = function () {
+    var _ref2 = (0, _bluebird.coroutine)( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              if (!available) {
+                _context.next = 6;
+                break;
+              }
+
+              _context.next = 3;
+              return coreInterface.call('activateStage', stageName);
+
+            case 3:
+              cameraController.activeCamera = vrCamera;
+              _context.next = 7;
+              break;
+
+            case 6:
+              throw new Error('ViewAR API: Error! vrCamera is not available! Check your app configuration!');
+
+            case 7:
+            case 'end':
+              return _context.stop();
+          }
+        }
+      }, _callee, this);
+    }));
+
+    return function activate() {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+
+  /**
+   * Enables the gyroscope for this camera.
+   * @async
+   * @function VrCamera#enableGyroscope
+   * @returns {Promise} resolved on completion.
+   */
+
+
+  var appConfig = props.appConfig,
+      pose = props.pose,
+      stageName = props.stageName,
+      cameraController = props.cameraController,
+      coreInterface = props.coreInterface;
+
+  var gyroscopeActive = true;
+  var available = false;
+
+  (0, _assign2.default)(vrCamera, {
+    init: init,
+    activate: activate,
+
+    enableGyroscope: enableGyroscope,
+    disableGyroscope: disableGyroscope,
+    translate: translate,
+    rotate: rotate,
+
+    get pose() {
+      return (0, _clone2.default)(pose);
+    },
+    get gyroscopeActive() {
+      return gyroscopeActive;
+    }
+  });function enableGyroscope() {
+    return gyroscopeActive ? (0, _bluebird.resolve)() : coreInterface.call('enableGyroscopeForExperienceStage').then(function () {
+      return gyroscopeActive = true;
+    });
+  }
+
+  /**
+   * Disables the gyroscope for this camera.
+   * @async
+   * @function VrCamera#disableGyroscope
+   * @returns {Promise} resolved on completion.
+   */
+  function disableGyroscope() {
+    return !gyroscopeActive ? (0, _bluebird.resolve)() : coreInterface.call('disableGyroscopeForExperienceStage').then(function () {
+      return gyroscopeActive = false;
+    });
+  }
+
+  /**
+   * Translates the camera using joystick input
+   * @async
+   * @function VrCamera#translate
+   * @param {Vector3d} joystick axis values
+   */
+  function translate(controllerInputVector) {
+    coreInterface.emit('translateCamera', controllerInputVector);
+  }
+
+  /**
+   * Rotates the camera using joystick input
+   * @async
+   * @function VrCamera#rotate
+   * @param {Vector3d} joystick axis values
+   */
+  function rotate(controllerInputVector) {
+    coreInterface.emit('rotateCamera', controllerInputVector);
+  }
+};
+
+/**
+ * @type {VrCamera}
+ */
+var vrCamera = (0, _compose.compose)((0, _compose.defaultProps)(function () {
+  return (0, _clone2.default)(_constants.VR_CAMERA_DEFAULTS);
+}), _cameraBase2.default, VrCamera)();
+
+exports.default = vrCamera;
 
 /***/ }),
 /* 317 */
@@ -32637,7 +32685,7 @@ function createGoogleTangoProvider(specification) {
       return _deactivate().then(resetState);
     },
     reset: function reset() {
-      return _reset().then(resetState);
+      return _reset(onUpdate).then(resetState);
     },
     confirmGroundPosition: confirmGroundPosition,
 
@@ -32849,7 +32897,7 @@ function createStructureProvider(specification) {
       return _deactivate().then(resetState);
     },
     reset: function reset() {
-      return _reset().then(resetState);
+      return _reset(onUpdate).then(resetState);
     },
     confirmGroundPosition: confirmGroundPosition,
 
@@ -33264,7 +33312,7 @@ function createVuforiaProvider(specification) {
       rawTargets = _specification$target === undefined ? [] : _specification$target,
       _activate = specification.activate,
       deactivate = specification.deactivate,
-      reset = specification.reset,
+      _reset = specification.reset,
       isActive = specification.isActive,
       coreInterface = specification.coreInterface;
 
@@ -33277,7 +33325,9 @@ function createVuforiaProvider(specification) {
       return _activate(onUpdate);
     },
     deactivate: deactivate,
-    reset: reset,
+    reset: function reset() {
+      return _reset(onUpdate);
+    },
 
     captureUserTarget: captureUserTarget,
     removeUserTarget: removeUserTarget,
@@ -33543,13 +33593,13 @@ function createWikitudeProvider(specification) {
 
   var wikitudeProvider = (0, _componentEmitter2.default)({
     activate: function activate() {
-      return _activate(handleTrackingTargetStatusChanged).then(resetState);
+      return _activate(onUpdate).then(resetState);
     },
     deactivate: function deactivate() {
       return _deactivate().then(resetState);
     },
     reset: function reset() {
-      return _reset().then(resetState);
+      return _reset(onUpdate).then(resetState);
     },
     confirmGroundPosition: confirmGroundPosition,
     setFloorOffset: setFloorOffset,
@@ -33600,7 +33650,7 @@ function createWikitudeProvider(specification) {
       console.warn('ViewAR API: Warning! Can\'t set floor offset, given height is not a number.');
       return (0, _bluebird.resolve)();
     }
-  }function handleTrackingTargetStatusChanged(targetName, event) {
+  }function onUpdate(targetName, event) {
     tracking = event === 'found';
     wikitudeProvider.emit('trackingTargetStatusChanged', tracking);
   }
