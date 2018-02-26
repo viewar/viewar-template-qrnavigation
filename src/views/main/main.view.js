@@ -1,5 +1,5 @@
 import React from 'react';
-import {compose, withHandlers, pure, withState} from 'recompose';
+import { compose, withHandlers, pure, withState } from 'recompose';
 import { withRouter } from 'react-router-dom';
 import { Button } from '../../components/Button';
 
@@ -12,7 +12,7 @@ import { removeInstancesByForeignKey } from "../new/new.view";
 
 import styles from './styles.css';
 
-const MainView = ({ handleBack, setActiveRoute, activeRoute, handleNewClick, toggleRoutes, initialized, setInitialized, showRoutes }) =>
+const MainView = ({ debugMode, handleBack, setActiveRoute, activeRoute, handleNewClick, toggleRoutes, initialized, setInitialized, showRoutes }) =>
   <Container>
     <TrackingSystem initializationStatusChanged={setInitialized} />
     <div className={styles.upperLeftBar}>

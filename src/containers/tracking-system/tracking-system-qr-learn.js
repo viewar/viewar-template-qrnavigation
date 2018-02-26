@@ -14,7 +14,7 @@ let interval;
 const TrackingSystemQRLearn = ({ isTracking, initialized, showInstructions }) =>
     <span>{ !initialized ? <Container>
         { !isTracking && <div className={styles.overlay}>Please do a few sidesteps</div> }
-        { isTracking && showInstructions && <div className={styles.overlay}>Start scanning QR-Codes</div> }
+        { isTracking && showInstructions && <div className={styles.overlay}>Film a learned QR code first and then film the new ones.</div> }
     </Container> : <div></div> }</span>;
 
 export default  compose(
@@ -25,7 +25,7 @@ export default  compose(
   withState('initialized', 'setInitialized', false),
   defaultProps({
     initializationStatusChanged: () => {},
-    onNewQR: () => {}
+    onNewQR: () => {},
   }),
   withProps(({ viewar }) => ({
     tracker: Object.values(viewar.trackers)[0],
@@ -55,20 +55,22 @@ export default  compose(
       if (targetName.includes('planeTarget')) {
         setIsTracking(tracking);
         setInitialized(false);
-        initializationStatusChanged(true);
         if (tracking) {
           setShowInstructions(true);
-          setTimeout(() => setShowInstructions(false), 3000);
+          setTimeout(() => {
+            setShowInstructions(false)
+            initializationStatusChanged(true);
+          }, 3000);
+
 
           interval = setInterval(async() => {
-            //TODO check for new QRcode;
             const QRCodes = await viewar.coreInterface.call('customTrackingCommand', 'ARKit', 'getLearnedTargets', '');
             const scannedQRCodes = QRCodes.filter(QRCode => {
               const { x, y, z } = QRCode.pose.position;
               return x !== 0 && y !== 0 && z !== 0;
-            })
+            });
             onScan(scannedQRCodes);
-          }, 5000);
+          }, 2000);
 
         }
       }
@@ -83,9 +85,16 @@ export default  compose(
       await viewar.cameras.augmentedRealityCamera.activate();
       await tracker.reset();
       tracker.on('trackingStatusChanged', handleTracking);
+
+      setTimeout(() => {
+        const model = viewar.modelManager.findModelByForeignKey('ball');
+        return viewar.sceneManager.insertModel(model, { pose: { position: { x: 0, y: 0, z: 0 }} } );
+      }, 0);
     },
     async componentWillUnmount() {
       const { tracker, handleTracking } = this.props;
+
+      await tracker.deactivate();
 
       tracker && tracker.off('trackingStatusChanged', handleTracking);
       clearInterval(interval);

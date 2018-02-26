@@ -34,11 +34,6 @@ export default compose(
 
       await viewar.sceneManager.clearScene();
 
-      setTimeout(() => {
-        const model = modelManager.findModelByForeignKey('ball');
-        return sceneManager.insertModel(model, { pose: { position: { x: 0, y: 0, z: 0 }} } );
-      }, 0);
-
       socketConnection.socket.on('connect_error', () => {
         alert('Socket Connection Error!');
       });

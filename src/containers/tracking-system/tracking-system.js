@@ -38,7 +38,7 @@ const getUniqueTargetsByPosition = (targets) => {
 const TrackingSystem = ({ isTracking, showQRMessage, initialized }) =>
     <span>{ !initialized ? <Container>
         { !isTracking && <div className={styles.overlay}> Please do a few sidesteps </div> }
-        { showQRMessage && <div className={styles.overlay}> Please film the QR-Code </div> }
+        { showQRMessage && <div className={styles.overlay}> Please film a registered QR-Code </div> }
     </Container> : <div></div> }</span>
 
 export default  compose(
@@ -100,9 +100,17 @@ export default  compose(
 
       await tracker.activate();
       tracker.on('trackingStatusChanged', handleTracking);
+
+      setTimeout(() => {
+        const model = viewar.modelManager.findModelByForeignKey('ball');
+        return viewar.sceneManager.insertModel(model, { pose: { position: { x: 0, y: 0, z: 0 }} } );
+      }, 0);
     },
     async componentWillUnmount() {
+
       const { tracker, handleTracking } = this.props;
+
+      await tracker.deactivate();
 
       tracker && tracker.off('trackingStatusChanged', handleTracking);
     },

@@ -48,7 +48,7 @@ export default compose(
     handleBack: ({ history }) => () => {
       history.push('/admin');
     },
-    handleNewQRCodes: ({ setQRCodes, QRCodes }) => (newQRCodes) => {
+    handleNewQRCodes: ({ setQRCodes }) => (newQRCodes) => {
       setQRCodes(newQRCodes);
     },
     handleUpload: ({ QRCodes, setInfoMessage, setShowPasswordModal, viewar }) => async (password) => {
@@ -59,8 +59,8 @@ export default compose(
       const payload = new FormData();
       payload.append('password', password);
       payload.append('QRCodes', JSON.stringify(QRCodes));
-      payload.append('appId', appId);
-      payload.append('version', version.app);
+      payload.append('bundleIdentifier', appId);
+      payload.append('bundleVersion', version.app);
 
       const response = await axios.post(
         'http://dev2.viewar.com/templates/custom/qrnavigation/action:saveQRCodes/',
