@@ -58,7 +58,7 @@ export default compose(
 
       const payload = new FormData();
       payload.append('password', password);
-      payload.append('QRCodes', QRCodes);
+      payload.append('QRCodes', JSON.stringify(QRCodes));
       payload.append('appId', appId);
       payload.append('version', version.app);
 
