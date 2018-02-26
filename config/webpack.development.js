@@ -37,7 +37,7 @@ exports.developmentConfig = merge([
           test: /\.css$/,
           use: [
             'style-loader',
-            { loader: 'css-loader', options: { importLoaders: 1, modules: true, localIdentName: '[name]-[local]-[hash:base64:6]' } },
+            { loader: 'css-loader', options: { importLoaders: 1, modules: true, localIdentName: '[name]-[local]' } },
             { loader: 'postcss-loader', options: { plugins: [
               require('postcss-smart-import')(),
               require('postcss-cssnext')(),

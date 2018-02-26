@@ -32,7 +32,7 @@
     "rxjs": "^5.4.2",
     "socket.io-client": "^2.0.4",
     "viewar-api": "file:./src/lib/patched-viewar-api",
-    "viewar-core": "^5.4.2"
+    "viewar-core": "^5.5.1"
   },
   "devDependencies": {
     "babel": "^6.5.2",

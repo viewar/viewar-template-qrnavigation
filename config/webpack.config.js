@@ -20,7 +20,7 @@ const commonConfig = merge([
     },
     plugins: [
       new HtmlWebpackPlugin({
-        title: 'ViewAR React Boilerplate',
+        title: 'QR Navigation',
         template: `${PATHS.app}/index.html`,
       }),
       new webpack.IgnorePlugin(/^(core)$/),
