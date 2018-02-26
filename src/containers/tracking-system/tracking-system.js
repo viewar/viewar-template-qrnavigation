@@ -81,7 +81,15 @@ export default  compose(
         if (tracking) setShowQRMessage(true);
       }
 
-      if (tracking && !initialized && !targetName.includes('planeTarget')) {
+      const hasPose = (targetName ) => {
+        const arkit = viewar.appConfig.trackerList.find(tracker => tracker.name === "ARKit");
+        if(!arkit) return false;
+        const target = arkit.targets.find(target => target.name === targetName);
+        if(!target) return false;
+        return !!target.pose;
+      };
+
+      if (tracking && !initialized && !targetName.includes('planeTarget') && hasPose(targetName)) {
         setShowQRMessage(false);
         setInitialized(true);
         initializationStatusChanged(true);

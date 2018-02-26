@@ -44,6 +44,15 @@ export default  compose(
        onScan
     }) => async ({ tracking, targetName }) => {
 
+      //HELPER
+      const hasPose = (targetName ) => {
+        const arkit = viewar.appConfig.trackerList.find(tracker => tracker.name === "ARKit");
+        if(!arkit) return false;
+        const target = arkit.targets.find(target => target.name === targetName);
+        if(!target) return false;
+        return !!target.pose;
+      };
+
       // for mock
       if(tracking && targetName === 'VCard01') {
         setInitialized(true);
@@ -57,22 +66,21 @@ export default  compose(
         setInitialized(false);
         if (tracking) {
           setShowInstructions(true);
-          setTimeout(() => {
-            setShowInstructions(false)
-            initializationStatusChanged(true);
-          }, 3000);
-
-
-          interval = setInterval(async() => {
-            const QRCodes = await viewar.coreInterface.call('customTrackingCommand', 'ARKit', 'getLearnedTargets', '');
-            const scannedQRCodes = QRCodes.filter(QRCode => {
-              const { x, y, z } = QRCode.pose.position;
-              return x !== 0 && y !== 0 && z !== 0;
-            });
-            onScan(scannedQRCodes);
-          }, 2000);
-
         }
+      }
+
+      if(hasPose(targetName)){
+        setShowInstructions(false);
+        initializationStatusChanged(true);
+
+        interval = setInterval(async() => {
+          const QRCodes = await viewar.coreInterface.call('customTrackingCommand', 'ARKit', 'getLearnedTargets', '');
+          const scannedQRCodes = QRCodes.filter(QRCode => {
+            const { x, y, z } = QRCode.pose.position;
+            return x !== 0 && y !== 0 && z !== 0;
+          });
+          onScan(scannedQRCodes);
+        }, 2000);
       }
     },
   }),
