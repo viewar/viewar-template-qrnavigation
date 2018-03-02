@@ -26,7 +26,6 @@ const AdminView = ({ handleLearnClick, handleBack, handleCreateNewRouteBack, set
     { !showCreateNewRoute && <Button onClick={handleLearnClick}>Learn QR Codes</Button> }
     </div>
     { initialized && showCreateNewRoute && <CreateNewRoute onBack={handleCreateNewRouteBack} /> }
-  }
 </Container>
 
 export default compose(
