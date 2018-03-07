@@ -1,22 +1,18 @@
 {
   "presets": [
-    "stage-0",
-    ["es2015", { "modules": false }],
     [
       "env",
       {
-        "modules": false,
-//        "targets": {
-//          "browsers": ["last 2 Chrome versions"]
-//        },
+        "modules": false
       }
     ],
     "react"
   ],
   "plugins": [
+    "transform-object-rest-spread",
     "transform-class-properties",
     "syntax-dynamic-import",
-    ["transform-imports", {}] //add potential libraries to treeshake
+    ["transform-imports", {}]
   ],
   "env": {
     "development": {

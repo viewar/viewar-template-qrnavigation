@@ -23,12 +23,10 @@ const commonConfig = merge([
         title: 'QR Navigation',
         template: `${PATHS.app}/index.html`,
       }),
-      new webpack.IgnorePlugin(/^(core)$/),
     ],
     resolve: {
       modules: [
-        "node_modules",
-        "viewar-modules",
+        "node_modules"
       ],
     },
     module: {
@@ -36,7 +34,7 @@ const commonConfig = merge([
         {
           test: /\.js$/,
           include: PATHS.app,
-          exclude: [/node_modules/, /viewar-modules/],
+          exclude: [/node_modules/],
 
           use: {
             loader: 'babel-loader',
