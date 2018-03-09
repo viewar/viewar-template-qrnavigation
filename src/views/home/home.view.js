@@ -1,10 +1,10 @@
 import React from 'react';
-import {compose, withProps, withHandlers, pure, lifecycle, withState} from 'recompose';
+import {compose, withProps, withHandlers, pure } from 'recompose';
 import { withRouter } from 'react-router-dom';
+import viewar from 'viewar-api';
 
 import styles from './styles.css';
 
-import { withViewar } from '../../lib/viewar-react';
 import { Button } from "../../components/Button";
 
 import { Container } from "../../components/FullScreenContainer";
@@ -19,8 +19,10 @@ const HomeView = ({ isAdmin, handleStartClick, handleAdminClick }) =>
   </Container>
 
 export default compose(
-  withViewar(),
   withRouter,
+  withProps({
+    viewar
+  }),
   withProps(({ viewar }) => ({
     isAdmin: viewar.appConfig.uiConfig.isAdmin,
   })),

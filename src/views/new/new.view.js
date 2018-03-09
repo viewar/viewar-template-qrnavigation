@@ -1,10 +1,10 @@
 import React from 'react';
 import { compose, withProps, withState, withHandlers, pure, lifecycle } from 'recompose';
+import viewar from 'viewar-api';
 import { Button } from '../../components/Button';
 import { Container } from "../../components/FullScreenContainer";
 
 import { distance } from '../../utils/math';
-import { withViewar } from '../../lib/viewar-react';
 
 import { InputModal } from "../../containers/modal/modal";
 
@@ -29,10 +29,12 @@ const NewView = ({ handleBack, isTracking, showQRMessage, startHandler, stopHand
   </Container>
 
 export default compose(
-  withViewar(),
   withState('showLabelModal', 'setShowLabelModal', false),
   withState('isRecording', 'setIsRecording', false),
   withState('label', 'setLabel', ''),
+  withProps({
+    viewar
+  }),
   withProps(({ viewar }) => ({
     ballModel: viewar.modelManager.findModelByForeignKey('ball'),
     activeCamera: viewar.cameras.perspectiveCamera.active ? viewar.cameras.perspectiveCamera : viewar.cameras.augmentedRealityCamera,

@@ -5,9 +5,9 @@ import { compose, withProps, withState, withHandlers, pure, lifecycle } from 're
 import { withRouter } from 'react-router-dom';
 import Button from '../../components/Button';
 
-import { removeInstancesByForeignKey } from "../../views/new/new.view";
+import viewar from 'viewar-api';
 
-import { withViewar } from '../../lib/viewar-react';
+import { removeInstancesByForeignKey } from "../../views/new/new.view";
 
 import styles from './styles.css';
 
@@ -43,10 +43,13 @@ const Routes = ({ routes, handleRouteSelect, activeRoute, isAdmin, deleteRoute, 
     </div>;
 
 export default compose(
-  withViewar(),
   withRouter,
   withState('routes', 'setRoutes', {}),
+  withProps({
+    viewar
+  }),
   withProps(({ viewar }) => ({
+    viewar,
     ballModel: viewar.modelManager.findModelByForeignKey('ball'),
   })),
   withHandlers({
@@ -75,7 +78,6 @@ export default compose(
 
       const sceneState = routes[label];
       const result = await viewar.sceneManager.setSceneState(sceneState);
-      console.log(result);
     },
     deleteRoute: ({ viewar, setRoutes, activeRouteChanged }) => async (name) => {
       if(confirm('are you sure?')) {

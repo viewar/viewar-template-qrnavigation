@@ -2,8 +2,6 @@ const merge = require('webpack-merge');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
-
-const glob = require('glob');
 const webpack = require('webpack');
 const path = require('path');
 
@@ -43,9 +41,7 @@ exports.productionConfig = merge([
               { loader: 'postcss-loader', options: { plugins: [
                 require('postcss-smart-import')(),
                 require('postcss-cssnext')(),
-                require('postcss-apply')(),
                 require('postcss-responsive-type')(),
-                require('precss')(),
               ] }},
             ],
             fallback: 'style-loader',

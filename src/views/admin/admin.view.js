@@ -1,10 +1,11 @@
 import React from 'react';
-import {compose, withProps, withHandlers, pure, lifecycle, withState} from 'recompose';
+import {compose, withProps, withHandlers, pure, withState} from 'recompose';
+import viewar from 'viewar-api';
+
 import { withRouter } from 'react-router-dom';
 import Button from '../../components/Button';
 import { Container } from "../../components/FullScreenContainer";
 
-import { withViewar } from '../../lib/viewar-react';
 
 import Routes from '../../containers/routes/routes';
 import TrackingSystem from '../../containers/tracking-system/tracking-system';
@@ -29,8 +30,10 @@ const AdminView = ({ handleLearnClick, handleBack, handleCreateNewRouteBack, set
 </Container>
 
 export default compose(
-  withViewar(),
   withRouter,
+  withProps({
+    viewar
+  }),
   withProps(({ viewar }) => ({
     isAdmin: viewar.appConfig.uiConfig.isAdmin,
   })),

@@ -7,5 +7,11 @@
 </head>
 <body>
   <div id="app"></div>
+  <script type="text/javascript">
+    window.bundleIdentifier = window.bundleIdentifier || <%= JSON.stringify(htmlWebpackPlugin.options.bundleIdentifier) %>
+    window.bundleVersion = window.bundleVersion || <%= JSON.stringify(htmlWebpackPlugin.options.bundleVersion) %>
+  </script>
+  <script src="./viewar-core.js"></script>
 </body>
+<link rel="stylesheet" type="text/css" href="//CustomUI/index.css">
 </html>

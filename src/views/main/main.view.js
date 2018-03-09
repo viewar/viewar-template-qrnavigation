@@ -1,9 +1,9 @@
 import React from 'react';
-import { compose, withHandlers, pure, withState } from 'recompose';
+import { compose, withHandlers, pure, withState, withProps } from 'recompose';
 import { withRouter } from 'react-router-dom';
-import { Button } from '../../components/Button';
+import viewar from 'viewar-api';
 
-import { withViewar } from '../../lib/viewar-react';
+import { Button } from '../../components/Button';
 
 import Routes from '../../containers/routes/routes';
 import TrackingSystem from '../../containers/tracking-system/tracking-system';
@@ -12,7 +12,7 @@ import { removeInstancesByForeignKey } from "../new/new.view";
 
 import styles from './styles.css';
 
-const MainView = ({ debugMode, handleBack, setActiveRoute, activeRoute, handleNewClick, toggleRoutes, initialized, setInitialized, showRoutes }) =>
+const MainView = ({ handleBack, setActiveRoute, activeRoute, toggleRoutes, initialized, setInitialized, showRoutes }) =>
   <Container>
     <TrackingSystem initializationStatusChanged={setInitialized} />
     <div className={styles.upperLeftBar}>
@@ -23,8 +23,8 @@ const MainView = ({ debugMode, handleBack, setActiveRoute, activeRoute, handleNe
   </Container>
 
 export default compose(
-  withViewar(),
   withRouter,
+  withProps({ viewar }),
   withState('activeRoute', 'setActiveRoute', null),
   withState('initialized', 'setInitialized', false),
   withState('showRoutes', 'setShowRoutes', false),

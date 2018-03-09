@@ -1,9 +1,9 @@
 import React from 'react';
-import {compose, withHandlers, pure, withState} from 'recompose';
+import { compose, withHandlers, pure, withState, withProps } from 'recompose';
+import viewar from 'viewar-api';
+
 import { withRouter } from 'react-router-dom';
 import { Button } from '../../components/Button';
-
-import { withViewar } from '../../lib/viewar-react';
 
 import TrackingSystemQRLearn from '../../containers/tracking-system/tracking-system-qr-learn';
 import { Container } from "../../components/FullScreenContainer";
@@ -35,12 +35,12 @@ const LearnView = ({ infoMessage, setInfoMessage, showPasswordModal, setShowPass
   </Container>
 
 export default compose(
-  withViewar(),
   withRouter,
   withState('infoMessage', 'setInfoMessage', null),
   withState('showPasswordModal', 'setShowPasswordModal', false),
   withState('initialized', 'setInitialized', false),
   withState('QRCodes', 'setQRCodes', []),
+  withProps({ viewar }),
   withHandlers({
     removeInstancesByForeignKey,
   }),

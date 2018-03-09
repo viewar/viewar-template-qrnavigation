@@ -1,7 +1,7 @@
 import React from 'react';
 import {compose, withProps, withHandlers, pure, lifecycle, withState, defaultProps} from 'recompose';
 
-import { withViewar } from '../../lib/viewar-react';
+import viewar from 'viewar-api';
 
 import { Container } from "../../components/FullScreenContainer";
 
@@ -18,12 +18,12 @@ const TrackingSystemQRLearn = ({ isTracking, initialized, showInstructions }) =>
     </Container> : <div></div> }</span>;
 
 export default  compose(
-  withViewar(),
   withState('showInstructions', 'setShowInstructions', false),
   withState('showQRMessage', 'setShowQRMessage', false),
   withState('isTracking', 'setIsTracking', false),
   withState('initialized', 'setInitialized', false),
   defaultProps({
+    viewar,
     initializationStatusChanged: () => {},
     onNewQR: () => {},
   }),
@@ -42,7 +42,10 @@ export default  compose(
        initialized,
        initializationStatusChanged,
        onScan
-    }) => async ({ tracking, targetName }) => {
+    }) => async ({ target }) => {
+
+      const targetName = target.name;
+      const tracking = target.tracked;
 
       //HELPER
       const hasPose = (targetName ) => {

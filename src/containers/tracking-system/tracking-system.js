@@ -1,7 +1,7 @@
 import React from 'react';
 import {compose, withProps, withHandlers, pure, lifecycle, withState, defaultProps} from 'recompose';
 
-import { withViewar } from '../../lib/viewar-react';
+import viewar from 'viewar-api';
 
 import { Container } from "../../components/FullScreenContainer";
 
@@ -42,12 +42,14 @@ const TrackingSystem = ({ isTracking, showQRMessage, initialized }) =>
     </Container> : <div></div> }</span>
 
 export default  compose(
-  withViewar(),
   withState('showQRMessage', 'setShowQRMessage', false),
   withState('isTracking', 'setIsTracking', false),
   withState('initialized', 'setInitialized', false),
   defaultProps({
     initializationStatusChanged: () => {}
+  }),
+  withProps({
+    viewar
   }),
   withProps(({ viewar }) => ({
     tracker: Object.values(viewar.trackers)[0],
@@ -63,7 +65,10 @@ export default  compose(
        setInitialized,
        initialized,
        initializationStatusChanged
-    }) => async ({ tracking, targetName }) => {
+    }) => async ({ target }) => {
+
+      const targetName = target.name;
+      const tracking = target.tracked;
 
       // for mock
       if(tracking && targetName === 'VCard01') {

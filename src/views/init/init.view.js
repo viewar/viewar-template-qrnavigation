@@ -1,16 +1,19 @@
 import React from 'react';
 import { compose, withProps, pure, lifecycle } from 'recompose';
 import { withRouter } from 'react-router-dom';
+import viewar from 'viewar-api';
+
 import { setupStream } from '../../services/websocket/stream-manager';
 
-import { withViewar } from '../../lib/viewar-react';
 import { Container } from "../../components/FullScreenContainer";
 
 const InitView = ({  }) => <Container backgroundColor='#333333' center >Loading...</Container>;
 
 export default compose(
-  withViewar(),
   withRouter,
+  withProps({
+    viewar
+  }),
   withProps(({ viewar }) => ({
     serverChannel: viewar.appConfig.uiConfig.serverChannel || 'com.viewar.qrnavigation',
     role: viewar.appConfig.uiConfig.isAdmin ? 'Admin' : 'Client',

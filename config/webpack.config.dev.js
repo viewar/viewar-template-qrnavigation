@@ -6,13 +6,12 @@ const path = require('path');
 const utils = require('./utils');
 const PATHS = utils.paths();
 
-
 exports.developmentConfig = merge([
   {
     entry: {
       index: [
-        'react-hot-loader/patch',
         PATHS.app + '/polyfills.js',
+        'react-hot-loader/patch',
         PATHS.app,
       ],
     },
@@ -41,14 +40,15 @@ exports.developmentConfig = merge([
             { loader: 'postcss-loader', options: { plugins: [
               require('postcss-smart-import')(),
               require('postcss-cssnext')(),
-              require('postcss-apply')(),
               require('postcss-responsive-type')(),
-              require('precss')(),
             ] }},
           ],
         },
       ],
     },
+    plugins: [
+      new webpack.HotModuleReplacementPlugin(),
+    ],
   },
   utils.setFreeVariable('process.env.NODE_ENV', 'development'),
 ]);

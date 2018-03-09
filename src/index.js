@@ -5,9 +5,6 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import viewarApi from 'viewar-api';
 
-
-import { ViewarProvider } from './lib/viewar-react';
-
 import Main from './containers/main/main';
 
 import SocketConnection from './services/websocket/socket-connection';
@@ -38,9 +35,7 @@ injectTapEventPlugin();
   const render = Component => {
     ReactDOM.render(
       <AppContainer>
-        <ViewarProvider viewar={api}>
-            <Component />
-        </ViewarProvider>
+        <Component />
       </AppContainer>,
       document.getElementById('app')
     );
