@@ -1,77 +1,96 @@
 import React from 'react';
-import {compose, withProps, withHandlers, pure, lifecycle, withState, defaultProps} from 'recompose';
+import {
+  compose,
+  withProps,
+  withHandlers,
+  pure,
+  lifecycle,
+  withState,
+  defaultProps,
+} from 'recompose';
 
 import viewar from 'viewar-api';
 
-import { Container } from "../../components/FullScreenContainer";
+import { Container } from '../../components/FullScreenContainer';
 
 import styles from './styles.css';
 
-
 //HELPER FUNCTIONS//
 
-
-const concatObjValues = (obj) => Object.values(obj).join('');
+const concatObjValues = obj => Object.values(obj).join('');
 
 const isObjectInArr = (objArr, obj) => {
   const concatenated = concatObjValues(obj);
   return objArr.map(concatObjValues).find(str => str === concatenated);
 };
 
-const getUniqueTargetsByPosition = (targets) => {
-  return targets.filter(target => target.pose)
+const getUniqueTargetsByPosition = targets => {
+  return targets
+    .filter(target => target.pose)
     .reduce((acc, target) => {
       const positions = acc.map(({ pose }) => pose.position);
-      if( isObjectInArr(positions, target.pose.position) ) {
+      if (isObjectInArr(positions, target.pose.position)) {
         return acc;
-      }
-      else {
+      } else {
         acc.push(target);
         return acc;
       }
     }, []);
 };
 
-
 ///////////////
 
-const TrackingSystem = ({ isTracking, showQRMessage, initialized }) =>
-    <span>{ !initialized ? <Container>
-        { !isTracking && <div className={styles.overlay}> Please do a few sidesteps </div> }
-        { showQRMessage && <div className={styles.overlay}> Please film a registered QR-Code </div> }
-    </Container> : <div></div> }</span>
+const TrackingSystem = ({ isTracking, showQRMessage, initialized }) => (
+  <span>
+    {!initialized ? (
+      <Container>
+        {!isTracking && (
+          <div className={styles.overlay}> Please do a few sidesteps </div>
+        )}
+        {showQRMessage && (
+          <div className={styles.overlay}>
+            {' '}
+            Please film a registered QR-Code{' '}
+          </div>
+        )}
+      </Container>
+    ) : (
+      <div />
+    )}
+  </span>
+);
 
-export default  compose(
+export default compose(
   withState('showQRMessage', 'setShowQRMessage', false),
   withState('isTracking', 'setIsTracking', false),
   withState('initialized', 'setInitialized', false),
   defaultProps({
-    initializationStatusChanged: () => {}
+    initializationStatusChanged: () => {},
   }),
   withProps({
-    viewar
+    viewar,
   }),
   withProps(({ viewar }) => ({
     tracker: Object.values(viewar.trackers)[0],
-    targetModel: viewar.modelManager.findModelByForeignKey('target')
+    targetModel: viewar.modelManager.findModelByForeignKey('target'),
   })),
   withHandlers({
-    toggleRoutes: ({ setShowRoutes, showRoutes }) => () => setShowRoutes(!showRoutes),
+    toggleRoutes: ({ setShowRoutes, showRoutes }) => () =>
+      setShowRoutes(!showRoutes),
     handleTracking: ({
-       viewar,
-       targetModel,
-       setIsTracking,
-       setShowQRMessage,
-       setInitialized,
-       initialized,
-       initializationStatusChanged
+      viewar,
+      targetModel,
+      setIsTracking,
+      setShowQRMessage,
+      setInitialized,
+      initialized,
+      initializationStatusChanged,
     }) => async ({ target }) => {
-
       const targetName = target.name;
       const tracking = target.tracked;
 
       // for mock
-      if(tracking && targetName === 'VCard01') {
+      if (tracking && targetName === 'VCard01') {
         setInitialized(true);
         initializationStatusChanged(true);
         setIsTracking(true);
@@ -86,41 +105,55 @@ export default  compose(
         if (tracking) setShowQRMessage(true);
       }
 
-      const hasPose = (targetName ) => {
-        const arkit = viewar.appConfig.trackerList.find(tracker => tracker.name === "ARKit");
-        if(!arkit) return false;
+      const hasPose = targetName => {
+        const arkit = viewar.appConfig.trackerList.find(
+          tracker => tracker.name === 'ARKit'
+        );
+        if (!arkit) return false;
         const target = arkit.targets.find(target => target.name === targetName);
-        if(!target) return false;
+        if (!target) return false;
         return !!target.pose;
       };
 
-      if (tracking && !initialized && !targetName.includes('planeTarget') && hasPose(targetName)) {
+      if (
+        tracking &&
+        !initialized &&
+        !targetName.includes('planeTarget') &&
+        hasPose(targetName)
+      ) {
         setShowQRMessage(false);
         setInitialized(true);
         initializationStatusChanged(true);
 
-        const targets = getUniqueTargetsByPosition(viewar.appConfig.trackerList[0].targets);
+        const targets = getUniqueTargetsByPosition(
+          viewar.appConfig.trackerList[0].targets
+        );
 
-        return Promise.all(targets.map(({ pose }) => viewar.sceneManager.insertModel(targetModel, { pose }) ));
+        return Promise.all(
+          targets.map(({ pose }) =>
+            viewar.sceneManager.insertModel(targetModel, { pose })
+          )
+        );
       }
-    }
+    },
   }),
   lifecycle({
     async componentDidMount() {
       const { viewar, tracker, handleTracking } = this.props;
 
-      await viewar.cameras.augmentedRealityCamera.activate();
+      await viewar.cameras.arCamera.activate();
 
       await tracker.activate();
       tracker.on('trackingStatusChanged', handleTracking);
 
       setTimeout(() => {
         const model = viewar.modelManager.findModelByForeignKey('ball');
-        return viewar.sceneManager.insertModel(model, { pose: { position: { x: 0, y: 0, z: 0 }} } );
+        return viewar.sceneManager.insertModel(model, {
+          pose: { position: { x: 0, y: 0, z: 0 } },
+        });
       }, 0);
     },
     async componentWillUnmount() {
-
       const { tracker, handleTracking } = this.props;
 
       await tracker.deactivate();
@@ -128,5 +161,5 @@ export default  compose(
       tracker && tracker.off('trackingStatusChanged', handleTracking);
     },
   }),
-  pure,
+  pure
 )(TrackingSystem);
