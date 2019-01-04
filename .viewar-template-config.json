@@ -1,0 +1,76 @@
+{
+  "tracking": {
+    "ARKit": [
+      {
+        "name": "ARKit",
+        "config": {
+          "configFile": "",
+          "autostart": false,
+          "groundConfirm": "false"
+        },
+        "targets": [
+          {
+            "name": "planeTarget",
+            "type": "map",
+            "handling": "camera",
+            "useTimeout": true,
+            "targetTimeout": 0
+          },
+          {
+            "name": "hello",
+            "type": "image",
+            "size": 169.0,
+            "handling": "camera",
+            "useTimeout": true,
+            "targetTimeout": 0
+          },
+          {
+            "name": "http://qr.viewar.com/demo/1",
+            "type": "image",
+            "size": 190.0,
+            "handling": "camera",
+            "useTimeout": true,
+            "targetTimeout": 0,
+            "pose": {
+              "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              },
+              "orientation": {
+                "w": 1,
+                "x": 0,
+                "y": 0,
+                "z": 0
+              }
+            }
+          },
+          {
+            "name": "http://qr.viewar.com/demo/2",
+            "type": "image",
+            "size": 190.0,
+            "handling": "camera",
+            "useTimeout": true,
+            "targetTimeout": 0
+          },
+          {
+            "name": "http://qr.viewar.com/demo/3",
+            "type": "image",
+            "size": 190.0,
+            "handling": "camera",
+            "useTimeout": true,
+            "targetTimeout": 0
+          },
+          {
+            "name": "http://qr.viewar.com/demo/4",
+            "type": "image",
+            "size": 190.0,
+            "handling": "camera",
+            "useTimeout": true,
+            "targetTimeout": 0
+          }
+        ]
+      }
+    ]
+  }
+}
