@@ -1,46 +1,45 @@
 .button {
-    padding: 1em 1.8em;
-    color: white;
-    display: flex;
-    justify-content: center; /* align horizontal */
-    align-items: center; /* align vertical */
-    margin: 1rem;
-    font-size: 1rem;
-    background-color: #2fad77;
-    pointer-events: all;
-    border-radius: 5px;
-    cursor: pointer;
-    border: 1px solid transparent;
+  padding: 1em 1.8em;
+  color: white;
+  display: flex;
+  justify-content: center; /* align horizontal */
+  align-items: center; /* align vertical */
+  margin: 1rem;
+  font-size: 1rem;
+  background-color: #bd1819;
+  pointer-events: all;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid transparent;
 }
 
 .big {
-    font-size: 2rem;
+  font-size: 2rem;
 }
 
 .small {
-    font-size: 0.7rem;
-    margin: 1em;
+  font-size: 0.7rem;
+  margin: 1em;
 }
 
 .round {
-    border-radius: 50%;
-    padding: 25px 20px;
+  border-radius: 50%;
+  padding: 25px 20px;
 }
 
-
 .upperRight {
-    position: absolute;
-    top: 0;
-    right: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 .bottomLeft {
-    position: absolute;
-    bottom: 0;
-    left: 0;
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }
 
 .disabled {
-    background-color: #76e0c4;
-    cursor: not-allowed;
+  background-color: rgba(189, 24, 25, 0.51);
+  cursor: not-allowed;
 }

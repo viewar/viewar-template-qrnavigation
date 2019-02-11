@@ -3,7 +3,6 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
 export default function SocketConnection() {
-
   return {
     connect,
     setRole,
@@ -21,7 +20,6 @@ export default function SocketConnection() {
   };
 
   function connect({ host }) {
-
     this.clientLeft$ = new Subject();
     this.clientJoined$ = new Subject();
     this.clientListUpdate$ = new Subject();
@@ -53,24 +51,27 @@ export default function SocketConnection() {
     }
 
     return new Promise((resolve, reject) => {
-      const callbackId = `temp_${Date.now()}_${Math.random().toString(36).substring(7)}`;
+      const callbackId = `temp_${Date.now()}_${Math.random()
+        .toString(36)
+        .substring(7)}`;
       const req = this.socket.emit('joinRoom', { room, role }, callbackId);
 
-      this.socket.on('clientJoined', (client) => {
+      this.socket.on('clientJoined', client => {
         this.clients.push(client);
         this.clientJoined$.next(client);
         this.clientListUpdate$.next();
       });
 
-
-      this.socket.on('clientLeft', (clientId) => {
+      this.socket.on('clientLeft', clientId => {
         this.clients = this.clients.filter(({ id }) => id !== clientId);
         this.clientLeft$.next(clientId);
         this.clientListUpdate$.next();
       });
 
-      this.socket.on('clientChangedData', (alteredClient) => {
-        const remainingClients = this.clients.filter(({ id }) => id !== alteredClient.id);
+      this.socket.on('clientChangedData', alteredClient => {
+        const remainingClients = this.clients.filter(
+          ({ id }) => id !== alteredClient.id
+        );
         this.clients = [...remainingClients, alteredClient];
         this.clientListUpdate$.next(alteredClient);
       });
@@ -83,7 +84,6 @@ export default function SocketConnection() {
         this.room = res.name;
         resolve();
       });
-
     });
   }
 
@@ -91,12 +91,12 @@ export default function SocketConnection() {
     if (!this.connected) throw new Error('not connected');
     this.socket.emit('leaveRoom', { room });
 
-    this.socket.off('clientJoined', (client) => {
+    this.socket.off('clientJoined', client => {
       this.clients.push(client);
       this.clientJoined$.next(client);
     });
 
-    this.socket.off('clientLeft', (clientId) => {
+    this.socket.off('clientLeft', clientId => {
       this.clients = this.clients.filter(({ id }) => id !== clientId);
       this.clientLeft$.next(clientId);
     });
@@ -108,24 +108,25 @@ export default function SocketConnection() {
     if (!this.connected) throw new Error('not connected');
     this.socket.emit('setClientData', { room: this.room, data });
 
-    if(data.role){
+    if (data.role) {
       this.setRole(data.role);
     }
-
   }
 
   function getRooms() {
     if (!this.connected) throw new Error('not connected');
     return new Promise((resolve, reject) => {
-      const callbackId = `temp_${Date.now()}_${Math.random().toString(36).substring(7)}`;
+      const callbackId = `temp_${Date.now()}_${Math.random()
+        .toString(36)
+        .substring(7)}`;
       const req = this.socket.emit('getRooms', callbackId);
-      req.once(callbackId, (rooms) => {
+      req.once(callbackId, rooms => {
         resolve(rooms);
       });
     });
   }
 
-  function send({ room = this.room, data, messageType = 'message'}) {
+  function send({ room = this.room, data, messageType = 'message' }) {
     if (!this.connected) throw new Error('not connected');
     if (room) {
       this.socket.emit('send', { room, data, messageType });
@@ -135,16 +136,20 @@ export default function SocketConnection() {
   }
 
   function getData(action = 'message') {
-    return new Observable((observer) => {
-      this.socket.on(action, (data) => {
+    return new Observable(observer => {
+      this.socket.on(action, data => {
         observer.next(data);
       });
     });
   }
 
-  async function joinSession({ id, prefix = '', role = 'Client' }){
+  async function joinSession({ id, prefix = '', role = 'Client' }) {
     try {
-      const room = id || Math.random().toString(36).substring(7);
+      const room =
+        id ||
+        Math.random()
+          .toString(36)
+          .substring(7);
       await this.joinRoom(prefix + room, role);
       this.setRole(role);
       return room;
@@ -153,4 +158,3 @@ export default function SocketConnection() {
     }
   }
 }
-

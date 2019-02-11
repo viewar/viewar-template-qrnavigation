@@ -60,6 +60,53 @@ const TrackingSystem = ({ isTracking, showQRMessage, initialized }) => (
   </span>
 );
 
+const updateTracking = ({
+  viewar,
+  tracker,
+  targetModel,
+  setIsTracking,
+  setShowQRMessage,
+  setInitialized,
+  initialized,
+  initializationStatusChanged,
+}) => async () => {
+  const trackedTargets = tracker.targets.filter(target => target.tracked);
+  const trackedPlaneTarget = trackedTargets.find(target =>
+    target.name.includes('planeTarget')
+  );
+  const otherTarget = trackedTargets.find(
+    target => !target.name.includes('planeTarget')
+  );
+  const otherTargetHasPose =
+    otherTarget &&
+    !!api.appConfig.trackerList[0].targets.find(
+      target => target.name === otherTarget.name
+    ).pose;
+
+  setIsTracking(!!trackedPlaneTarget);
+
+  if (trackedPlaneTarget && !otherTarget && !initialized) {
+    initializationStatusChanged(false);
+    setShowQRMessage(true);
+  }
+
+  if (trackedPlaneTarget && otherTarget && !initialized && otherTargetHasPose) {
+    setShowQRMessage(false);
+    setInitialized(true);
+    initializationStatusChanged(true);
+
+    const targets = getUniqueTargetsByPosition(
+      viewar.appConfig.trackerList[0].targets
+    );
+
+    return Promise.all(
+      targets.map(({ pose }) =>
+        viewar.sceneManager.insertModel(targetModel, { pose })
+      )
+    );
+  }
+};
+
 export default compose(
   withState('showQRMessage', 'setShowQRMessage', false),
   withState('isTracking', 'setIsTracking', false),
@@ -77,74 +124,16 @@ export default compose(
   withHandlers({
     toggleRoutes: ({ setShowRoutes, showRoutes }) => () =>
       setShowRoutes(!showRoutes),
-    handleTracking: ({
-      viewar,
-      targetModel,
-      setIsTracking,
-      setShowQRMessage,
-      setInitialized,
-      initialized,
-      initializationStatusChanged,
-    }) => async ({ target }) => {
-      const targetName = target.name;
-      const tracking = target.tracked;
-
-      // for mock
-      if (tracking && targetName === 'VCard01') {
-        setInitialized(true);
-        initializationStatusChanged(true);
-        setIsTracking(true);
-        setShowQRMessage(false);
-        return;
-      }
-
-      if (targetName.includes('planeTarget')) {
-        setIsTracking(tracking);
-        setInitialized(false);
-        initializationStatusChanged(false);
-        if (tracking) setShowQRMessage(true);
-      }
-
-      const hasPose = targetName => {
-        const arkit = viewar.appConfig.trackerList.find(
-          tracker => tracker.name === 'ARKit'
-        );
-        if (!arkit) return false;
-        const target = arkit.targets.find(target => target.name === targetName);
-        if (!target) return false;
-        return !!target.pose;
-      };
-
-      if (
-        tracking &&
-        !initialized &&
-        !targetName.includes('planeTarget') &&
-        hasPose(targetName)
-      ) {
-        setShowQRMessage(false);
-        setInitialized(true);
-        initializationStatusChanged(true);
-
-        const targets = getUniqueTargetsByPosition(
-          viewar.appConfig.trackerList[0].targets
-        );
-
-        return Promise.all(
-          targets.map(({ pose }) =>
-            viewar.sceneManager.insertModel(targetModel, { pose })
-          )
-        );
-      }
-    },
+    updateTracking,
   }),
   lifecycle({
     async componentDidMount() {
-      const { viewar, tracker, handleTracking } = this.props;
+      const { viewar, tracker, updateTracking } = this.props;
 
       await viewar.cameras.arCamera.activate();
 
       await tracker.activate();
-      tracker.on('trackingStatusChanged', handleTracking);
+      tracker.on('trackingStatusChanged', updateTracking);
 
       setTimeout(() => {
         const model = viewar.modelManager.findModelByForeignKey('ball');
@@ -154,11 +143,11 @@ export default compose(
       }, 0);
     },
     async componentWillUnmount() {
-      const { tracker, handleTracking } = this.props;
+      const { tracker, updateTracking } = this.props;
 
       await tracker.deactivate();
 
-      tracker && tracker.off('trackingStatusChanged', handleTracking);
+      tracker && tracker.off('trackingStatusChanged', updateTracking);
     },
   }),
   pure

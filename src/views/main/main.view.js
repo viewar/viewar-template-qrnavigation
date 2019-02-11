@@ -7,20 +7,42 @@ import { Button } from '../../components/Button';
 
 import Routes from '../../containers/routes/routes';
 import TrackingSystem from '../../containers/tracking-system/tracking-system';
-import { Container } from "../../components/FullScreenContainer";
-import { removeInstancesByForeignKey } from "../new/new.view";
+import { Container } from '../../components/FullScreenContainer';
+import { removeInstancesByForeignKey } from '../new/new.view';
 
 import styles from './styles.css';
 
-const MainView = ({ handleBack, setActiveRoute, activeRoute, toggleRoutes, initialized, setInitialized, showRoutes }) =>
+const MainView = ({
+  handleBack,
+  setActiveRoute,
+  activeRoute,
+  toggleRoutes,
+  initialized,
+  setInitialized,
+  showRoutes,
+}) => (
   <Container>
     <TrackingSystem initializationStatusChanged={setInitialized} />
     <div className={styles.upperLeftBar}>
-      <Button onClick={handleBack}>Back</Button>
-      { initialized && <Button onClick={toggleRoutes}>{ showRoutes ? 'Hide Routes' : 'Show routes' }</Button> }
+      <Button onClick={handleBack} className={styles.button}>
+        Back
+      </Button>
+      {initialized && (
+        <Button onClick={toggleRoutes} className={styles.button}>
+          {showRoutes ? 'Hide Routes' : 'Show routes'}
+        </Button>
+      )}
     </div>
-      { initialized && showRoutes && <Routes activeRouteChanged={setActiveRoute} activeRoute={activeRoute} showEditOptions={false} /> }
+    {initialized && (
+      <Routes
+        activeRouteChanged={setActiveRoute}
+        activeRoute={activeRoute}
+        showEditOptions={false}
+        visible={showRoutes}
+      />
+    )}
   </Container>
+);
 
 export default compose(
   withRouter,
@@ -36,7 +58,8 @@ export default compose(
       removeInstancesByForeignKey('ball');
       history.push('/home');
     },
-    toggleRoutes: ({ setShowRoutes, showRoutes }) => () => setShowRoutes(!showRoutes),
+    toggleRoutes: ({ setShowRoutes, showRoutes }) => () =>
+      setShowRoutes(!showRoutes),
   }),
-  pure,
+  pure
 )(MainView);

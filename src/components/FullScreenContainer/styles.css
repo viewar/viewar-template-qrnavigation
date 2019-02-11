@@ -1,13 +1,13 @@
 .container {
-   width: 100vw;
-   height: 100vh;
-   position: relative;
-   overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
 }
 
 .center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
 }

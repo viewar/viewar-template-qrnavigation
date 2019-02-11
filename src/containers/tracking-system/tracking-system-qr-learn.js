@@ -110,7 +110,7 @@ export default compose(
             'getLearnedTargets',
             ''
           );
-          const scannedQRCodes = QRCodes.filter(QRCode => {
+          const scannedQRCodes = Object.values(QRCodes).filter(QRCode => {
             const { x, y, z } = QRCode.pose.position;
             return x !== 0 && y !== 0 && z !== 0;
           });

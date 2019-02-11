@@ -5,17 +5,22 @@ import viewar from 'viewar-api';
 
 import { setupStream } from '../../services/websocket/stream-manager';
 
-import { Container } from "../../components/FullScreenContainer";
+import { Container } from '../../components/FullScreenContainer';
 
-const InitView = ({  }) => <Container backgroundColor='#333333' center >Loading...</Container>;
+const InitView = ({}) => (
+  <Container backgroundColor="#333333" center>
+    Loading...
+  </Container>
+);
 
 export default compose(
   withRouter,
   withProps({
-    viewar
+    viewar,
   }),
   withProps(({ viewar }) => ({
-    serverChannel: viewar.appConfig.uiConfig.serverChannel || 'com.viewar.qrnavigation',
+    serverChannel:
+      viewar.appConfig.uiConfig.serverChannel || 'com.viewar.qrnavigation',
     role: viewar.appConfig.uiConfig.isAdmin ? 'Admin' : 'Client',
   })),
   lifecycle({
@@ -27,10 +32,14 @@ export default compose(
       socketConnection.socket.on('connect', async () => {
         setupStream(socketConnection, viewar);
 
-        try{
-          await socketConnection.joinSession({ prefix: 'dev', id: serverChannel, role });
+        try {
+          await socketConnection.joinSession({
+            prefix: 'dev',
+            id: serverChannel,
+            role,
+          });
           history.push('/home');
-        }catch(e) {
+        } catch (e) {
           console.error(e);
         }
       });
@@ -40,8 +49,7 @@ export default compose(
       socketConnection.socket.on('connect_error', () => {
         alert('Socket Connection Error!');
       });
-
-    }
+    },
   }),
-  pure,
+  pure
 )(InitView);

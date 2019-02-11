@@ -1,7 +1,19 @@
 .upperLeftBar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: flex;
-    z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  z-index: 1;
+  width: 300px;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.button {
+  flex: 1 0 auto;
+  margin: 0 1rem 0 0;
+}
+
+.button:last-child {
+  margin-right: 0;
 }

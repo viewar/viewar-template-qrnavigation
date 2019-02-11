@@ -10,6 +10,7 @@ import {
 import viewar from 'viewar-api';
 import { Button } from '../../components/Button';
 import { Container } from '../../components/FullScreenContainer';
+import styles from './style.css';
 
 import { distance } from '../../utils/math';
 
@@ -40,14 +41,16 @@ const NewView = ({
   showLabelModal,
   handleModalCancel,
 }) => (
-  <Container>
+  <Container className={styles.container}>
     {showLabelModal && (
       <InputModal required onOk={startHandler} onCancel={handleModalCancel}>
         Enter a label for the route
       </InputModal>
     )}
-    {isRecording && <Button onClick={stopHandler}>Stop</Button>}
-    {isRecording && <Button onClick={cancelHandler}>Cancel</Button>}
+    <div className={styles.bottomBar}>
+      {isRecording && <Button onClick={stopHandler}>Stop</Button>}
+      {isRecording && <Button onClick={cancelHandler}>Cancel</Button>}
+    </div>
   </Container>
 );
 
@@ -70,7 +73,9 @@ export default compose(
   withHandlers({
     addPoint: ({ viewar, activeCamera, ballModel, label }) => async () => {
       try {
-        const pose = await activeCamera.updatePose();
+        const pose = JSON.parse(
+          JSON.stringify(await activeCamera.updatePose())
+        );
 
         viewar.socketConnection.send({
           messageType: 'newLiveRoute',
@@ -85,12 +90,13 @@ export default compose(
             messageType: 'newLiveRoutePoint',
             data: { route: label, pose },
           });
-          lastPosition = pose.position;
+          lastPosition = JSON.parse(JSON.stringify(pose.position));
           return viewar.sceneManager.insertModel(ballModel, { pose });
         }
       } catch (e) {
+        console.error(e.message);
         console.warn(
-          'creation of new Routes is not available in the Web-Version'
+          'Creation of new Routes is not available in the Web-Version.'
         );
       }
     },

@@ -1,7 +1,7 @@
 export function createStorageService(viewarApi) {
   const storageService = {
     editKey,
-    deleteKey
+    deleteKey,
   };
 
   return storageService;

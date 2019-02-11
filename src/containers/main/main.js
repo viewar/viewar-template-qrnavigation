@@ -1,10 +1,6 @@
 import React from 'react';
 
-import {
-  Route,
-  MemoryRouter as Router
-} from 'react-router-dom';
-
+import { Route, MemoryRouter as Router } from 'react-router-dom';
 
 import InitView from '../../views/init/init.view';
 import HomeView from '../../views/home/home.view';
@@ -14,7 +10,7 @@ import LearnView from '../../views/learn/learn.view';
 
 import { Container } from '../../components/FullScreenContainer';
 
-const Main = () =>
+const Main = () => (
   <Router>
     <Container>
       <Route exact path="/" component={InitView} />
@@ -23,6 +19,7 @@ const Main = () =>
       <Route exact path="/admin" component={AdminView} />
       <Route exact path="/learn" component={LearnView} />
     </Container>
-  </Router>;
+  </Router>
+);
 
 export default Main;

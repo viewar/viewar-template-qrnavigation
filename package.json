@@ -8,15 +8,14 @@
     "url": "git://github.com/viewar/viewar-template-qrnavigation.git"
   },
   "scripts": {
-    "clean": "rm -rf build && rm -rf bundle",
+    "test": "node ./scripts/run-tests.js './src/**/*.test.js' | faucet",
+    "deploy": "viewar-cli deploy",
+    "clean": "rimraf build && rimraf bundle",
     "build": "npm run clean && webpack -p --config ./config/webpack.config.js --mode production --env production",
     "start": "npm run clean && webpack-dev-server --config ./config/webpack.config.js --open --mode development --env development_core",
     "start:mock": "npm run clean && webpack-dev-server --config ./config/webpack.config.js --open --mode development --env development_mock",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --single-quote --trailing-comma es5 'src/**/*.{js,jsx,css,scss,md,json}' --write"
   },
-  "author": "Matthias Klan <mk@viewar.com>",
-  "license": "ISC",
   "babel": {
     "presets": [
       "@babel/preset-env",
@@ -29,11 +28,13 @@
     }
   },
   "lint-staged": {
-    "*.{js,json,css,scss,md,jsx}": [
+    "*.{js,json,css,md,jsx}": [
       "prettier --single-quote --trailing-comma es5 --write",
       "git add"
     ]
   },
+  "author": "Karl Hofer <kh@viewar.com>",
+  "license": "ISC",
   "dependencies": {
     "axios": "^0.16.2",
     "classnames": "^2.2.5",
@@ -46,8 +47,9 @@
     "recompose": "^0.26.0",
     "rxjs": "^5.4.2",
     "socket.io-client": "^2.0.4",
-    "viewar-api": "^0.30.2",
-    "viewar-core": "^11.18.1"
+    "viewar-api": "^0.36.3",
+    "viewar-core": "^11.18.1",
+    "webpack": "^4.25.1"
   },
   "devDependencies": {
     "@babel/core": "^7.1.6",
@@ -57,10 +59,11 @@
     "babel-polyfill": "^6.26.0",
     "copy-webpack-plugin": "^4.6.0",
     "css-loader": "^1.0.1",
+    "faucet": "0.0.1",
     "file-loader": "^2.0.0",
     "html-webpack-plugin": "^3.2.0",
-    "husky": "^1.2.0",
-    "lint-staged": "^8.1.0",
+    "husky": "^1.1.4",
+    "lint-staged": "^8.0.4",
     "mini-css-extract-plugin": "^0.4.4",
     "node-sass": "^4.10.0",
     "postcss": "^7.0.5",
@@ -69,11 +72,12 @@
     "postcss-preset-env": "^6.4.0",
     "prettier": "^1.15.2",
     "react-hot-loader": "^4.3.12",
+    "rimraf": "^2.6.3",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "webpack": "^4.25.1",
     "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.10",
+    "webpack-dev-server": "^3.1.14",
     "webpack-merge": "^4.1.4"
   }
 }
